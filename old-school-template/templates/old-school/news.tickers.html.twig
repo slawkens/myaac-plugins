@@ -14,18 +14,7 @@
 							<div class="changelog_big{{ i }}" style="display: none;">
 								{{ ticker.body|raw }}
 								{% if canEdit %}
-									<a href="admin/?p=news&action=edit&id={{ ticker.id }}" title="Edit">
-										<img src="images/edit.png"/>
-										Edit
-									</a>
-									<a id="delete" href="admin/?p=news&action=delete&id={{ ticker.id }}" onclick="return confirm('Are you sure?');" title="Delete">
-										<img src="images/del.png"/>
-										Delete
-									</a>
-									<a href="admin/?p=news&action=hide&id={{ ticker.id }}" title="{% if ticker.hidden != 1 %}Hide{% else %}Show{% endif %}">
-										<img src="images/{% if ticker.hidden != 1 %}success{% else %}error{% endif %}.png"/>
-										{% if ticker.hidden != 1 %}Hide{% else %}Show{% endif %}
-									</a>
+									{{ include('admin.links.html.twig', {page: 'news', id: article.id, hide: article.hide }) }}
 								{% endif %}
 							</div>
 						</td>
