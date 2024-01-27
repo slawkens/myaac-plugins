@@ -18,8 +18,12 @@
 
 		<div class="title">
 
-			<span class="sitename"><a href="index.php"><font color="green"><?php echo ucwords($config['lua']['serverName']); ?></font></a></span>
-			<div class="slogan"><font color="black"><b>IP:</b> <?php echo configLua('ip'); ?></font></div>
+			<span class="sitename">
+				<a href="<?= getLink(''); ?>">
+					<span style="color: green"><?php echo ucwords(configLua('serverName')); ?></span>
+				</a>
+			</span>
+			<div class="slogan"><span style="color: black"><b>IP:</b> <?php echo configLua('ip'); ?></span></div>
 
 		</div>
 
@@ -52,64 +56,75 @@
 			<ul>
 				<?php
 				if($logged): ?>
-					<li><a href="<?= getLink('account/manage'); ?>"><b><font size="1">My Account</font></b></a></li>
-					<li><a href="<?= getLink('account/logout'); ?>"><b><font size="1">Logout</font></b></a></li>
+					<li><a href="<?= getLink('account/manage'); ?>"><b><span style="font-size: 10px">My Account</span></b></a></li>
+					<li><a href="<?= getLink('account/logout'); ?>"><b><span style="font-size: 10px">Logout</span></b></a></li>
 				<?php else: ?>
-					<li><a href="<?= getLink('account/manage'); ?>"><b><font size="1">Login</font></b></a></li>
-					<li><a href="<?= getLink('account/create'); ?>"><b><font size="1" color="red">Create Account</font></b></a></li>
-					<li><a href="<?= getLink('account/lost'); ?>"><b><font size="1">Lost Account</font></b></a></li>
+					<li><a href="<?= getLink('account/manage'); ?>"><b><span style="font-size: 10px">Login</span></b></a></li>
+					<li><a href="<?= getLink('account/create'); ?>"><b><span style="font-size: 10px; color: red">CreateAccount</span></b></a></li>
+					<li><a href="<?= getLink('account/lost'); ?>"><b><span style="font-size: 10px">Lost Account</span></b></a></li>
 				<?php endif; ?>
 
-				<li><a href="<?= getLink('rules'); ?>"><b><font size="1">Server Rules</font></b></a></li>
-				<li><a href="<?= getLink('downloads'); ?>"><b><font size="1">Download</font></b></a></li>
+				<li><a href="<?= getLink('rules'); ?>"><b><span style="font-size: 10px">Server Rules</span></b></a></li>
+				<li><a href="<?= getLink('downloads'); ?>"><b><span style="font-size: 10px">Download</span></b></a></li>
 			</ul>
 
 			<h1><span style="color: green">Community</span></h1>
 			<ul>
-				<li><a href="<?= getLink('characters'); ?>"><b><font size="1">Characters</font></b></a></li>
-				<li><a href="<?= getLink('guilds'); ?>"><b><font size="1">Guilds</font></b></a></li>
-				<li><a href="<?= getLink('highscores'); ?>"><b><font size="1">Highscores</font></b></a></li>
-				<li><a href="<?= getLink('last-kills'); ?>"><b><font size="1">Last Deaths</font></b></a></li>
-				<li><a href="<?= getLink('houses'); ?>"><b><font size="1">Houses</font></b></a></li>
+				<li><a href="<?= getLink('characters'); ?>"><b><span style="font-size: 10px">Characters</b></a></li>
+				<li><a href="<?= getLink('guilds'); ?>"><b><span style="font-size: 10px">Guilds</span></b></a></li>
+				<li><a href="<?= getLink('highscores'); ?>"><b><span style="font-size: 10px">Highscores</span></b></a></li>
+				<li><a href="<?= getLink('last-kills'); ?>"><b><span style="font-size: 10px">Last Deaths</span></b></a></li>
+				<li><a href="<?= getLink('houses'); ?>"><b><span style="font-size: 10px">Houses</span></b></a></li>
 				<?php if(config('forum') != ''):
 					if(config('forum') == 'site'): ?>
-						<li><a href="<?php echo internalLayoutLink('forum'); ?>"><b><font size="1">Forum</font></b></a></li>
+						<li><a href="<?php echo getLink('forum'); ?>"><b><span style="font-size: 10px">Forum</span></b></a></li>
 					<?php else: ?>
-						<li><a href="<?php echo config('forum'); ?>" target="_blank"><b><font size="1">Forum</font></b></a></li>
+						<li><a href="<?php echo config('forum'); ?>" target="_blank"><b><span style="font-size: 10px">Forum</span></b></a></li>
 					<?php endif; ?>
 				<?php endif; ?>
-				<li><a href="<?= getLink('bans'); ?>'"><b><font size="1">Bans</font></b></a></li>
-				<li><a href="<?= getLink('team'); ?>"><b><font size="1">Team</font></b></a></li>
+				<li><a href="<?= getLink('bans'); ?>"><b><span style="font-size: 10px">Bans</span></b></a></li>
+				<li><a href="<?= getLink('team'); ?>"><b><span style="font-size: 10px">Team</span></b></a></li>
 			</ul>
 			<h1><span style="color: green">Library</span></h1>
 			<ul>
-				<li><a href="<?= getLink('creatures'); ?>"><b><font size="1">Creatures</font></b></a></li>
-				<li><a href="<?= getLink('spells'); ?>"><b><font size="1">Spells</font></b></a></li>
-				<li><a href="<?= getLink('commands'); ?>"><b><font size="1">Commands</font></b></a></li>
-				<li><a href="<?= getLink('exp-stages'); ?>"><b><font size="1">Exp stages</font></b></a></li>
-				<li><a href="<?= getLink('gallery'); ?>"><b><font size="1">Gallery</font></b></a></li>
-				<li><a href="<?= getLink('server-info'); ?>"><b><font size="1">Server info</font></b></a></li>
-				<li><a href="<?= getLink('exp-table'); ?>"><b><font size="1">Experience table</font></b></a></li>
+				<li><a href="<?= getLink('monsters'); ?>"><b><span style="font-size: 10px">Monsters</span></b></a></li>
+				<li><a href="<?= getLink('spells'); ?>"><b><span style="font-size: 10px">Spells</span></b></a></li>
+				<li><a href="<?= getLink('commands'); ?>"><b><span style="font-size: 10px">Commands</span></b></a></li>
+				<li><a href="<?= getLink('exp-stages'); ?>"><b><span style="font-size: 10px">Exp stages</span></b></a></li>
+				<li><a href="<?= getLink('gallery'); ?>"><b><span style="font-size: 10px">Gallery</span></b></a></li>
+				<li><a href="<?= getLink('server-info'); ?>"><b><span style="font-size: 10px">Server info</span></b></a></li>
+				<li>
+					<a href="<?= getLink('exp-table'); ?>">
+						<b>
+							<span style="font-size: 10px">Exp Table</span>
+						</b>
+					</a>
+				</li>
 			</ul>
 
-<?php if($config['gifts_system']): ?>
-			<h1><span style="color: green">Shop</span></h1>
-			<ul>
-				<li><a href="<?= getLink('points'); ?>"><b><font size="1" color="red"><blink>Buy Premium Points</blink></font></b></a></li>
-				<li><a href="<?= getLink('gifts'); ?>"><b><font size="1">Shop Offer</font></b></a></li>
-				<?php if($logged): ?>
-					<li><a href="<?= getLink('gifts/history'); ?>"><b><font size="1">Shop History</font></b></a></li>
-				<?php endif; ?>
+			<?php if(config('gifts_system')): ?>
+				<h1><span style="color: green">Shop</span></h1>
+				<ul>
+					<li><a href="<?= getLink('points'); ?>">
+							<b>
+								<span style="font-size: 10px; color: red">Buy Premium Points</span>
+							</b>
+						</a>
+					</li>
+					<li><a href="<?= getLink('gifts'); ?>"><b><span style="font-size: 10px">Shop Offer</span></b></a></li>
+					<?php if($logged): ?>
+						<li><a href="<?= getLink('gifts/history'); ?>"><b><span style="font-size: 10px">Shop History</span></b></a></li>
+					<?php endif; ?>
+				</ul>
+			<?php endif; ?>
+			<?php if(config('template_allow_change')): ?>
+				<h1><span style="color: green">Change template</span></h1>
+				<ul>
+					<li>
+						<div style="text-align: center"><?= template_form(); ?></div>
+					</li>
 			</ul>
-<?php endif; ?>
-<?php if(config('template_allow_change'))
-echo '
-			<h1><font color="green">Change template</font></h1>
-			<ul>
-				<li><center>' . template_form() . '
-				</center></li>
-			</ul>';
-?>
+			<?php endif; ?>
 		</div>
 
 		<div class="clearer">&nbsp;</div>
