@@ -1,0 +1,13 @@
+{
+	"name": "Theme Coffee N Cream",
+	"description": "This is coffee-n-cream theme for MyAAC.",
+	"version": "2.0",
+	"type": "template",
+	"license": "GPLv3",
+	"author": "Arcsin, slawkens",
+	"contact": "slawkens@gmail.com",
+	"uninstall": [
+		"plugins/theme-coffee-n-cream.json",
+		"plugins/theme-coffee-n-cream"
+	]
+}
