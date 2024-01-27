@@ -3,9 +3,9 @@ defined('MYAAC') or die('Direct access not allowed!');
 
 $template = 'aldora';
 
-require TEMPLATES . $template . '/config.php';
+require PLUGINS . $template . '-theme/themes/aldora/config.php';
 
-if (!tableExist(TABLE_PREFIX . 'menu')) {
+if (!$db->hasTable(TABLE_PREFIX . 'menu')) {
 	return;
 }
 

@@ -1,8 +1,8 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-if(!version_compare(MYAAC_VERSION, '0.7', '>=')) {
-	echo 'MyAAC 0.7.0 is required.';
+if(!version_compare(MYAAC_VERSION, '1.0-beta', '>=')) {
+	echo 'MyAAC 1.0-beta is required.';
 	exit;
 }
 
