@@ -22,55 +22,51 @@ defined('MYAAC') or die('Direct access not allowed!');
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li><a href="<?php echo $template['link_news']; ?>"><i class="fa fa-home"></i>Home</a></li>
+							<li><a href="<?= getLink('news'); ?>"><i class="fa fa-home"></i>Home</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>Community<b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a href="<?php echo $template['link_characters']; ?>">Characters</a></li>
-										<li><a href="<?php echo $template['link_online']; ?>">Online</a></li>
-										<li><a href="<?php echo $template['link_highscores']; ?>">Highscores</a></li>
-										<li><a href="<?php echo $template['link_lastkills']; ?>">Last kills</a></li>
-										<li><a href="<?php echo $template['link_houses']; ?>">Houses</a></li>
-										<li><a href="<?php echo $template['link_guilds']; ?>">Guilds</a></li>
-										<?php if(isset($config['wars'])): ?>
-										<li><a href="<?php echo $template['link_wars']; ?>">Guild Wars</a></li>
-										<?php endif; ?>
+										<li><a href="<?= getLink('characters'); ?>">Characters</a></li>
+										<li><a href="<?= getLink('online'); ?>">Online</a></li>
+										<li><a href="<?= getLink('highscores'); ?>">Highscores</a></li>
+										<li><a href="<?= getLink('last-kills'); ?>">Last kills</a></li>
+										<li><a href="<?= getLink('houses'); ?>">Houses</a></li>
+										<li><a href="<?= getLink('guilds'); ?>">Guilds</a></li>
 									</ul>
 							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> Library <b class="caret"></b></a>
 										<ul class="dropdown-menu">
-											<li><a href="<?php echo $template['link_creatures']; ?>">Monsters</a></li>
-											<li><a href="<?php echo $template['link_spells']; ?>">Spells</a></li>
-											<li><a href="<?php echo $template['link_commands']; ?>">Commands</a></li>
-											<li><a href="<?php echo $template['link_experienceStages']; ?>">Experience stages</a></li>
-											<li><a href="<?php echo $template['link_serverInfo']; ?>">Server Information</a></li>
-											<li><a href="<?php echo $template['link_screenshots']; ?>">Screenshots</a></li>
-											<li><a href="<?php echo $template['link_movies']; ?>">Movies</a></li>
+											<li><a href="<?= getLink('monsters'); ?>">Monsters</a></li>
+											<li><a href="<?= getLink('spells'); ?>">Spells</a></li>
+											<li><a href="<?= getLink('commands'); ?>">Commands</a></li>
+											<li><a href="<?= getLink('exp-stages'); ?>">Experience stages</a></li>
+											<li><a href="<?= getLink('server-info'); ?>">Server Information</a></li>
+											<li><a href="<?= getLink('gallery'); ?>">Gallery</a></li>
 										</ul>
 							</li>
-							<?php if($config['gifts_system']): ?>
+							<?php if(config('gifts_system')): ?>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i> Shop <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo $template['link_points']; ?>">Buy points</a></li>
-									<li><a href="<?php echo $template['link_gifts']; ?>">Gifts</a></li>
+									<li><a href="<?= getLink('points'); ?>">Buy points</a></li>
+									<li><a href="<?= getLink('gifts'); ?>">Gifts</a></li>
 								</ul>
 							</li>
 							<?php endif; ?>
-							<li><?php echo $template['link_forum']; ?><i class="fa fa-comment"></i> Forum</a></li>
+							<li><a href="<?= getLink('forum'); ?>"><i class="fa fa-comment"></i>
+								Forum</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question-circle"></i> Help <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="<?php echo $template['link_team']; ?>">Support</a></li>
-									<li><a href="<?php echo $template['link_faq']; ?>">FAQ</a></li>
+									<li><a href="<?= getLink('team'); ?>">Support</a></li>
+									<li><a href="<?= getLink('faq'); ?>">FAQ</a></li>
 								</ul>
 							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-left">
-							<form class="navbar-form navbar-left" role="search" type="submit" method="get">
+							<form action="<?= getLink('characters'); ?>" class="navbar-form navbar-left" role="search" type="submit" method="get">
 								<div class="form-group">
-									<input type="hidden" name="subtopic" value="characters"/>
 									<input type="text" maxlength="45" name="name" class="form-control" style="max-width: 130px;" placeholder="Search character..." required />
 								</div>
 							</form>
@@ -78,14 +74,14 @@ defined('MYAAC') or die('Direct access not allowed!');
 
 						<ul class="nav navbar-nav navbar-right">
               				<?php if (!$logged) { ?>
-              				<li> <a href="<?php echo $template['link_account_create']; ?>"><i class="fa fa-share"></i> Sign Up</a></li>
+              				<li> <a href="<?= getLink('account/create'); ?>"><i class="fa fa-share"></i> Sign Up</a></li>
                   			<li class="dropdown">
                   				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
 								<ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
 								<li>
 									<div class="row">
 										<div class="col-md-12">
-											<form action="<?php echo $template['link_account_manage']; ?>" method="post">
+											<form action="<?= getLink('account/manage'); ?>" method="post">
 												<div class="form-group">
 													<input type="password" name="account_login" class="form-control" placeholder="Account Name" required />
 												</div>
@@ -100,17 +96,17 @@ defined('MYAAC') or die('Direct access not allowed!');
 									</div>
 								</li>
 								<li class="divider"></li>
-								<li><p><a href="<?php echo $template['link_account_lost']; ?>" class="btn btn-danger form-control">Account Lost?</a></p></li>
+								<li><p><a href="<?= getLink('account/lost'); ?>" class="btn btn-danger form-control">Account Lost?</a></p></li>
 							</li>
 							<?PHP } else { ?>
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><?php echo $account_logged->getName(); ?></strong> <b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a href="<?php echo $template['link_account_manage']; ?>">Account Management</a></li>
-										<li><a href="<?php echo BASE_URL; ?>?subtopic=accountmanagement&action=createcharacter">Create Character</a></li>
-										<li><a href="<?php echo BASE_URL; ?>?subtopic=accountmanagement&action=changepassword">Change Password</a></li>
+										<li><a href="<?= getLink('account/manage'); ?>">Account Management</a></li>
+										<li><a href="<?= getLink('account/character/create'); ?>">Create Character</a></li>
+										<li><a href="<?= getLink('account/password'); ?>">Change Password</a></li>
 										<li class="nav-divider"></li>
-										<li><a href="<?php echo BASE_URL; ?>?subtopic=accountmanagement&action=logout">Sign out</a></li>
+										<li><a href="<?= getLink('account/logout'); ?>">Sign out</a></li>
 									</ul>
 								</li>
 							<?PHP } ?>
@@ -197,7 +193,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 							</tbody>
 						</table>
 						<p><a href="http://static.otland.net/ipchanger.exe" class="btn btn-success form-control">Download IP Changer</a></p>
-						<a href="<?php echo $template['link_downloads']; ?>" class="btn btn-danger form-control">Download Client</a>
+						<a href="<?= getLink('downloads'); ?>" class="btn btn-danger form-control">Download Client</a>
 					</div>
 				</div>
 				<div class="panel panel-default">
@@ -219,14 +215,14 @@ defined('MYAAC') or die('Direct access not allowed!');
 								</tr>
 								<?php if ($status['online']) { ?>
 								<tr>
-									<td><a href="<?php echo $template['link_online']; ?>"><?php echo $status['players']; ?> players online</a></td>
+									<td><a href="<?= getLink('online'); ?>"><?php echo $status['players']; ?> players online</a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
 						</table>
 					</div>
 				</div>
-				<?php if($config['template_allow_change']): ?>
+				<?php if(config('template_allow_change')): ?>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Change style</h3>
