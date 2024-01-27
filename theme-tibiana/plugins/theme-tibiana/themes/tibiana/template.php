@@ -1,18 +1,12 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-if(!version_compare(MYAAC_VERSION, '0.7', '>=')) {
-	echo 'MyAAC 0.7.0 is required.';
+if(!version_compare(MYAAC_VERSION, '1.0-beta', '>=')) {
+	echo 'MyAAC 1.0 is required.';
 	exit;
 }
 
 $menus = get_template_menus();
-foreach($menus as $cat => &$_menus) {
-	foreach($_menus as &$menu) {
-		$link_full = strpos(trim($menu['link']), 'http') === 0 ? $menu['link'] : getLink($menu['link']);
-		$menu['link_full'] = $link_full;
-	}
-}
 
 if(count($menus) === 0) {
 	$text = "Please install the $template_name template in Admin Panel, so the menus will be imported too.";
@@ -46,7 +40,7 @@ if(count($menus) === 0) {
 	<div id="pandaac">
 	<div class="sidebar-right">
 		<div class="players-online-wrapper">
-		  <a href="?subtopic=creatures&creature=<?php echo $config['logo_monster'] ?>"><span class="c-monster"
+		  <a href="?subtopic=creatures&creature=<?php echo config('logo_monster') ?>"><span class="c-monster"
 																								 style="background: url(/images/monsters/<?= logo_monster() ?>.gif);"></span></a>
 		  <div class="players-online-w">
 			<div class="players-online-l">
@@ -134,7 +128,7 @@ if(count($menus) === 0) {
 <div>
 					<?php
 						echo tickers() . template_place_holder('center_top');
-	
+
 						echo $content;
 
 						?>

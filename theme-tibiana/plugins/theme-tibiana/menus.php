@@ -11,8 +11,8 @@ return [
 		'News' => 'news',
 		'Register' => 'account/create',
 		'Characters' => 'characters',
-		'Experience' => 'experienceTable',
-		'Last Kills' => 'lastkills',
+		'Exp Table' => 'exp-table',
+		'Last Kills' => 'last-kills',
 		'Houses' => 'houses',
 		'Guilds' => 'guilds',
 		'Monsters' => 'creatures',
@@ -20,6 +20,6 @@ return [
 		'Commands' => 'commands',
 		'Gallery' => 'gallery',
 		'Support' => 'team',
-		'Server Info' => 'serverInfo',
+		'Server Info' => 'server-info',
 	],
 ];
