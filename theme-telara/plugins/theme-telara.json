@@ -1,0 +1,17 @@
+{
+	"name": "Theme Telara",
+	"description": "This is Telara theme for MyAAC.",
+	"version": "2.0",
+	"type": "template",
+	"license": "GPLv3",
+	"author": "pedrogiampietro, slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.0-beta",
+		"php": "8.1"
+	},
+	"uninstall": [
+		"plugins/theme-telara.json",
+		"plugins/theme-telara"
+	]
+}

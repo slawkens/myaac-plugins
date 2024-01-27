@@ -103,7 +103,7 @@ foreach(getTopPlayers(5) as $player) {
 						<li><a href="<?= getLink('characters'); ?>">Search character</a></li>
 						<li><a href="<?= getLink('highscores'); ?>">Highscores</a></li>
 						<li><a href="<?= getLink('online'); ?>">Who is online?</a></li>
-						<li><a href="<?= getLink('lastkills'); ?>">Latest Kills</a></li>
+						<li><a href="<?= getLink('last-kills'); ?>">Latest Kills</a></li>
 						<li><a href="<?= getLink('houses'); ?>">Houses</a></li>
 						<li><a href="<?= getLink('guilds'); ?>">Guilds</a></li>
 						<li><a href="<?= getLink('team'); ?>">Team</a></li>
@@ -112,12 +112,12 @@ foreach(getTopPlayers(5) as $player) {
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Library <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?= getLink('creatures'); ?>">Monsters</a></li>
+						<li><a href="<?= getLink('monsters'); ?>">Monsters</a></li>
 						<li><a href="<?= getLink('spells'); ?>">Spells</a></li>
 						<li><a href="<?= getLink('commands'); ?>">Commands</a></li>
-						<li><a href="<?= getLink('serverInfo'); ?>">Server info</a></li>
+						<li><a href="<?= getLink('server-info'); ?>">Server info</a></li>
 						<li><a href="<?= getLink('gallery'); ?>">Gallery</a></li>
-						<li><a href="<?= getLink('experienceTable'); ?>">Experience Table</a></li>
+						<li><a href="<?= getLink('exp-table'); ?>">Exp Table</a></li>
 					</ul>
 				</li>
 				<?php if($config['gifts_system']): ?>
