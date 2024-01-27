@@ -42,42 +42,61 @@
 							<td>{% if offer.hidden %}Yes{% else %}No{% endif %}</td>
 							<td>{{ offer.ordering }}</td>
 							<td>
-								<a href="{{ link }}&action=toggle_hidden&id={{ offer.id }}" class="ico" title="{% if offer.hidden != 1 %}Hide{% else %}Show{% endif %}">
-									{% if offer.hidden != 1 %}
-										<span class="btn btn-primary btn-sm btn-flat">
+								<form action="{{ link }}" method="post" style="float: left">
+									{{ csrf() }}
+									<input type="hidden" name="action" value="toggle_hidden" />
+									<input type="hidden" name="id" value="{{ offer.id }}" />
+
+									<button type="submit" class="btn {% if offer.hidden != 1 %}btn-primary{% else %}btn-default{% endif%} btn-sm btn-flat" title="{% if offer.hidden != 1 %}Hide{% else %}Show{% endif %}">
+										{% if offer.hidden != 1 %}
 											<i class="fa fa-eye"></i>
-										</span>
-									{% else %}
-										<span class="btn btn-default btn-sm btn-flat">
+										{% else %}
 											<i class="fa fa-eye-slash"></i>
-										</span>
-									{% endif %}
-								</a>
+										{% endif %}
+									</button>
+								</form>
 
-								<a href="{{ link }}&action=offer_form&id={{ offer.id }}" class="ico" title="Edit">
-									<span class="btn btn-success btn-sm edit btn-flat">
+								<form action="{{ link }}" method="post" style="float: left">
+									{{ csrf() }}
+									<input type="hidden" name="action" value="offer_form" />
+									<input type="hidden" name="id" value="{{ offer.id }}" />
+
+									<button type="submit" class="btn btn-success btn-sm edit btn-flat" title="{% if offer.hidden != 1 %}Hide{% else %}Show{% endif %}">
 										<i class="fa fa-edit"></i>
-									</span>
-								</a>
+									</button>
+								</form>
 
-								<a href="{{ link }}&action=delete&id={{ offer.id }}" class="ico" onclick="return confirm('Are you sure?');" title="Delete">
-									<span class="btn btn-danger btn-sm delete btn-flat">
+								<form action="{{ link }}" method="post" style="float: left">
+									{{ csrf() }}
+									<input type="hidden" name="action" value="delete" />
+									<input type="hidden" name="id" value="{{ offer.id }}" />
+
+									<button type="submit" class="btn btn-danger btn-sm delete btn-flat" onclick="return confirm('Are you sure?');" title="Delete">
 										<i class="fa fa-trash"></i>
-									</span>
-								</a>
+									</button>
+								</form>
+
 								{% if i != 1 %}
-									<a href="{{ link }}&action=moveup&id={{ offer.id }}" class="ico" title="Move up">
-										<span class="btn btn-info btn-sm delete btn-flat">
+									<form action="{{ link }}" method="post" style="float: left">
+										{{ csrf() }}
+										<input type="hidden" name="action" value="moveup" />
+										<input type="hidden" name="id" value="{{ offer.id }}" />
+
+										<button type="submit" class="btn btn-info btn-sm delete btn-flat" title="Move up">
 											<i class="fa fa-arrow-up"></i>
-										</span>
-									</a>
+										</button>
+									</form>
 								{% endif %}
 								{% if i != last %}
-									<a href="{{ link }}&action=movedown&id={{ offer.id }}" class="ico" title="Move down">
-										<span class="btn btn-info btn-sm delete btn-flat">
+									<form action="{{ link }}" method="post" style="float: left">
+										{{ csrf() }}
+										<input type="hidden" name="action" value="movedown" />
+										<input type="hidden" name="id" value="{{ offer.id }}" />
+
+										<button type="submit" class="btn btn-info btn-sm delete btn-flat" title="Move up">
 											<i class="fa fa-arrow-down"></i>
-										</span>
-									</a>
+										</button>
+									</form>
 								{% endif %}
 							</td>
 						</tr>

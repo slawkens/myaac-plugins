@@ -1,11 +1,17 @@
-<form method="post" action="{{ link }}">
-	<input type="hidden" name="action" value="edit_categories"/>
+<div class="card card-info card-outline">
+	<div class="card-header">
+		<h5 class="m-0">Categories</h5>
+		<form action="{{ link }}" method="post" style="float: left">
+			{{ csrf() }}
+			<input type="hidden" name="action" value="reset_categories" />
+			<input type="hidden" name="id" value="{{ id }}" />
+			<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?');" title="Reset Categories">Reset Categories</button>
+		</form>
+	</div>
 
-	<div class="card card-info card-outline">
-		<div class="card-header">
-			<h5 class="m-0">Categories</h5>
-			<input type="button" onclick="if(confirm('Are you sure?')) window.location = '{{ link }}&action=reset_categories';" class="btn btn-danger" value="Reset Categories"/>
-		</div>
+	<form method="post" action="{{ link }}">
+		{{ csrf() }}
+		<input type="hidden" name="action" value="edit_categories"/>
 
 		<div class="card-body">
 			<div class="form-group">
@@ -20,5 +26,5 @@
 			<input type="submit" class="btn btn-info" value="Save"/>
 			<input type="button" onclick="window.location = '{{ link }}';" class="btn btn-default" value="Cancel"/>
 		</div>
-	</div>
-</form>
+	</form>
+</div>

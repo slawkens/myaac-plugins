@@ -10,6 +10,8 @@
 defined('MYAAC') or die('Direct access not allowed!');
 $title = 'Gifts';
 
+csrfProtect();
+
 require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
 
 $link = ADMIN_URL . '?p=plugins/gesior-shop-system/admin/gifts.php';
@@ -19,7 +21,7 @@ $types = [
 
 if(!empty($action)) {
 	$id = $_REQUEST['id'] ?? null;
-	$errors = array();
+	$errors = [];
 
 	if($action == 'offer_form') {
 		$categories = GesiorShop::getCategories();
@@ -36,7 +38,13 @@ if(!empty($action)) {
 		}
 
 		$twig->display('gesior-shop-system/templates/admin-offers-add.html.twig', $values);
-	} elseif($action == 'add' || $action == 'edit') {
+	}
+
+	if (!isRequestMethod('post')) {
+		return;
+	}
+
+	if($action == 'add' || $action == 'edit') {
 		if ($action == 'edit') {
 			$offer_id = $_REQUEST['offer_id'] ?? null;
 
@@ -183,7 +191,6 @@ if(!empty($action)) {
 		if (GesiorShop::saveCategories($categoriesExploded, $errors)) {
 			success('Saved categories.');
 		}
-
 	}
 	else if($action == 'reset_categories') {
 		$categoriesReset = ['Items', 'Addons', 'Mounts', 'Premium Account', 'Containers', 'Other'];
