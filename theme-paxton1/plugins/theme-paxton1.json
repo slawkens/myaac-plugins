@@ -1,0 +1,14 @@
+{
+	"name": "Theme Paxton1",
+	"description": "This is Paxton1 theme for MyAAC.",
+	"version": "2.0",
+	"type": "template",
+	"license": "GPLv3",
+	"author": "Paxton, slawkens",
+	"contact": "slawkens@gmail.com",
+	"install": "plugins/theme-paxton1/install.php",
+	"uninstall": [
+		"plugins/theme-paxton1.json",
+		"plugins/theme-paxton1"
+	]
+ }

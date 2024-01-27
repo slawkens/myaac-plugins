@@ -31,7 +31,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 							require_once($template_path . '/menu.php');
 						}
 						?>
-						<?php if($config['template_allow_change']): ?>
+						<?php if(config('template_allow_change')): ?>
 							<div id="menu-top">Change template</div>
 							<div id="menu-cnt">
 									<ul>
@@ -50,17 +50,19 @@ defined('MYAAC') or die('Direct access not allowed!');
 							<div id="content-bot" style="font-size: 10px;">
 							<style type="text/css">font#offline { font-size: 26px; } font#online { font-size: 26px; color: #008000; }</style>
 									<table style="text-align: center;" width="100%">
-										<tbody><tr>
-
+										<tbody>
+										<tr>
 											<td style="font-size: 15px;">
 												<div style="font-size: 15px;">
-																										  <?php
-			if($status['online'])
-				echo '<b><div id="players" style="display: inline;">' . $status['players'] . '/' . $status['playersMax'] . '</div> players online.</b>';
-			else
-				echo '<font color="red"><b>Server<br/>OFFLINE</b></font>';
-			?></div>
-						<?php echo template_place_holder('center_top'); ?>
+													<?php
+												if($status['online']) {
+													echo '<b><div id="players" style="display: inline;">' . $status['players'] . '/' . $status['playersMax'] . '</div> players online.</b>';
+												}
+												else { ?>
+													<font color="red"><b>Server<br/>OFFLINE</b></font>
+												<?php } ?>
+												</div>
+												<?php echo template_place_holder('center_top'); ?>
 											</td>
 										</tr>
 									</tbody></table>
