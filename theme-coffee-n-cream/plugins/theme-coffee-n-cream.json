@@ -6,6 +6,10 @@
 	"license": "GPLv3",
 	"author": "Arcsin, slawkens",
 	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.0-beta",
+		"php": "8.1"
+	},
 	"uninstall": [
 		"plugins/theme-coffee-n-cream.json",
 		"plugins/theme-coffee-n-cream"
