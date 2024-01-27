@@ -23,8 +23,9 @@ if(!isset($config['downloads']))
 }
 
 if(isset($_REQUEST['step']) && $_REQUEST['step'] == "download") {
-	$twig->display('better-downloads-page/downloads.html.twig', array('downloads_config' => $config['downloads']));
-	$template_place_holders['body_end'][] = $twig->render('better-downloads-page/downloads-head-end.html.twig');
+	$twig->display('better-downloads-page/views/downloads.html.twig', array('downloads_config' =>
+		$config['downloads']));
+	$template_place_holders['body_end'][] = $twig->render('better-downloads-page/views/downloads-head-end.html.twig');
 } else {
-	$twig->display('better-downloads-page/downloads.agreement.html.twig');
+	$twig->display('better-downloads-page/views/downloads.agreement.html.twig');
 }
