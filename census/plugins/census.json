@@ -1,13 +1,13 @@
 {
 	"name": "Census",
 	"description": "This is Census plugin for MyAAC. It display various statistics about players and accounts.",
-	"version": "2.0",
+	"version": "3.0",
 	"type": "page",
 	"license": "GPLv3",
 	"author": "slawkens",
 	"contact": "slawkens@gmail.com",
 	"require": {
-		"myaac": "0.5.0",
-		"php": "5.4"
+		"myaac": "1.0-beta",
+		"php": "8.1"
 	}
 }

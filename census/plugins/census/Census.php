@@ -5,7 +5,7 @@ namespace MyAAC\Plugin;
 class Census
 {
 	private $db;
-	public function __construct(\OTS_DB_MySQL $db)
+	public function __construct($db)
 	{
 		$this->db = $db;
 	}
