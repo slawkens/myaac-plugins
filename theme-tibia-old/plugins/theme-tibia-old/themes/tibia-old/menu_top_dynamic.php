@@ -9,7 +9,7 @@ foreach($menus[2] as $menu) {
 		continue;
 	}
 ?>
-	<li><a href="<?= $menu['full_link']; ?>" <?= $menu['target_blank']; ?>><?= $menu['name']; ?></a></li>
+	<li><a href="<?= $menu['link_full']; ?>" <?= $menu['target_blank']; ?>><?= $menu['name']; ?></a></li>
 <?php
 }
 ?>

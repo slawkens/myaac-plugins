@@ -55,7 +55,7 @@
 					</section>
 
 					<section id="sidebar-misc">
-						<?php include TEMPLATES . 'tibiaold/widgets/serverinfo.php'; ?>
+						<?php include $template_path . '/widgets/serverinfo.php'; ?>
 					</section>
 				</aside>
 
