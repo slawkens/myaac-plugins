@@ -6,6 +6,10 @@
 	"license": "GPLv3",
 	"author": "Viktor Persson <contact@arcsin.se>",
 	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.0-beta",
+		"php": "8.1"
+	},
 	"uninstall": [
 		"plugins/theme-darkritual.json",
 		"plugins/theme-darkritual"
