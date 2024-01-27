@@ -1,0 +1,36 @@
+<?php
+
+return [
+	1 => [
+		'Latest News' => 'news',
+		'News Archive' => 'news/archive',
+		'Changelog' => 'changelog',
+		'Account' => 'account/manage',
+		'Register' => 'account/create',
+		'Lost Account?' => 'account/lost',
+		'Server Rules' => 'rules',
+		'Downloads' => 'downloads',
+		'Characters' => 'characters',
+		'Highscores' => 'highscores',
+		'Last Deaths' => 'last-kills',
+		'Houses' => 'houses',
+		'Bans' => 'bans',
+		'Forum' => 'forum',
+		'Monsters' => 'monsters',
+		'Spells' => 'spells',
+		'Commands' => 'commands',
+		'Gallery' => 'gallery',
+		'Exp Table' => 'exp-table',
+		'FAQ' => 'faq',
+		'Buy Points' => 'points',
+		'Shop Offer' => 'gifts',
+		'Shop History' => 'gifts/history',
+	],
+	2 => [
+		'Home' => 'news',
+		'Guilds' => 'guilds',
+		'Who Is Online' => 'online',
+		'Server Information' => 'server-info',
+		'Support' => 'team',
+	],
+];
