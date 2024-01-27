@@ -1,7 +1,5 @@
 <?php
-$config['darkborder'] = "#343434";
-$config['lightborder'] = "#444444";
-$config['vdarkborder'] = "#1d1d1d";
+
 $config['menu_categories'] = array(
 	MENU_CATEGORY_NEWS => array('id' => 'news', 'name' => 'Latest News'),
 	MENU_CATEGORY_ACCOUNT => array('id' => 'account', 'name' => 'Account'),

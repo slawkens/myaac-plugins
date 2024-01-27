@@ -1,0 +1,24 @@
+{
+	"name": "Theme Emma",
+	"description": "This is Emma theme for MyAAC.",
+	"version": "2.0",
+	"type": "template",
+	"license": "GPLv3",
+	"author": "Sprite, slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.0-beta",
+		"php": "8.1"
+	},
+	"hooks": {
+		"emma-account-menu": {
+			"type": "HOOK_BEFORE_PAGE",
+			"file": "plugins/theme-emma/themes/emma/account-menu.php"
+		}
+	},
+	"install": "plugins/theme-emma/install.php",
+	"uninstall": [
+		"plugins/theme-emma.json",
+		"plugins/theme-emma"
+	]
+ }

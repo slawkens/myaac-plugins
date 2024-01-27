@@ -34,7 +34,7 @@
 			{% endif %}
 			{% for name, link in menus %}
 				<a href="{{ getLink(link) }}">{{ name }}</a>
-			{% if link == 'account/character/delete' %}<br/><br/><br/>{% endif %}
+			{% if link == 'account/character/delete' or link == 'account/email' %}<br/><br/><br/>{% endif %}
 			{% endfor %}
 			{% if config.account_change_character_name %}
 				<a href="{{ getLink('account/character/name') }}">Change Name</a>
