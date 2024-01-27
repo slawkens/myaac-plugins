@@ -1,0 +1,18 @@
+{
+	"name": "Theme Old School",
+	"description": "This is Old School theme for MyAAC.",
+	"version": "2.0",
+	"type": "template",
+	"license": "GPLv3",
+	"author": "Hemrenus321, slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.0-beta",
+		"php": "8.1"
+	},
+	"install": "plugins/theme-old-school/install.php",
+	"uninstall": [
+		"plugins/theme-old-school.json",
+		"plugins/theme-old-school"
+	]
+ }

@@ -2,11 +2,12 @@
 
 namespace MyAAC\Plugin;
 
+use MyAAC\Cache\Cache;
+
 class OldWelcomeBox
 {
 	private $db;
-	public function __construct(\OTS_DB_MySQL $db)
-	{
+	public function __construct($db) {
 		$this->db = $db;
 	}
 
@@ -33,11 +34,11 @@ class OldWelcomeBox
 		$query = $this->db->query('SELECT count(1) as `how_much` FROM `houses` WHERE `owner` != 0;')->fetch(\PDO::FETCH_ASSOC);
 		$total['rentedHouses'] = $query['how_much'];
 
-		if (tableExist('players_online')) {
+		if ($this->db->hasTable('players_online')) {
 			$query = $this->db->query('SELECT count(1) as `how_much` FROM `players_online`')->fetch(\PDO::FETCH_ASSOC);
 			$total['online'] = $query['how_much'];
 		}
-		else if (fieldExist('online', 'players')) {
+		else if ($this->db->hasTable('online', 'players')) {
 			$query = $this->db->query('SELECT count(1) as `how_much` FROM `players` WHERE `online` > 0;')->fetch(\PDO::FETCH_ASSOC);
 			$total['online'] = $query['how_much'];
 		}
@@ -49,7 +50,7 @@ class OldWelcomeBox
 	}
 
 	public function getTotalCached() {
-		$cache = \Cache::getInstance();
+		$cache = Cache::getInstance();
 		if ($cache->enabled()) {
 			$tmp = '';
 			if ($cache->fetch('old_school_totals', $tmp)) {
@@ -100,12 +101,12 @@ class OldWelcomeBox
 
 	private function getBannedPlayers()
 	{
-		if(tableExist('account_bans')) {
+		if($this->db->hasTable('account_bans')) {
 			$query = $this->db->query('SELECT count(*) as `how_much` FROM `account_bans` WHERE `expires_at` > ' . time() .' OR `expires_at` = -1;')->fetch();
 			return $query['how_much'];
 		}
-		elseif(tableExist('bans')) {
-			if (fieldExist('bans', 'active')) {
+		elseif($this->db->hasTable('bans')) {
+			if ($this->db->hasColumn('bans', 'active')) {
 				$query = $this->db->query('SELECT count(*) as `how_much` FROM `bans` WHERE (`type` = 3 OR `type` = 5) AND `active` = 1 AND (`expires` > ' . time() . ' OR `expires` = -1);')->fetch();
 				return $query['how_much'];
 			} else { // tfs 0.2
