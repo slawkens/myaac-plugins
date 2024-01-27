@@ -52,8 +52,8 @@ $config['stripe'] = [
 	'endpoint_secret' => 'whsec_asdasd123',
 
 	// defaults should be ok, but you can change
-	'success_url' => BASE_URL . '?subtopic=gifts&success',
-	'cancel_url' => BASE_URL . '?subtopic=gifts&cancel',
+	'success_url' => getLink('gifts') . '?success',
+	'cancel_url' => getLink('gifts') . '?cancel',
 
 	'payments' => [
 		['price' => '10', 'currency' => 'USD', 'points' => '100', 'name' => '100 premium points on Your OTS'],
@@ -113,7 +113,7 @@ $config['pagseguro'] = array(
 		'production' => 'yourtokenhere',
 		'sandbox' => 'yourtokenhere',
 	),
-	'urlRedirect' => '?subtopic=points&action=final', // default should be good
+	'urlRedirect' => getLink('points') . '?action=final', // default should be good
 	'productName' => 'Premium Points', // or Coins
 	'productValue' => 1.00,
 	'doublePoints' => false, // should points be doubled? for example: for 5 points donated you become 10.

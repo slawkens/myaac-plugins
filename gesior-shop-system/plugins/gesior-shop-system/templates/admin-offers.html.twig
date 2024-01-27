@@ -1,12 +1,14 @@
-<div class="box">
-	<div class="box-header">
-		<h3 class="box-title">Gifts System</h3>
-		<div class="box-tools pull-right">
-			<a href="?p=gifts&action=offer_form"><span class="btn btn-success">Add Offer</span></a>
-		</div>
+<div class="card card-info card-outline">
+	<div class="card-header">
+		<h5 class="m-0">Gifts System
+			<form method="post" class="float-right">
+				{{ csrf() }}
+				<input type="hidden" name="action" value="offer_form" />
+				<button type="submit" class="btn btn-sm btn-success">New</button>
+			</form>
+		</h5>
 	</div>
-
-	<div class="box-body">
+	<div class="card-body">
 		<div class="row">
 			<div class="col-sm-12">
 				<table class="table">
@@ -40,7 +42,7 @@
 							<td>{% if offer.hidden %}Yes{% else %}No{% endif %}</td>
 							<td>{{ offer.ordering }}</td>
 							<td>
-								<a href="?p=gifts&action=toggle_hidden&id={{ offer.id }}" class="ico" title="{% if offer.hidden != 1 %}Hide{% else %}Show{% endif %}">
+								<a href="{{ link }}&action=toggle_hidden&id={{ offer.id }}" class="ico" title="{% if offer.hidden != 1 %}Hide{% else %}Show{% endif %}">
 									{% if offer.hidden != 1 %}
 										<span class="btn btn-primary btn-sm btn-flat">
 											<i class="fa fa-eye"></i>
@@ -52,26 +54,26 @@
 									{% endif %}
 								</a>
 
-								<a href="?p=gifts&action=offer_form&id={{ offer.id }}" class="ico" title="Edit">
+								<a href="{{ link }}&action=offer_form&id={{ offer.id }}" class="ico" title="Edit">
 									<span class="btn btn-success btn-sm edit btn-flat">
 										<i class="fa fa-edit"></i>
 									</span>
 								</a>
 
-								<a href="?p=gifts&action=delete&id={{ offer.id }}" class="ico" onclick="return confirm('Are you sure?');" title="Delete">
+								<a href="{{ link }}&action=delete&id={{ offer.id }}" class="ico" onclick="return confirm('Are you sure?');" title="Delete">
 									<span class="btn btn-danger btn-sm delete btn-flat">
 										<i class="fa fa-trash"></i>
 									</span>
 								</a>
 								{% if i != 1 %}
-									<a href="?p=gifts&action=moveup&id={{ offer.id }}" class="ico" title="Move up">
+									<a href="{{ link }}&action=moveup&id={{ offer.id }}" class="ico" title="Move up">
 										<span class="btn btn-info btn-sm delete btn-flat">
 											<i class="fa fa-arrow-up"></i>
 										</span>
 									</a>
 								{% endif %}
 								{% if i != last %}
-									<a href="?p=gifts&action=movedown&id={{ offer.id }}" class="ico" title="Move down">
+									<a href="{{ link }}&action=movedown&id={{ offer.id }}" class="ico" title="Move down">
 										<span class="btn btn-info btn-sm delete btn-flat">
 											<i class="fa fa-arrow-down"></i>
 										</span>

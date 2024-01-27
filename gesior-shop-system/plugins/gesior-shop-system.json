@@ -1,15 +1,15 @@
 {
 	"name": "Gesior Shop System",
 	"description": "This is shop system taken from Gesior, modified for MyAAC.",
-	"version": "5.0-beta.2",
+	"version": "6.0-beta.1",
 	"type": "plugin",
 	"license": "GPLv3",
 	"author": "Gesior, slawkens, whiteblXK",
 	"contact": "slawkens@gmail.com",
 	"hooks": {
 		"startup": {
-			"type": "STARTUP",
-			"file": "plugins/gesior-shop-system/startup.php"
+			"type": "HOOK_ADMIN_MENU",
+			"file": "plugins/gesior-shop-system/admin/menu.php"
 		}
 	},
 	"routes": {
@@ -21,7 +21,8 @@
 	},
 	"install": "plugins/gesior-shop-system/install.php",
 	"require": {
-		"myaac": "0.8.9",
+		"myaac": "1.0-beta",
+		"php": "8.1",
 		"php-ext": "curl"
 	}
 }

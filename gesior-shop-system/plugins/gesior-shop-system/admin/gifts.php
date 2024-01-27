@@ -9,8 +9,10 @@
  */
 defined('MYAAC') or die('Direct access not allowed!');
 $title = 'Gifts';
+
 require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
 
+$link = ADMIN_URL . '?p=plugins/gesior-shop-system/admin/gifts.php';
 $types = [
 	'item', 'addon', 'mount', 'pacc', 'container'
 ];
@@ -25,6 +27,7 @@ if(!empty($action)) {
 		$values = [
 			'categories' => $categories,
 			'types' => $types,
+			'link' => $link,
 		];
 
 		$offer_id = $_REQUEST['id'] ?? null;
@@ -207,6 +210,7 @@ if(!empty($offers_fetch)) {
 if ($action !== 'offer_form') {
 	$twig->display('gesior-shop-system/templates/admin-categories.html.twig', [
 		'categories' => implode(',', array_values($categories)),
+		'link' => $link,
 	]);
 }
 
@@ -215,4 +219,5 @@ $twig->display('gesior-shop-system/templates/admin-offers.html.twig', [
 	'offers' => $offers,
 	'categories' => $categories,
 	'last' => $last,
+	'link' => $link,
 ]);

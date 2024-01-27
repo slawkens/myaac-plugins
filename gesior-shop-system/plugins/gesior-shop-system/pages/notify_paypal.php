@@ -1,16 +1,6 @@
 <?php
-/**
- * This is shop system taken from Gesior, modified for MyAAC.
- *
- * @name      myaac-gesior-shop-system
- * @author    Gesior <jerzyskalski@wp.pl>
- * @author    Slawkens <slawkens@gmail.com>
- * @website   github.com/slawkens/myaac-gesior-shop-system
- */
+defined('MYAAC') or die('Direct access not allowed!');
 
-require_once '../common.php';
-require_once SYSTEM . 'functions.php';
-require_once SYSTEM . 'init.php';
 require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 

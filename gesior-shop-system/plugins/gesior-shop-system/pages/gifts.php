@@ -38,7 +38,7 @@ if($logged) {
 } else {
 	$was_before = $config['friendly_urls'];
 	$config['friendly_urls'] = true;
-	$user_premium_points = generateLink(getLink('?subtopic=accountmanagement') . '&redirect=' . urlencode(BASE_URL . '?subtopic=gifts'), 'Login first');
+	$user_premium_points = generateLink(getLink('account/manage') . '?redirect=' . urlencode(getLink('gifts')), 'Login first');
 	$config['friendly_urls'] = $was_before;
 }
 
@@ -54,18 +54,18 @@ if(!empty($action)) {
 		case 'select_player':
 			$buy_id = isset($_REQUEST['buy_id']) ? (int)$_REQUEST['buy_id'] : null;
 			if(empty($buy_id)) {
-				$errors[] = 'Please <a href="?subtopic=gifts">select item</a> first.';
+				$errors[] = 'Please <a href="' . getLink('gifts') . '">select item</a> first.';
 				break;
 			}
 
 			$buy_offer = GesiorShop::getOfferById($buy_id);
 			if(!isset($buy_offer['id']) || $buy_offer['hidden'] == '1') {
-				$errors[] = 'Offer with ID <b>' . $buy_id . '</b> doesn\'t exist. Please <a href="?subtopic=gifts">select item</a> again.';
+				$errors[] = 'Offer with ID <b>' . $buy_id . '</b> doesn\'t exist. Please <a href="' . getLink('gifts') . '">select item</a> again.';
 				break;
 			}
 
 			if($user_premium_points < $buy_offer['points']) {
-				$errors[] = 'For this item you need <b>' . $buy_offer['points'] . '</b> points. You have only <b>' . $user_premium_points . '</b> premium points. Please <a href="?subtopic=gifts">select other item</a> or buy premium points.';
+				$errors[] = 'For this item you need <b>' . $buy_offer['points'] . '</b> points. You have only <b>' . $user_premium_points . '</b> premium points. Please <a href="' . getLink('gifts') . '">select other item</a> or buy premium points.';
 				break;
 			}
 
@@ -75,13 +75,13 @@ if(!empty($action)) {
 		case 'confirm_transaction':
 			$buy_id = isset($_POST['buy_id']) ? (int)$_POST['buy_id'] : null;
 			if(empty($buy_id)) {
-				$errors[] = 'Please <a href="?subtopic=gifts">select item</a> first.';
+				$errors[] = 'Please <a href="' . getLink('gifts') . '">select item</a> first.';
 				break;
 			}
 
 			$buy_offer = GesiorShop::getOfferById($buy_id);
 			if(!isset($buy_offer['id']) || $buy_offer['hidden'] == '1') {
-				$errors[] = 'Offer with ID <b>' . $buy_id . '</b> doesn\'t exist. Please <a href="?subtopic=gifts">select item</a> again.';
+				$errors[] = 'Offer with ID <b>' . $buy_id . '</b> doesn\'t exist. Please <a href="' . getLink('gifts') . '">select item</a> again.';
 				break;
 			}
 
@@ -91,30 +91,30 @@ if(!empty($action)) {
 			}
 
 			if(!check_name($buy_from)) {
-				$errors[] = 'Invalid nick ("from player") format. Please <a href="?subtopic=gifts&action=select_player&buy_id=' . $buy_id . '">select other name</a> or contact with administrator.';
+				$errors[] = 'Invalid nick ("from player") format. Please <a href="' . getLink('gifts') . '?action=select_player&buy_id=' . $buy_id . '">select other name</a> or contact with administrator.';
 				break;
 			}
 
 			$buy_name = isset($_POST['buy_name']) ? stripslashes(urldecode($_POST['buy_name'])) : '';
 			if(!check_name($buy_name)) {
-				$errors[] = 'Invalid name format. Please <a href="?subtopic=gifts&action=select_player&buy_id=' . $buy_id . '">select other name</a> or contact with administrator.';
+				$errors[] = 'Invalid name format. Please <a href="' . getLink('gifts') . '?action=select_player&buy_id=' . $buy_id . '">select other name</a> or contact with administrator.';
 				break;
 			}
 
 			if($user_premium_points < $buy_offer['points']) {
-				$errors[] = 'For this item you need <b>' . $buy_offer['points'] . '</b> points. You have only <b>' . $user_premium_points . '</b> premium points. Please <a href="?subtopic=gifts">select other item</a> or buy premium points.';
+				$errors[] = 'For this item you need <b>' . $buy_offer['points'] . '</b> points. You have only <b>' . $user_premium_points . '</b> premium points. Please <a href="' . getLink('gifts') . '">select other item</a> or buy premium points.';
 				break;
 			}
 
 			$buy_player = new OTS_Player();
 			$buy_player->find($buy_name);
 			if(!$buy_player->isLoaded()) {
-				$errors[] = 'Player with name <b>' . $buy_name . '</b> doesn\'t exist. Please <a href="?subtopic=gifts&action=select_player&buy_id=' . $buy_id . '">select other name</a>.';
+				$errors[] = 'Player with name <b>' . $buy_name . '</b> doesn\'t exist. Please <a href="' . getLink('gifts') . '?action=select_player&buy_id=' . $buy_id . '">select other name</a>.';
 				break;
 			}
 
 			if ($buy_player->isDeleted()) {
-				$errors[] = 'Player with name <b>' . $buy_name . '</b> has been deleted. Please <a href="?subtopic=gifts&action=select_player&buy_id=' . $buy_id . '">select other name</a>.';
+				$errors[] = 'Player with name <b>' . $buy_name . '</b> has been deleted. Please <a href="' . getLink('gifts') . '?action=select_player&buy_id=' . $buy_id . '">select other name</a>.';
 				break;
 			}
 

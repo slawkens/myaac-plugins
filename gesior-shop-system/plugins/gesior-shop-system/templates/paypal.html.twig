@@ -31,7 +31,7 @@ The donation costs:
 	<input type="hidden" name="lc" value="GB"/>
 	<input type="hidden" name="currency_code" value="{{ config.paypal.currency_code }}"/>
 	<input type="hidden" name="no_shipping" value="1"/>
-	<input type="hidden" name="notify_url" value="{{ constant('BASE_URL') }}payments/paypal.php"/>
+	<input type="hidden" name="notify_url" value="{{ getLink('notify_paypal') }}"/>
 	<input type="hidden" name="return" value="{{ constant('BASE_URL') }}"/>
 	<input type="hidden" name="rm" value="0"/>
 	<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" {% if is_localhost %}disabled{% endif %}/>

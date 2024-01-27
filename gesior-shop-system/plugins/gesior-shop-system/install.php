@@ -61,8 +61,8 @@ INSERT INTO `z_shop_offer` (`id`, `points`, `itemid1`, `count1`, `itemid2`, `cou
 	success('Imported sample offers to database.');
 }
 
-if($db->select(TABLE_PREFIX . 'admin_menu', ['name' => 'Gifts']) === false) {
-	$db->query("INSERT INTO `" . TABLE_PREFIX . "admin_menu` (`name`, `page` ,`ordering` ,`flags` ,`enabled`) VALUES ('Gifts', 'gifts', '0', '0', '1')");
+if($db->select(TABLE_PREFIX . 'admin_menu', ['name' => 'Gifts']) !== false) {
+	$db->delete(TABLE_PREFIX . 'admin_menu', ['name' => 'Gifts']);
 }
 
 if (!$db->hasColumn('z_shop_offer', 'category_id')) {

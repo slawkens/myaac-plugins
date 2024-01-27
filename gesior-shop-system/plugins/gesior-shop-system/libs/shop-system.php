@@ -183,7 +183,7 @@ class GesiorShop {
 				case 'pacc':
 					$is_othire = fieldExist('premend', 'accounts');
 					if($is_othire && $buy_player->isOnline()) {
-						$errors[] = 'Player with name <b>' . $buy_name . '</b> is online. Please logout. Then <a href="?subtopic=gifts&action=select_player&buy_id=' . $buy_id . '">refresh this page</a>.';
+						$errors[] = 'Player with name <b>' . $buy_name . '</b> is online. Please logout. Then <a href="' . getLink('gifts') . '?action=select_player&buy_id=' . $buy_id . '">refresh this page</a>.';
 						break;
 					}
 

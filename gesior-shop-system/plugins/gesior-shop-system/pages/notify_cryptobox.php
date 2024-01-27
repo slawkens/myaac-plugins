@@ -31,9 +31,8 @@
  *
  */
 
-require_once '../common.php';
-require_once SYSTEM . 'functions.php';
-require_once SYSTEM . 'init.php';
+defined('MYAAC') or die('Direct access not allowed!');
+
 require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 
