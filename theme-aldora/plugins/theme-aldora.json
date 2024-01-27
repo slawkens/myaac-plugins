@@ -1,5 +1,5 @@
 {
-	"name": "Aldora Theme",
+	"name": "Theme Aldora",
 	"description": "Aldora theme for MyAAC.",
 	"version": "2.0",
 	"type": "template",
@@ -10,9 +10,9 @@
 		"myaac": "1.0-beta",
 		"php": "8.1"
 	},
-	"install": "plugins/aldora-theme/install.php",
+	"install": "plugins/theme-aldora/install.php",
 	"uninstall": [
-		"plugins/aldora-theme.json",
-		"plugins/aldora-theme"
+		"plugins/theme-aldora.json",
+		"plugins/theme-aldora"
 	]
 }
