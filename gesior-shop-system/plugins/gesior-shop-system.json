@@ -10,6 +10,10 @@
 		"startup": {
 			"type": "HOOK_ADMIN_MENU",
 			"file": "plugins/gesior-shop-system/admin/menu.php"
+		},
+		"cache-clear": {
+			"type": "HOOK_CACHE_CLEAR",
+			"file": "plugins/gesior-shop-system/hooks/cache-clear.php"
 		}
 	},
 	"routes": {
