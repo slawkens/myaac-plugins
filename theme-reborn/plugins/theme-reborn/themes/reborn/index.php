@@ -34,7 +34,7 @@ defined('MYAAC') or die('Direct access not allowed!');
                 else
                     $headline = $template_path . '/headline.php?t=' . ucfirst($config['lua']['serverName']);
             ?>
-            <img src="<?php echo $headline; ?>" alt="<?php echo $config['lua']['serverName']; ?>" class="d-inline-block align-top">
+            <img src="<?php echo $headline; ?>" alt="<?= configLua('serverName'); ?>" class="d-inline-block align-top">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,7 @@ defined('MYAAC') or die('Direct access not allowed!');
         <div class="collapse navbar-collapse" id="navbars">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="?news">News</a>
+                    <a class="nav-link" href="<?= getLink('news'); ?>">News</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Community</a>
@@ -51,29 +51,26 @@ defined('MYAAC') or die('Direct access not allowed!');
                         <li><a class="dropdown-item" href="<?= getLink('characters'); ?>">Characters</a></li>
                         <li><a class="dropdown-item" href="<?= getLink('online'); ?>">Online</a></li>
                         <li><a class="dropdown-item" href="<?= getLink('highscores'); ?>">Highscores</a></li>
-                        <li><a class="dropdown-item" href="<?= getLink('lastkills'); ?>">Last kills</a></li>
+                        <li><a class="dropdown-item" href="<?= getLink('last-kills'); ?>">Last kills</a></li>
                         <li><a class="dropdown-item" href="<?= getLink('houses'); ?>">Houses</a></li>
                         <li><a class="dropdown-item" href="<?= getLink('guilds'); ?>">Guilds</a></li>
-                        <?php if (isset($config['wars'])) : ?>
-                            <li><a class="dropdown-item" href="<?= getLink('wars'); ?>">Guild Wars</a></li>
-                        <?php endif; ?>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Library</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown07">
-                    <li><a class="dropdown-item" href="<?= getLink('creatures'); ?>">Monsters</a></li>
+                    <li><a class="dropdown-item" href="<?= getLink('monsters'); ?>">Monsters</a></li>
                         <li><a class="dropdown-item" href="<?= getLink('spells'); ?>">Spells</a></li>
-                        <li><a class="dropdown-item" href="<?= getLink('experienceStages'); ?>">Experience stages</a></li>
+                        <li><a class="dropdown-item" href="<?= getLink('exp-stages'); ?>">Experience stages</a></li>
                         <li><a class="dropdown-item" href="<?= getLink('commands'); ?>">Commands</a></li>
-                        <li><a class="dropdown-item" href="<?= getLink('serverInfo'); ?>">Server Information</a></li>
+                        <li><a class="dropdown-item" href="<?= getLink('server-info'); ?>">Server Information</a></li>
 						<li><a class="dropdown-item" href="<?= getLink('news/archive'); ?>">News Archive</a></li>
 						<li><a class="dropdown-item" href="<?= getLink('changelog'); ?>">Changelog</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="?forum">Forum</a>
+                    <a class="nav-link" href="<?= getLink('forum'); ?>">Forum</a>
                 </li>
                 <?php if ($config['gifts_system']) : ?>
                         <li class="nav-item dropdown">
