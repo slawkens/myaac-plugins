@@ -1,0 +1,17 @@
+{
+	"name": "Theme Rasta",
+	"description": "This is rasta theme for MyAAC.",
+	"version": "2.0",
+	"type": "template",
+	"license": "GPLv3",
+	"author": "Gesior, slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.0-beta",
+		"php": "8.1"
+	},
+	"uninstall": [
+		"plugins/theme-rasta.json",
+		"plugins/theme-rasta"
+	]
+}
