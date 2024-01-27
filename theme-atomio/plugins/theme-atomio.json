@@ -1,5 +1,5 @@
 {
-	"name": "AtomIO Theme",
+	"name": "Theme AtomIO",
 	"description": "This is AtomIO theme for MyAAC.",
 	"version": "2.0",
 	"type": "template",
@@ -10,9 +10,9 @@
 		"myaac": "1.0-beta",
 		"php": "8.1"
 	},
-	"install": "plugins/atomio-theme/install.php",
+	"install": "plugins/theme-atomio/install.php",
 	"uninstall": [
-		"plugins/atomio-theme.json",
-		"plugins/atomio-theme"
+		"plugins/theme-atomio.json",
+		"plugins/theme-atomio"
 	]
  }
