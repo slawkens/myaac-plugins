@@ -1,8 +1,7 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
-defined('ADMIN_PANEL') or die('Direct access not allowed!');
 
-if(!tableExist('znote_accounts')) {
+if(!$db->hasTable('znote_accounts')) {
 	warning('znote_accounts table not found. Seems ZnoteAAC is not installed?');
 	return;
 }
@@ -71,16 +70,16 @@ foreach($query->fetchAll() as $thread) {
 	else {
 		$author_aid = 0;
 	}
-	
+
 	// insert thread
 	$db->insert(TABLE_PREFIX . 'forum', array('section' => $board_ids[$thread['forum_id']], 'author_aid' => $author_aid, 'author_guid' => $thread['player_id'], 'post_topic' => $thread['title'], 'post_text' => $thread['text'], 'post_smile' => 1, 'post_date' => $thread['created'], 'edit_date' => $thread['updated'], 'sticked' => $thread['sticky'], 'closed' => $thread['closed']));
 	$lastThreadId = $db->lastInsertId();
-	
+
 	$converted['threads']++;
-	
+
 	// set first_post to id
 	$db->query('UPDATE `' . TABLE_PREFIX . 'forum` SET `first_post` = ' . $db->quote($lastThreadId) . ' WHERE `id` = ' . $db->quote($lastThreadId));
-	
+
 	// get posts
 	$posts_db = $db->query('SELECT * FROM `znote_forum_posts` WHERE `thread_id` = ' . $db->quote($thread['id']));
 	foreach($posts_db as $post) {
@@ -92,7 +91,7 @@ foreach($query->fetchAll() as $thread) {
 		else {
 			$author_aid = 0;
 		}
-		
+
 		$db->insert(TABLE_PREFIX . 'forum', array('first_post' => $lastThreadId, 'section' => $board_ids[$thread['forum_id']], 'author_aid' => $author_aid, 'author_guid' => $post['player_id'], 'post_text' => $post['text'], 'post_topic' => '', 'post_smile' => 1, 'post_date' => $post['created'], 'edit_date' => $post['updated']));
 		$converted['posts']++;
 	}
@@ -100,9 +99,8 @@ foreach($query->fetchAll() as $thread) {
 
 global $twig;
 success(
-	$twig->render('znote-converter.html.twig', array(
+	$twig->render('znote-converter/views/znote-converter.html.twig', array(
 			'converted' => $converted
 		)
 	));
 registerDatabaseConfig('converted_from_znote', true);
-?>
