@@ -12,8 +12,6 @@ $title = 'List Of Items';
 require PLUGINS . 'list_of_items/Items.php';
 $items = new \MyAAC\Plugin\Items($db);
 
-$twig_loader->prependPath(PLUGINS . 'list_of_items');
-
 $reload = isset($_REQUEST['reload']) && (int)$_REQUEST['reload'] == 1;
 
 if($reload && admin()) {
@@ -24,7 +22,7 @@ if($reload && admin()) {
 // Checks if you have an Administrator account
 if(admin()) {
 	// Show button to reload the items.
-	echo $twig->render('reload.html.twig');
+	echo $twig->render('list_of_items/views/reload.html.twig');
 }
 
 $type = isset($_GET['type']) ? $_GET['type'] : '';
@@ -41,7 +39,7 @@ $possibleTypes = [
 ];
 
 if (empty($type) || !in_array($type, $possibleTypes)) {
-	$twig->display('list.html.twig');
+	$twig->display('list_of_items/views/list.html.twig');
 	return;
 }
 
@@ -102,7 +100,7 @@ foreach($items as &$item) {
 	$item['image'] = getItemImage($item['id']);
 }
 
-$twig->display('item.html.twig', [
+$twig->display('list_of_items/views/item.html.twig', [
 	'items' => $items,
 	'headerDesc' => $headerTitle,
 ]);

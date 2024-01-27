@@ -2,25 +2,22 @@
 
 namespace MyAAC\Plugin;
 
-use OTS_DB_MySQL;
-
 // some PCs are really slow...
 ini_set('max_execution_time', 300);
 
 class Items
 {
-	/**
-	 * @var OTS_DB_MySQL
-	 */
+	private $exist = [];
+
 	private $db;
 
 	/**
 	 * Constructor
 	 * Just ensure that table is loaded
 	 *
-	 * @param OTS_DB_MySQL $db
+	 * @param $db
 	 */
-	public function __construct(OTS_DB_MySQL $db)
+	public function __construct($db)
 	{
 		$this->db = $db;
 
@@ -140,13 +137,17 @@ class Items
 			}
 		}
 
-		$this->db->insert('list_of_items', [
-			'id' => $id,
-			'name' => $item->getAttribute('name'),
-			'description' => $description,
-			'level' => $level,
-			'type' => $type,
-		]);
+		if (!isset($this->exist[$id])) {
+			$this->db->insert('list_of_items', [
+				'id' => $id,
+				'name' => $item->getAttribute('name'),
+				'description' => $description,
+				'level' => $level,
+				'type' => $type,
+			]);
+
+			$this->exist[$id] = true;
+		}
 	}
 
 	/**

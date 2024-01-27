@@ -1,3 +1,8 @@
+[4.0 - 27.01.2024]
+	* Update for MyAAC 1.0
+	* move page to plugins folder
+	* Fix duplicate exception
+
 [3.0 - 23.12.2021]
 	* refactor code, now everything is in two files
 	* fix link not working
