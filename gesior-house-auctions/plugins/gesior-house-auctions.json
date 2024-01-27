@@ -1,0 +1,13 @@
+{
+	"name": "Gesior House Auctions",
+	"description": "This is House Auctions script taken from Gesior for MyAAC that works only on TFS 1.x and higher.",
+	"version": "2.0",
+	"type": "page",
+	"license": "GPLv3",
+	"author": "gesior, slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.0-beta",
+		"php": "8.1"
+	}
+}

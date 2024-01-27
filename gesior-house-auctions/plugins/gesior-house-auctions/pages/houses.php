@@ -25,8 +25,8 @@ function timeToEndString($end)
 		return $timeLeft . ' seconds left!';
 }
 
-$towns_list = $config['towns'];
-if($action == '')
+$towns_list = config('towns');
+if(ACTION == '')
 {
 	##-- town --##
 	$houses_town = isset($_REQUEST['town']) ? (int)$_REQUEST['town'] : 0;
@@ -119,12 +119,16 @@ if($action == '')
 						<td>'.$house['size'].' sqm</td>
 						<td>'.$house['rent'].' gold</td>
 						<td>'.$owner.'</td>
-						<td><a href="?subtopic=houses&show='.$house['id'].'"><img src="'.$template_path.'/images/buttons/sbutton_view.gif" border="0"></a></td>
+						<td>
+						<a href="' . getLink('houses') . '?show='.$house['id'].'">
+							' . $twig->render('buttons.base.html.twig', ['button_name' => 'View']) . '
+						</a>
+						</td>
 					</tr>';
 				}
 			echo '</table><br>';
 		}
-		echo '<form action="?subtopic=houses" method="post">
+		echo '<form action="' . getLink('houses') . '" method="post">
 			<table border=0 cellspacing=1 cellpadding=4 width=100%>
 				<tr bgcolor="'.$config['site']['vdarkborder'].'" class=white>
 					<td colspan="3" style="color:white;"><b>Search House</b></td>
@@ -190,7 +194,11 @@ if($action == '')
 					</td>
 				</tr>
 				<tr>
-					<td><br><center><input type=image name="Submit" alt="Submit" src="'.$template_path.'/images/buttons/sbutton_submit.gif" border="0" WIDTH=120 HEIGHT=18></center></td>
+					<td><br>
+						<center>
+						' . $twig->render('buttons.submit.html.twig') . '
+						</center>
+					</td>
 				</tr>
 			</table>
 		</form>';
@@ -214,6 +222,8 @@ if($action == '')
 		{
 			$player = new OTS_Player();
 			$player->load($house['owner']);
+
+			$paid = '';
 			if($house['paid'] > 0)
 				$paid = ' and paid until <b>'.date("M j Y, H:i:s", $house['paid']).' CET</b>';
 			$owner = '<br>The house is currently rented by ' . getPlayerLink($player->getName()) . $paid.'.';
@@ -253,7 +263,7 @@ if($action == '')
 					The house has a size of <b>'.$house['size'].' square meters</b>.
 					The monthly rent is <b>'.$house['rent'].' gold</b> and will be debited to the bank account on <b>' . $config['lua']['serverName'] . '</b><br>
 					'.$owner;
-				   
+
 		if($logged)
 		{
 			$houseBidded = $db->query('SELECT `houses`.`id` house_id, `players`.`id` bidder_id FROM `houses`, `players` WHERE `players`.`id` = `houses`.`highest_bidder` AND `players`.`account_id` = ' . $account_logged->getId())->fetch();
@@ -273,15 +283,19 @@ if($action == '')
 		if($house['owner'] == 0 && ($house['bid_end'] > time() || $house['bid_end'] == 0))
 		{
 			// bid button
-			echo '<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR><TD><center><a href="?subtopic=houses&action=bid&house=' . $house['id'] . '"><img src="images/buttons/sbutton_bid.gif" BORDER=0 /></a></center></TD><TD><center><a href="?subtopic=houses&town=' . (int) $house['town_id'] . '&owner=' . (($house['owner'] > 0) ? 1 : 0) . '&order=0&status=0"><img src="'.$template_path.'/images/buttons/sbutton_back.gif" BORDER=0 /></a></center></TD></TR></TABLE>';
+			echo '<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR><TD><center><a href="' . getLink('houses') . '?action=bid&house=' . $house['id'] . '">
+				' . $twig->render('buttons.base.html.twig', ['button_name' => 'Bid']) . '
+				</a></center></TD><TD><center><a href="' . getLink('houses') . '?town=' . (int) $house['town_id'] . '&owner=' . (($house['owner'] > 0) ? 1 : 0) . '&order=0&status=0">
+				' . $twig->render('buttons.base.html.twig', ['button_name' => 'Back']) . '
+				</a></center></TD></TR></TABLE>';
 		}
 		else
 		{
-			echo '<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR><TD><center><a href="?subtopic=houses&town=' . (int) $house['town_id'] . '&owner=' . (($house['owner'] > 0) ? 1 : 0) . '&order=0&status=0"><img src="'.$template_path.'/images/buttons/sbutton_back.gif" BORDER=0 /></a></center></TD></TR></TABLE>';
+			echo '<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR><TD><center><a href="' . getLink('houses') . '?town=' . (int) $house['town_id'] . '&owner=' . (($house['owner'] > 0) ? 1 : 0) . '&order=0&status=0">' . $twig->render('buttons.base.html.twig', ['button_name' => 'Back']) . '</a></center></TD></TR></TABLE>';
 		}
 	}
 }
-elseif($action == 'bid')
+elseif(ACTION == 'bid')
 {
 	if($logged)
 	{
@@ -301,7 +315,6 @@ elseif($action == 'bid')
 							$houseBidded = $db->query('SELECT `houses`.`id` house_id, `players`.`id` bidder_id FROM `houses`, `players` WHERE `players`.`id` = `houses`.`highest_bidder` AND `players`.`account_id` = ' . $account_logged->getId())->fetch();
 							if($houseBidded === false || $houseBidded['house_id'] == $house->getId())
 							{
-							   
 									$bidded = false;
 									if(isset($_REQUEST['do_bid']))
 									{
@@ -419,7 +432,10 @@ elseif($action == 'bid')
 											</tr>
 											<tr bgcolor="'.$config['lightborder'].'">
 												<td width="200px"><b>Your maximum offer:</b></td>
-												<td><input type="text" size="9" name="bid" value="' . (($houseBidded['house_id'] == $house->getId()) ? $house->getBid() : $house->getLastBid()+1) . '" /> gold coins</td>
+												<td><input type="text" size="9" name="bid" value="' . (
+													($houseBidded !== false && $houseBidded['house_id'] ==
+														$house->getId()
+									) ? $house->getBid() : $house->getLastBid()+1) . '" /> gold coins</td>
 											</tr>
 											<tr bgcolor="'.$config['darkborder'].'">
 												<td><b>Current bid:</b></td>
@@ -427,7 +443,9 @@ elseif($action == 'bid')
 											</tr>
 											<tr bgcolor="'.$config['lightborder'].'">
 												<td><b>Owner</b></td>
-												<td><input type=image name="Submit" alt="Submit" src="images/buttons/sbutton_bid.gif" border="0" WIDTH=120 HEIGHT=18></td>
+												<td>
+													' . $twig->render('buttons.base.html.twig', ['button_name' => 'Bid']) . '
+													</td>
 											</tr>
 										</table>
 									</form><br />If your offer is now highest on auction you can bid to make your maximum offer lower (cannot be lower then current "bid") or higher.<br />You can also bid you change character that will own house, if you win auction.';
@@ -453,5 +471,5 @@ elseif($action == 'bid')
 	}
 	else
 		echo 'You must login to bid on auction!';
-	echo '<br /><br /><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR><TD><center><a href="?subtopic=houses&show=' . (int) $_REQUEST['house'] . '"><img src="'.$template_path.'/images/buttons/sbutton_back.gif" BORDER=0 /></a></center></TD></TR></TABLE>';
+	echo '<br /><br /><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100%><TR><TD><center><a href="' . getLink('houses') . '?show=' . (int) $_REQUEST['house'] . '">' . $twig->render('buttons.base.html.twig', ['button_name' => 'Back']) . '</a></center></TD></TR></TABLE>';
 }
