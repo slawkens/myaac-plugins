@@ -10,6 +10,8 @@
 defined('MYAAC') or die('Direct access not allowed!');
 $title = 'Points';
 
+csrfProtect();
+
 require_once(PLUGINS . 'gesior-shop-system/libs/shop-system.php');
 require_once(PLUGINS . 'gesior-shop-system/config.php');
 $twig->addGlobal('config', $config);

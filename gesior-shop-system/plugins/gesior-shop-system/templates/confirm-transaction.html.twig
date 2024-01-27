@@ -40,7 +40,8 @@
 		<tr bgcolor="red">
 			<td width="100"><b>Transaction?</b></td>
 			<td width="275" align="left">
-				<form action="{{ getLink('gifts') }}?action=confirm_transaction" method="POST">
+				<form action="{{ getLink('gifts') }}?action=confirm_transaction" method="post">
+					{{ csrf() }}
 					<input type="hidden" name="buy_confirmed" value="yes">
 					<input type="hidden" name="buy_id" value="{{ buy_id }}">
 					<input type="hidden" name="buy_from" value="{{ buy_from|url_encode }}">
@@ -50,7 +51,7 @@
 			</td>
 
 			<td align="right">
-				<form action="{{ getLink('gifts') }}" method="POST">
+				<form action="{{ getLink('gifts') }}">
 					<input type="submit" value="Cancel">
 				</form>
 			</td>

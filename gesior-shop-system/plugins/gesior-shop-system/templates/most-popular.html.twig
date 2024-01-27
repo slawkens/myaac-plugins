@@ -24,7 +24,8 @@
 			Offer Name: <b>{{ offer.name }}</b><br />
 			Points: <b>{{ offer.points }}</b><br />
 			{% if logged %}
-			<form action="{{ getLink('gifts') }}?action=select_player" method=POST>
+			<form action="{{ getLink('gifts') }}?action=select_player" method="post">
+				{{ csrf() }}
 				<input type="hidden" name="buy_id" value="{{ offer.id }}">
 				<input type="submit" value="Buy">
 			</form>

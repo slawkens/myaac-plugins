@@ -24,6 +24,7 @@
 <br/>
 
 <form action="{{ getLink('gifts') }}?action=confirm_transaction" method="post">
+	{{ csrf() }}
 	<input type="hidden" name="buy_id" value="{{ buy_id }}">
 
 	<table border="0" cellpadding="1" cellspacing="1" width="100%">
@@ -54,6 +55,7 @@
 <br/>
 
 <form action="{{ getLink('gifts') }}?action=confirm_transaction" method="post">
+	{{ csrf() }}
 	<input type="hidden" name="buy_id" value="{{ buy_id }}">
 
 	<table border="0" cellpadding="1" cellspacing="1" width="100%">

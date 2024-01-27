@@ -96,7 +96,8 @@
 					</div>
 				</div>
 
-				<form action="{{ getLink('points') }}?system=stripe&redirect" method="POST">
+				<form action="{{ getLink('points') }}?system=stripe&redirect" method="post">
+					{{ csrf() }}
 					<input type="hidden" id="accountId" name="accountId" value="{{ account_logged.getId() }}" />
 					<input type="hidden" id="id" name="id" value="{{ id }}" />
 
