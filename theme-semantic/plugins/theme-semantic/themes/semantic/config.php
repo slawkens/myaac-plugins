@@ -1,8 +1,4 @@
 <?php
-$config['darkborder'] = '#F9FAFB';
-$config['lightborder'] = '#fff';
-$config['vdarkborder'] = '#2185d0';
-
 define('MENU_CATEGORY_MAIN', 7);
 
 $config['menu_categories'] = [
