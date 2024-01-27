@@ -49,7 +49,6 @@ $enabled = array(
 	'fortumo' => isset($config['fortumo']) && $config['fortumo']['enabled'],
 	'cryptobox' => isset($config['cryptobox']) && $config['cryptobox']['enabled'],
 	'daopay' => isset($config['daopay']) && $config['daopay']['enabled'],
-	'pagseguro' => isset($config['pagseguro']) && $config['pagseguro']['enabled'],
 	'dotpay' => isset($config['dotpay']) && $config['dotpay']['enabled'],
 );
 
