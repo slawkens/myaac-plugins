@@ -30,7 +30,7 @@ if(empty($action)) {
 		$was_before = $config['friendly_urls'];
 		$config['friendly_urls'] = true;
 
-		echo 'To buy points you need to be logged. ' . generateLink(getLink('?subtopic=accountmanagement') . '&redirect=' . urlencode(BASE_URL . '?subtopic=points'), 'Login') . ' first to make a donate.';
+		echo 'To buy points you need to be logged. ' . generateLink(getLink('account/manage') . '&redirect=' . urlencode(getLink('points')), 'Login') . ' first to make a donate.';
 
 		$config['friendly_urls'] = $was_before;
 	}

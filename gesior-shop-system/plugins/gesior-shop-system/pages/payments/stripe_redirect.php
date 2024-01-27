@@ -54,8 +54,8 @@ $checkoutSession = \Stripe\Checkout\Session::create([
 		'quantity' => 1,
 	]],
 	'mode' => 'payment',
-	'success_url' => BASE_URL . '?subtopic=gifts&success',
-	'cancel_url' => BASE_URL . '?subtopic=gifts&cancel',
+	'success_url' => getLink('gifts') . '?success',
+	'cancel_url' => getLink('gifts') . '?cancel',
 ]);
 
 header("HTTP/1.1 303 See Other");

@@ -40,7 +40,7 @@
 		<tr bgcolor="red">
 			<td width="100"><b>Transaction?</b></td>
 			<td width="275" align="left">
-				<form action="?subtopic=gifts&action=confirm_transaction" method="POST">
+				<form action="{{ getLink('gifts') }}?action=confirm_transaction" method="POST">
 					<input type="hidden" name="buy_confirmed" value="yes">
 					<input type="hidden" name="buy_id" value="{{ buy_id }}">
 					<input type="hidden" name="buy_from" value="{{ buy_from|url_encode }}">
@@ -50,7 +50,7 @@
 			</td>
 
 			<td align="right">
-				<form action="?subtopic=gifts" method="POST">
+				<form action="{{ getLink('gifts') }}" method="POST">
 					<input type="submit" value="Cancel">
 				</form>
 			</td>
@@ -72,6 +72,6 @@
 		for <b>{{ buy_offer.points }} premium points</b> from your account.<br/>
 		Now patiently wait in game MAX 3 minutes to receive {{ buy_offer.name }}!<br/>
 		<br/>
-		<a href="?subtopic=gifts">GO TO MAIN SHOP SITE</a>
+		<a href="{{ getLink('gifts') }}">GO TO MAIN SHOP SITE</a>
 	</div>
 {% endif %}

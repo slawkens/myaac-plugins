@@ -26,7 +26,7 @@
 	{% endif %}
 
 	{% for id, name in offer_categories %}
-		<a class="offer_type" href="?subtopic=gifts&offercat={{ id }}"{% if get_offer_category == id %} style="background-color: #505050"{% endif %}>{{ name }}</a>
+		<a class="offer_type" href="{{ getLink('gifts') }}?offercat={{ id }}"{% if get_offer_category == id %} style="background-color: #505050"{% endif %}>{{ name }}</a>
 	{% endfor %}
 
 	<table class="offer_table" border="0" cellpadding="1" cellspacing="1" width="550">
@@ -53,7 +53,7 @@
 				<td>{{ offer.points }}</td>
 				<td>
 					{% if logged %}
-						<form action="?subtopic=gifts&action=select_player" method="post">
+						<form action="{{ getLink('gifts') }}?action=select_player" method="post">
 							<input type="hidden" name="buy_id" value="{{ offer.id }}">
 							<input type="submit" value="Buy">
 						</form>
