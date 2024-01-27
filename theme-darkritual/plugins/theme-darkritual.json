@@ -1,0 +1,13 @@
+{
+	"name": "Theme Dark Ritual",
+	"description": "This is Dark Ritual theme for MyAAC.",
+	"version": "2.0",
+	"type": "template",
+	"license": "GPLv3",
+	"author": "Viktor Persson <contact@arcsin.se>",
+	"contact": "slawkens@gmail.com",
+	"uninstall": [
+		"plugins/theme-darkritual.json",
+		"plugins/theme-darkritual"
+	]
+}

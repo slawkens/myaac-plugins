@@ -1,4 +1,4 @@
-# darkritual-template
+# theme-darkritual
 
 ## Description
 This is first template released for MyAAC. Its a plugin with simple installation.
@@ -7,7 +7,4 @@ This is first template released for MyAAC. Its a plugin with simple installation
 Go to Admin Panel, select 'Plugins', and then select myaac-darkritual-template.zip and click upload. Thats all!
 
 ## Configuration
-In config.local.php set:
-```
-$config['template'] = 'darkritual';
-```
+Go to Admin Panel -> Settings -> General -> Template.
