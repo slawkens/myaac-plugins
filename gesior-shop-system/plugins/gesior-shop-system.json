@@ -16,14 +16,11 @@
 			"file": "plugins/gesior-shop-system/hooks/cache-clear.php"
 		}
 	},
-	"routes": {
-		"gesior-shop-history": {
-			"pattern": "gifts/history",
-			"file": "plugins/gesior-shop-system/pages/history.php",
-			"method": "get"
-		}
-	},
 	"install": "plugins/gesior-shop-system/install.php",
+	"uninstall": [
+		"plugins/gesior-shop-system.json",
+		"plugins/gesior-shop-system"
+	],
 	"require": {
 		"myaac": "1.0-beta",
 		"php": "8.1",
