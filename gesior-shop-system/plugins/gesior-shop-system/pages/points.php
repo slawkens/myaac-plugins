@@ -50,7 +50,6 @@ $enabled = array(
 	'stripe' => isset($config['stripe']) && $config['stripe']['enabled'],
 	'fortumo' => isset($config['fortumo']) && $config['fortumo']['enabled'],
 	'cryptobox' => isset($config['cryptobox']) && $config['cryptobox']['enabled'],
-	'daopay' => isset($config['daopay']) && $config['daopay']['enabled'],
 	'dotpay' => isset($config['dotpay']) && $config['dotpay']['enabled'],
 );
 
