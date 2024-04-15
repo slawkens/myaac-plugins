@@ -66,7 +66,7 @@ if(isset($_GET['system'])) {
 		error('Error: System contains illegal characters.');
 	}
 	else {
-		$file = PLUGINS . 'gesior-shop-system/pages/payments/' . $to_load . '.php';
+		$file = PLUGINS . 'gesior-shop-system/payments/' . $to_load . '.php';
 		if(file_exists($file) && $enabled[$system]) {
 			require($file);
 		}

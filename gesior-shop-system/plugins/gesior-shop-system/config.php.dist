@@ -43,6 +43,7 @@ $config['paypal'] = array(
 
 /**
  * stripe.com configuration
+ * notify URL should be set in stripe.com: http://your-host.com/payments-notify/stripe
  */
 $config['stripe'] = [
 	// 'false' blocks new payments, it will still process old payment reports
@@ -67,6 +68,7 @@ $config['stripe'] = [
 /**
  * fortumo.com configuration
  * rest of the configuration you can do on fortumo.com
+ * notify URL should be set in fortumo.com: http://your-host/payments-notify/fortumo
  */
 $config['fortumo'] = array(
 	'enabled' => true,
