@@ -5,7 +5,7 @@
 {% elseif setting('google_recaptcha.type') == 'v2-checkbox' %}
 	<tr>
 		<td class="LabelV" style="width: 150px">
-			<span{% if errors.verification[0] is not null %} class="red"{% endif %}>Verification:</span>
+			<span{% if errors.verification is defined %} class="red"{% endif %}>Verification:</span>
 		</td>
 		<td>
 			<div class="g-recaptcha" data-sitekey="{{ setting('google_recaptcha.site_key') }}" data-theme="{{ setting('google_recaptcha.v2_theme') }}"></div>

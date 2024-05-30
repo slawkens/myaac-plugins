@@ -11,6 +11,6 @@ if(GoogleReCAPTCHA::enabled()) {
 		unsetSession('remember_me');
 		$logged = false;
 
-		$errors[] = GoogleReCAPTCHA::getErrorMessage();
+		$errors['verification'] = GoogleReCAPTCHA::getErrorMessage();
 	}
 }

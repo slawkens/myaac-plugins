@@ -9,10 +9,12 @@ if(GoogleReCAPTCHA::enabled()) {
 		return; // do not display when logged in
 	}
 
+	$recaptchaType = setting('google_recaptcha.type');
+
 	if ($this->_type == HOOK_ADMIN_HEAD_END) {
 		echo '<script src="https://www.google.com/recaptcha/api.js' . (setting('google_recaptcha.type') == 'v3' ? '?render=' . setting('google_recaptcha.site_key') : '') . '"></script>';
 	}
-	else if($this->_type == HOOK_ADMIN_BODY_END) {
+	else if($this->_type == HOOK_ADMIN_BODY_END && $recaptchaType == 'v3') {
 		$twig->display('google-recaptcha/templates/recaptcha-v3.html.twig', [
 				'action' => (PAGE == 'account/create' ? 'register' : 'login')
 			]
