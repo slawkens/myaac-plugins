@@ -13,7 +13,7 @@ return [
 			'name' => 'Enable ReCaptcha',
 			'type' => 'boolean',
 			'desc' => 'Enable ReCaptcha on login and create account.<br/>https://www.google.com/recaptcha',
-			'default' => true,
+			'default' => false,
 		],
 		'type' => [
 			'name' => 'ReCaptcha Version',
