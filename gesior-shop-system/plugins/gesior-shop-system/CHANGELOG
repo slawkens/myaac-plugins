@@ -1,3 +1,18 @@
+[6.0-RC.1 - 23.07.2024]
+	* Fix duplicated Paypal transactions
+	* Possibility to use coins_transferable and any other column in accounts table
+	* Moved notifications to: payments-notify/system (example: payments-notify/paypal)
+	* Option to uninstall plugin
+	* Support for latest myaac pages subfolders
+	* csrf protection
+	* Reorganize files according to latest myaac version
+	* Adjustments for Bootstrap 4
+	* Return http status 510 in case of paypal error
+	* Remove startup.php hook
+	* Remove admin_menu entry, use admin menu hook instead
+	* Don't include lua/ folder with plugin
+	* Remove outdated gateways: dotpay, daopay, PagSeguro
+
 [5.0-beta.2 - 14.12.2023]
 	* Fix mount images
 
