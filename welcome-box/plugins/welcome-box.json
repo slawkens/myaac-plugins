@@ -7,7 +7,7 @@
 	"author": "slawkens",
 	"contact": "slawkens@gmail.com",
 	"require": {
-		"myaac": "0.5.0"
+		"myaac": "1.0-beta"
 	},
 	"hooks": {
 		"Welcome Box": {
