@@ -1,3 +1,7 @@
+[1.0.2 - 19.19.2024]
+	* fixed importing Cache class
+	* fixed another exception with $db variable
+
 [1.0.1 - 15.02.2020]
 	* change ORDER BY level to ORDER BY experience
 

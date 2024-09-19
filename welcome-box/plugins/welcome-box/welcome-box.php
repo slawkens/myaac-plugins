@@ -6,6 +6,7 @@
  * @author    slawkens <slawkens@gmail.com>
  */
 
+use MyAAC\Cache\Cache;
 use MyAAC\Plugin\WelcomeBox;
 
 /**
