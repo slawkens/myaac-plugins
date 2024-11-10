@@ -2,7 +2,7 @@
 
 use MyAAC\Cache\Cache;
 
-/** @var Cache $cache */
+$cache = Cache::getInstance();
 if (!$cache->enabled()) {
 	return;
 }
