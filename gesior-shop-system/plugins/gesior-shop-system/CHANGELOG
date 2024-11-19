@@ -1,3 +1,7 @@
+[6.0 - 19.11.2024]
+	* Fix redirect links after login
+	* Ignore history offers that doesn't exist
+
 [6.0-RC.2 - 10.11.2024]
 	* fix exception on cache clear
 
