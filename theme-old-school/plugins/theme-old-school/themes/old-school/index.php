@@ -238,7 +238,9 @@ if(count($menus) === 0) {
 				<div class="rise-up-content">
 					<table class="sinfotable" cellspacing="0">
 						<?php
-							use MyAAC\Plugin\OldWelcomeBox;
+
+						use MyAAC\Cache;
+						use MyAAC\Plugin\OldWelcomeBox;
 							require __DIR__ . '/OldWelcomeBox.php';
 							$oldWelcomeBox = new OldWelcomeBox($db);
 							$total = $oldWelcomeBox->getTotalCached();
