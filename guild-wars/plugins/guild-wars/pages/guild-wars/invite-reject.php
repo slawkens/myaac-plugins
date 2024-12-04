@@ -53,9 +53,8 @@ if(empty($errors))
 					$war->setCustomField('ended', time());
 				}
 
-				if ($hasGuildWarsFragLimitColumn && $hasGuildWarsBountyColumn) {
-					$guild->setCustomField('balance', (int)$guild->getCustomField('balance') + (int)$war->getCustomField
-						('bounty'));
+				if ($canBounty) {
+					$guild->setCustomField('balance', (int)$guild->getCustomField('balance') + (int)$war->getCustomField($bountyColumn));
 				}
 
 				header('Location: '. getGuildLink($guild->getName(), false));

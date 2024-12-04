@@ -5,12 +5,28 @@ require __DIR__ . '/libs/OTS_GuildWars_List.php';
 require __DIR__ . '/libs/OTS_Guild_List.php';
 require __DIR__ . '/libs/OTS_GuildWar.php';
 
+$hasGuildsBalanceColumn = $db->hasColumn('guilds', 'balance');
+
 $hasGuildWarsNameColumn = $db->hasColumn('guild_wars', 'name1') && $db->hasColumn('guild_wars', 'name2');
 $hasGuildWarsStartedColumn = $db->hasColumn('guild_wars', 'started');
 $hasGuildWarsEndedColumn = $db->hasColumn('guild_wars', 'ended');
+
 $hasGuildWarsFragLimitColumn = $db->hasColumn('guild_wars', 'frag_limit');
+$hasGuildWarsFragsLimitColumn = $db->hasColumn('guild_wars', 'frags_limit');
+
 $hasGuildWarsDeclarationDateColumn = $db->hasColumn('guild_wars', 'declaration_date');
+$hasGuildWarsDurationDaysColumn = $db->hasColumn('guild_wars', 'duration_days');
+
 $hasGuildWarsBountyColumn = $db->hasColumn('guild_wars', 'bounty');
+$hasGuildWarsPaymentColumn = $db->hasColumn('guild_wars', 'payment');
+
+$canDurationDays = $hasGuildWarsDurationDaysColumn;
+
+$canFragLimit = $hasGuildWarsFragLimitColumn || $hasGuildWarsFragsLimitColumn;
+$fragLimitColumn = ($hasGuildWarsFragLimitColumn ? 'frag_limit' : ($hasGuildWarsFragsLimitColumn ? 'frags_limit' : ''));
+
+$canBounty = $hasGuildsBalanceColumn && ($hasGuildWarsBountyColumn || $hasGuildWarsPaymentColumn);
+$bountyColumn = ($hasGuildWarsBountyColumn ? 'bounty' : ($hasGuildWarsPaymentColumn ? 'payment' : ''));
 
 $extraQuery = '';
 if ($hasGuildWarsNameColumn) {
@@ -20,8 +36,17 @@ if ($hasGuildWarsNameColumn) {
 if ($hasGuildWarsStartedColumn && $hasGuildWarsEndedColumn) {
 	$extraQuery .= '`guild_wars`.`started`, `guild_wars`.`ended`, ';
 }
-elseif ($hasGuildWarsFragLimitColumn && $hasGuildWarsDeclarationDateColumn && $hasGuildWarsBountyColumn) {
-	$extraQuery .= '`guild_wars`.`frag_limit`, `guild_wars`.`declaration_date`, `guild_wars`.`bounty`, ';
+if ($hasGuildWarsDeclarationDateColumn) {
+	$extraQuery .= '`guild_wars`.`declaration_date`, ';
+}
+if ($canDurationDays) {
+	$extraQuery .= '`guild_wars`.`duration_days`, ';
+}
+if ($canBounty) {
+	$extraQuery .= '`guild_wars`.`' . $bountyColumn . '`, ';
+}
+if ($canFragLimit) {
+	$extraQuery .= '`guild_wars`.`' . $fragLimitColumn . '`, ';
 }
 
 $orderBy = 'started';

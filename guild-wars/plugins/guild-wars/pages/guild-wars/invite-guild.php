@@ -23,30 +23,42 @@ if(!$guild->isLoaded() || !$enemyGuild->isLoaded()) {
 }
 
 if(empty($errors)) {
-	$fragLimitPost = $_REQUEST['frag_limit'] ? (int)$_REQUEST['frag_limit'] : 0;
-	$bountyPost = $_REQUEST['bounty'] ? (int)$_REQUEST['bounty'] : 0;
+	$postFragLimit = isset($_REQUEST['frag_limit']) ? (int)$_REQUEST['frag_limit'] : 0;
+	$postBounty = isset($_REQUEST['bounty']) ? (int)$_REQUEST['bounty'] : 0;
+	$postDurationDays = isset($_REQUEST['duration_days']) ? (int)$_REQUEST['duration_days'] : 0;
 
-	if ($hasGuildWarsFragLimitColumn && $hasGuildWarsBountyColumn) {
-		if ($fragLimitPost <= 0 || $bountyPost <= 0) {
-			$errors[] = 'Frag limit and bounty needs to be higher than 0.';
+	if ($canFragLimit) {
+		if ($postFragLimit <= 0 || $postFragLimit >= 1000) {
+			$errors[] = 'Frag limit needs to be higher than 0 and lower than 1000.';
+		}
+	}
+
+	if (empty($errors) && $canBounty) {
+		if ($postBounty <= 0 || $postBounty > 100000000) {
+			$errors[] = 'Bounty needs to be higher than 0 and lower than 100.000.000.';
 		}
 		else {
-			if ($guild->getCustomField('balance') < $bountyPost) {
-				$errors[] = "Your guild does not have that much money in the bank account balance to invite with the
-					bounty of $bountyPost gold.";
+			if ($guild->getCustomField('balance') < $postBounty) {
+				$errors[] = "Your guild does not have that much money in the bank account balance to invite with the bounty of $postBounty gold.";
 			}
+		}
+	}
+
+	if (empty($errors) && $canDurationDays) {
+		if ($postDurationDays <= 0 || $postDurationDays >= 366) {
+			$errors[] = 'Duration days needs to be higher than 0 and lower than 366.';
 		}
 	}
 
 	if(!empty($errors)) {
 		$twig->display('error_box.html.twig', ['errors' => $errors]);
-		$twig->display('guilds.back_button.html.twig');
+		$twig->display('guilds.back_button.html.twig', ['action' => getLink('guild-wars/choose-enemy' . '?guild=' . $guild_id)]);
 		return;
 	}
 
 	$guild_leader_char = $guild->getOwner();
 	$guild_leader = false;
-	$account_players = $account_logged->getPlayers();
+	$account_players = $account_logged->getPlayersList();
 
 	foreach($account_players as $player) {
 		if($guild_leader_char->getId() == $player->getId()) {
@@ -95,16 +107,23 @@ if(empty($errors)) {
 					$war->setCustomField('ended', 0);
 				}
 
-				if ($hasGuildWarsFragsLimitColumn) {
-					$war->setCustomField('frags_limit', $fragLimitPost);
-				}
-				else if ($hasGuildWarsFragLimitColumn) {
-					$war->setCustomField('frag_limit', $fragLimitPost);
-					$war->setCustomField('declaration_date', date('Y-m-d H:i:s', time()));
-					$war->setCustomField('bounty', $bountyPost);
+				if ($canBounty) {
+					$war->setCustomField($bountyColumn, $postBounty);
 
 					// reduce bounty from guild balance
-					$guild->setCustomField('balance', $guild->getCustomField('balance') - $bountyPost);
+					$guild->setCustomField('balance', $guild->getCustomField('balance') - $postBounty);
+				}
+
+				if ($canDurationDays) {
+					$war->setCustomField('duration_days', $postDurationDays);
+				}
+
+				if ($canFragLimit) {
+					$war->setCustomField($fragLimitColumn, $postFragLimit);
+				}
+
+				if ($hasGuildWarsDeclarationDateColumn) {
+					$war->setCustomField('declaration_date', date('Y-m-d H:i:s', time()));
 				}
 
 				header('Location: ' . getGuildLink($guild->getName(), false));
@@ -121,5 +140,5 @@ if(empty($errors)) {
 
 if(!empty($errors)) {
 	$twig->display('error_box.html.twig', ['errors' => $errors]);
-	$twig->display('guilds.back_button.html.twig');
+	$twig->display('guilds.back_button.html.twig', ['action' => getLink('guild-wars/choose-enemy' . '?guild=' . $guild_id)]);
 }

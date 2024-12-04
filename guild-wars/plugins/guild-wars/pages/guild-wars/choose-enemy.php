@@ -11,8 +11,7 @@ if(!$logged) {
 	$errors[] = 'You are not logged.';
 }
 
-if(!empty($errors))
-{
+if(!empty($errors)) {
 	$twig->display('error_box.html.twig', ['errors' => $errors]);
 	$twig->display('guilds.back_button.html.twig');
 	return;
@@ -23,8 +22,7 @@ if(!$guild->isLoaded()) {
 	$errors[] = "Guild with ID <b>$guild_id</b> doesn't exist.";
 }
 
-if(empty($errors))
-{
+if(empty($errors)) {
 	$guild_leader_char = $guild->getOwner();
 	$guild_leader = FALSE;
 	$account_players = $account_logged->getPlayers();
@@ -77,8 +75,9 @@ if(empty($errors))
 					$_status = $twig->render('guild-wars/templates/guild_wars.invite.html.twig', [
 						'guild' => $guild,
 						'enemyGuild' => $enemyGuild,
-						'canFragLimit' => $hasGuildWarsFragLimitColumn || $hasGuildWarsFragsLimitColumn,
-						'canBounty' => $hasGuildWarsBountyColumn,
+						'canDurationDays' => $canDurationDays,
+						'canFragLimit' => $canFragLimit,
+						'canBounty' => $canBounty,
 					]);
 				}
 			}

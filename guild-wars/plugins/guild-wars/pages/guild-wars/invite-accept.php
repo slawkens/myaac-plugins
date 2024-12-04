@@ -38,8 +38,8 @@ if(empty($errors)) {
 		if(!$war->isLoaded())
 			$errors[] = 'War with ID <b>'.$war_id.'</b> doesn\'t exist.';
 
-		if ($hasGuildWarsFragLimitColumn && $hasGuildWarsBountyColumn) {
-			$bounty = $war->getCustomField('bounty');
+		if ($canBounty) {
+			$bounty = $war->getCustomField($bountyColumn);
 			if ($guild->getCustomField('balance') < $bounty) {
 				$errors[] = "Your guild does not have that much money in the bank account balance to accept that war with the bounty of $bounty gold.";
 			}
@@ -65,7 +65,7 @@ if(empty($errors)) {
 					$war->setCustomField('ended', 0);
 				}
 
-				if ($hasGuildWarsFragLimitColumn && $hasGuildWarsBountyColumn) {
+				if ($canBounty) {
 					// reduce bounty from guild balance
 					$guild->setCustomField('balance', (int)$guild->getCustomField('balance') - (int)$bounty);
 				}
