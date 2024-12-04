@@ -39,7 +39,7 @@ To invite guild to war use your guild page.<br/><br/>
 						<tr>
 							<td>
 								{% if logged and isLeader and not isWarsPage %}
-									<a href="{{ getLink('guilds/wars/chooseEnemy') }}?guild={{ guild.getId() }}"><b>Click here to start new war</b></a> - only guild leader can invite other guild to war.<br/><br/>
+									<a href="{{ getLink('guild-wars/choose-enemy') }}?guild={{ guild.getId() }}"><b>Click here to start new war</b></a> - only guild leader can invite other guild to war.<br/><br/>
 								{% endif %}
 							</td>
 						</tr>
@@ -87,13 +87,13 @@ To invite guild to war use your guild page.<br/><br/>
 
 																{% if isLeader and war.guild2 == guild.getId() %}
 																	<br />
-																	<a href="{{ getLink('guilds/wars/invitationAccept') }}?guild={{ guild.getId() }}&war={{ war.id }}" onclick="return confirm('Are you sure that you want ACCEPT that invitation for 7 days war?');" style="cursor: pointer;">&raquo; Click here to <span style="color: lime;">accept</span> invitation to war &laquo;</a>
+																	<a href="{{ getLink('guilds-wars/invite-accept') }}?guild={{ guild.getId() }}&war={{ war.id }}" onclick="return confirm('Are you sure that you want ACCEPT that invitation for 7 days war?');" style="cursor: pointer;">&raquo; Click here to <span style="color: lime;">accept</span> invitation to war &laquo;</a>
 																	<br/><br/>
-																	<a href="{{ getLink('guilds/wars/invitationReject') }}?guild={{ guild.getId() }}&war={{ war.id }}" onclick="return confirm('Are you sure that you want REJECT that invitation for 7 days war?');" style="cursor: pointer;">&raquo; Click here to <span style="color: darkred;">reject</span> invitation to war &laquo;</a>
+																	<a href="{{ getLink('guilds-wars/invite-reject') }}?guild={{ guild.getId() }}&war={{ war.id }}" onclick="return confirm('Are you sure that you want REJECT that invitation for 7 days war?');" style="cursor: pointer;">&raquo; Click here to <span style="color: darkred;">reject</span> invitation to war &laquo;</a>
 																{% endif %}
 
 																{% if isLeader and war.guild1 == guild.getId() %}
-																<br /><br /><a href="{{ getLink('guilds/wars/invitationCancel') }}?guild={{ guild.getId() }}&war={{ war.id }}" onclick="return confirm('Are you sure that you want CANCEL that invitation for 7 days war?');" style="cursor: pointer;">&raquo; Click here to <span style="color: darkred;">cancel</span> invitation to war &laquo;</a>
+																<br /><br /><a href="{{ getLink('guilds-wars/invite-cancel') }}?guild={{ guild.getId() }}&war={{ war.id }}" onclick="return confirm('Are you sure that you want CANCEL that invitation for 7 days war?');" style="cursor: pointer;">&raquo; Click here to <span style="color: darkred;">cancel</span> invitation to war &laquo;</a>
 																{% endif %}
 															</font>
 
