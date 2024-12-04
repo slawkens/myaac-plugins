@@ -28,14 +28,15 @@ if(empty($errors)) {
 	$postDurationDays = isset($_REQUEST['duration_days']) ? (int)$_REQUEST['duration_days'] : 0;
 
 	if ($canFragLimit) {
-		if ($postFragLimit <= 0 || $postFragLimit >= 1000) {
-			$errors[] = 'Frag limit needs to be higher than 0 and lower than 1000.';
+		if ($postFragLimit <= 0 || $postFragLimit > GUILD_WARS_MAX_FRAGS) {
+			$errors[] = 'Frag limit needs to be higher than 0 and lower than ' . (GUILD_WARS_MAX_FRAGS + 1) . '.';
 		}
 	}
 
 	if (empty($errors) && $canBounty) {
-		if ($postBounty <= 0 || $postBounty > 100000000) {
-			$errors[] = 'Bounty needs to be higher than 0 and lower than 100.000.000.';
+		if ($postBounty <= 0 || $postBounty > GUILD_WARS_MAX_BOUNTY) {
+			$errors[] = 'Bounty needs to be higher than 0 and lower than ' . number_format(GUILD_WARS_MAX_BOUNTY + 1, 0,
+					'', '.'). '.';
 		}
 		else {
 			if ($guild->getCustomField('balance') < $postBounty) {
@@ -45,8 +46,8 @@ if(empty($errors)) {
 	}
 
 	if (empty($errors) && $canDurationDays) {
-		if ($postDurationDays <= 0 || $postDurationDays >= 366) {
-			$errors[] = 'Duration days needs to be higher than 0 and lower than 366.';
+		if ($postDurationDays <= 0 || $postDurationDays > GUILD_WARS_MAX_DURATION) {
+			$errors[] = 'Duration days needs to be higher than 0 and lower than ' . (GUILD_WARS_MAX_DURATION + 1) . '.';
 		}
 	}
 

@@ -5,6 +5,10 @@ require __DIR__ . '/libs/OTS_GuildWars_List.php';
 require __DIR__ . '/libs/OTS_Guild_List.php';
 require __DIR__ . '/libs/OTS_GuildWar.php';
 
+const GUILD_WARS_MAX_BOUNTY = 100000000;
+const GUILD_WARS_MAX_DURATION = 365;
+const GUILD_WARS_MAX_FRAGS = 999;
+
 $hasGuildsBalanceColumn = $db->hasColumn('guilds', 'balance');
 
 $hasGuildWarsNameColumn = $db->hasColumn('guild_wars', 'name1') && $db->hasColumn('guild_wars', 'name2');

@@ -6,19 +6,19 @@
 			{% if canFragLimit %}
 			<td>
 				<label for="frag_limit">Frag Limit:</label>
-				<input id="frag_limit" type="number" name="frag_limit" min="1" max="999"/>
+				<input id="frag_limit" type="number" name="frag_limit" min="1" max="{{ constant('GUILD_WARS_MAX_FRAGS') }}"/>
 			</td>
 			{% endif %}
 			{% if canDurationDays %}
 				<td>
 					<label for="duration_days">Duration (in days):</label>
-					<input id="duration_days" type="number" name="duration_days" min="1" max="365"/>
+					<input id="duration_days" type="number" name="duration_days" min="1" max="{{ constant('GUILD_WARS_MAX_DURATION') }}"/>
 				</td>
 			{% endif %}
 			{% if canBounty %}
 			<td>
 				<label for="bounty">Bounty:</label>
-				<input id="bounty" type="number" name="bounty" min="1" max="100000000"/>
+				<input id="bounty" type="number" name="bounty" min="1" max="{{ constant('GUILD_WARS_MAX_BOUNTY') }}"/>
 			</td>
 			{% endif %}
 			<td>
