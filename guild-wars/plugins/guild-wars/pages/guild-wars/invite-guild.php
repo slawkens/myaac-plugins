@@ -84,8 +84,8 @@ if(empty($errors)) {
 				$war->setStatus(OTS_GuildWar::STATE_INVITED);
 
 				if ($hasGuildWarsNameColumn) {
-					$war->setName1('name1', $guild->getName());
-					$war->setName2('name2', $enemyGuild->getName());
+					$war->setName1($guild->getName());
+					$war->setName2($enemyGuild->getName());
 				}
 
 				$war->save();
@@ -95,12 +95,10 @@ if(empty($errors)) {
 					$war->setCustomField('ended', 0);
 				}
 
-				if ($hasGuildWarsNameColumn) {
-					$war->setCustomField('name1', $guild->getName());
-					$war->setCustomField('name2', $enemyGuild->getName());
+				if ($hasGuildWarsFragsLimitColumn) {
+					$war->setCustomField('frags_limit', $fragLimitPost);
 				}
-
-				if ($hasGuildWarsFragLimitColumn) {
+				else if ($hasGuildWarsFragLimitColumn) {
 					$war->setCustomField('frag_limit', $fragLimitPost);
 					$war->setCustomField('declaration_date', date('Y-m-d H:i:s', time()));
 					$war->setCustomField('bounty', $bountyPost);
