@@ -211,7 +211,7 @@ nav {
 #sidebar_container {
   float: right;
   width: 234px;
-  margin-top: 20px;
+/*  margin-top: 20px;*/
 }
 
 .sidebar {
@@ -261,6 +261,10 @@ nav {
   float: left;
   font-size: 120%;
   padding: 14px 0 0 0;
+  background: #DFE7CB;
+  border: 1px solid #CCC;
+  border-radius: 7px 7px 7px 7px;
+  padding: 15px;
 }
 
 .content ul {
