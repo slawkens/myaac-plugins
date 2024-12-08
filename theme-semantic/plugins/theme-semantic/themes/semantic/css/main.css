@@ -9,3 +9,10 @@
 .white {
 	color: white !important;
 }
+
+.TopButtonContainer .TopButton {
+	position: absolute;
+	right: 20px;
+	margin-top: 6px;
+	z-index: 55;
+}

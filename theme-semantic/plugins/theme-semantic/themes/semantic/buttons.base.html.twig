@@ -1,1 +1,10 @@
-<input class="ui button" type="submit" name="{{ button_name }}" value="{{ button_name }}" />
+{% set class = '' %}
+{% if button_color is defined %}
+	{% if button_color == 'green' %}
+		{% set class = 'green' %}
+	{% elseif button_color == 'red' %}
+		{% set class = 'red' %}
+	{% endif %}
+{% endif %}
+
+<input class="ui button {{ class }}" type="submit" name="{{ button_name }}" value="{{ button_name }}" />

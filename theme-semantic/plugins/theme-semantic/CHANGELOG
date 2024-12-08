@@ -1,3 +1,7 @@
+[3.1 - 08.12.2024]
+	* feat: colored buttons
+	* fix go to top button
+
 [3.0 - 27.01.2024]
 	* Update for MyAAC 1.0
 	* move template to plugins folder
