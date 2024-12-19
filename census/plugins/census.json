@@ -9,5 +9,9 @@
 	"require": {
 		"myaac": "1.0-beta",
 		"php": "8.1"
-	}
+	},
+	"uninstall": [
+		"plugins/census.json",
+		"plugins/census"
+	]
 }
