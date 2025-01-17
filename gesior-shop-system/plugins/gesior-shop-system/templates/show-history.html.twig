@@ -20,7 +20,7 @@
 		</td>
 	</tr>
 
-	{% for item_received in items_history if items_history is not empty %}
+	{% for item_received in items_history %}
 		<tr bgcolor="{{ config.lightborder }}">
 			<td>
 				<span style="color: {% if logged_id == item_received['to_account'] %}green{% else %}red{% endif %}">{{ item_received.to_name }}</span>
@@ -75,7 +75,7 @@
 		</td>
 	</tr>
 
-	{% for pacc_received in paccs_history if paccs_history is not empty %}
+	{% for pacc_received in paccs_history %}
 		<tr bgcolor="{{ config.lightborder }}">
 			<td>
 				<span style="color: {% if logged_id == pacc_received['to_account'] %}green{% else %}red{% endif %}">{{ pacc_received.to_name }}</span>

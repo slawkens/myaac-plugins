@@ -41,28 +41,30 @@
 			<td width="100"><b>Select product</b></td>
 		</tr>
 
-		{% for offer in offers_fetch if offer.category_id == get_offer_category %}
-			<tr bgcolor="{{ config.lightborder }}">
-				<td>
-					{{ offer.images|raw }}
-				</td>
-				<td style="text-align: left">
-					<b>{{ offer.name }}</b><br/>
-					{{ offer.description|raw }}
-				</td>
-				<td>{{ offer.points }}</td>
-				<td>
-					{% if logged %}
-						<form action="{{ getLink('gifts') }}?action=select_player" method="post">
-							{{ csrf() }}
-							<input type="hidden" name="buy_id" value="{{ offer.id }}">
-							<input type="submit" value="Buy">
-						</form>
-					{% else %}
-						<b>Login to buy</b>
-					{% endif %}
-				</td>
-			</tr>
+		{% for offer in offers_fetch %}
+			{% if offer.category_id == get_offer_category %}
+				<tr bgcolor="{{ config.lightborder }}">
+					<td>
+						{{ offer.images|raw }}
+					</td>
+					<td style="text-align: left">
+						<b>{{ offer.name }}</b><br/>
+						{{ offer.description|raw }}
+					</td>
+					<td>{{ offer.points }}</td>
+					<td>
+						{% if logged %}
+							<form action="{{ getLink('gifts') }}?action=select_player" method="post">
+								{{ csrf() }}
+								<input type="hidden" name="buy_id" value="{{ offer.id }}">
+								<input type="submit" value="Buy">
+							</form>
+						{% else %}
+							<b>Login to buy</b>
+						{% endif %}
+					</td>
+				</tr>
+			{% endif %}
 		{% else %}
 			{% if offer_categories[get_offer_category] %}
 				<td style="text-align: left" colspan="4">There is no offer here.</td>

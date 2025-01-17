@@ -39,60 +39,62 @@
 			</thead>
 			<tbody>
 				{% set showedRank, i = false, 0 %}
-				{% for rank in guild_members if rank.members|length > 0 %}
-					{% set rankStyle, i = getStyle(i), i + 1  %}
-					{% for player in rank.members %}
-						<tr>
-							<th scope="row">
-									{% if not showedRank %}{{ rank.rank_name }}{% endif %}
-									{% set showedRank = true %}
-							</th>
-							<td>
-								{% set playerName = player.getName() %}
-								<form action="?subtopic=guilds&action=change_nick&name={{ playerName }}&guild={{ guild_name }}" method="post">
-									{{ getPlayerLink(playerName, true)|raw }}
-									{% set showGuildNick = false %}
-									{% if player.getGuildNick() is not empty %}
-										{% set showGuildNick = true %}
-										{% set guildNickRaw = player.getGuildNick()|raw %}
-									{% endif %}
-									{% if logged %}
-									{% if player.getId() in players_from_account_ids %}
-										<div class="input-group input-group-sm mb-3">
-											<input type="text" name="nick" value="{{ guildNickRaw }}" class="form-control" placeholder="{{ guildNickRaw }}" aria-label="Set nickname" aria-describedby="button-changeNick">
-											<button class="btn" type="submit" id="button-changeNick" value="Change">Change Nick</button>
-										</div>
-									{% else %}
-										{% if showGuildNick %} ({{ guildNickRaw }}){% endif %}
-									{% endif %}
-									{% if level_in_guild > rank.rank_level or isLeader %}
-										{% if guildOwnerName != playerName %}
-											<span style="font-size: 10px; float: right">
-											<a class="btn" href="?subtopic=guilds&action=kick_player&guild={{ guild_name|url_encode }}&name={{ playerName|url_encode }}">KICK</a>
-											</span>
+				{% for rank in guild_members %}
+					{% if rank.members|length > 0 %}
+						{% set rankStyle, i = getStyle(i), i + 1  %}
+						{% for player in rank.members %}
+							<tr>
+								<th scope="row">
+										{% if not showedRank %}{{ rank.rank_name }}{% endif %}
+										{% set showedRank = true %}
+								</th>
+								<td>
+									{% set playerName = player.getName() %}
+									<form action="?subtopic=guilds&action=change_nick&name={{ playerName }}&guild={{ guild_name }}" method="post">
+										{{ getPlayerLink(playerName, true)|raw }}
+										{% set showGuildNick = false %}
+										{% if player.getGuildNick() is not empty %}
+											{% set showGuildNick = true %}
+											{% set guildNickRaw = player.getGuildNick()|raw %}
 										{% endif %}
-									{% endif %}
-									{% else %}
-										{% if showGuildNick %} ({{ guildNickRaw }}){% endif %}
-									{% endif %}
-								</form>
-							</td>
-							<td>
-								{{ player.getVocationName() }}
-							</td>
-							<td>
-								{{ player.getLevel() }}
-							</td>
-							<td>
-								<span style="color: {% if player.isOnline() %} green;"><b>Online{% else %} red;"><b>Offline{% endif %}</b></span>
-							</td>
-						</tr>
-					{% endfor %}
-					{% set showedRank = false %}
-					{% else %}
-						<tr>
-							<td colspan="5">No guild members found.</td>
-						</tr>
+										{% if logged %}
+										{% if player.getId() in players_from_account_ids %}
+											<div class="input-group input-group-sm mb-3">
+												<input type="text" name="nick" value="{{ guildNickRaw }}" class="form-control" placeholder="{{ guildNickRaw }}" aria-label="Set nickname" aria-describedby="button-changeNick">
+												<button class="btn" type="submit" id="button-changeNick" value="Change">Change Nick</button>
+											</div>
+										{% else %}
+											{% if showGuildNick %} ({{ guildNickRaw }}){% endif %}
+										{% endif %}
+										{% if level_in_guild > rank.rank_level or isLeader %}
+											{% if guildOwnerName != playerName %}
+												<span style="font-size: 10px; float: right">
+												<a class="btn" href="?subtopic=guilds&action=kick_player&guild={{ guild_name|url_encode }}&name={{ playerName|url_encode }}">KICK</a>
+												</span>
+											{% endif %}
+										{% endif %}
+										{% else %}
+											{% if showGuildNick %} ({{ guildNickRaw }}){% endif %}
+										{% endif %}
+									</form>
+								</td>
+								<td>
+									{{ player.getVocationName() }}
+								</td>
+								<td>
+									{{ player.getLevel() }}
+								</td>
+								<td>
+									<span style="color: {% if player.isOnline() %} green;"><b>Online{% else %} red;"><b>Offline{% endif %}</b></span>
+								</td>
+							</tr>
+						{% endfor %}
+						{% set showedRank = false %}
+					{% endif %}
+				{% else %}
+					<tr>
+						<td colspan="5">No guild members found.</td>
+					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
@@ -108,7 +110,7 @@
 			</thead>
 			<tbody>
 				{% set i = 0 %}
-				{% for invited_player in invited_list if invited_list|length > 0 %}
+				{% for invited_player in invited_list %}
 					{% if invited_player.isLoaded() %}
 						{% set i = i + 1 %}
 							<tr>

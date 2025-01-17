@@ -58,47 +58,49 @@
 			<td width="100"><b>Select product</b></td>
 		</tr>
 
-		{% for offer in offers_fetch if offer.type == get_offer_type %}
-			<tr bgcolor="{{ config.lightborder }}">
-				<td>
-					{% if offer.type == "item" or offer.type == "container" or offer.type == "equipment" or offer.type == "knight" or offer.type == "sorcerer" or offer.type == "druid" or offer.type == "paladin" or offer.type == "decoration" %}
-						{{ offer.item_img|raw }}
-						{% if offer.container_img is not empty %}
-							{{ offer.container_img|raw }}
+		{% for offer in offers_fetch %}
+			{% offer.type == get_offer_type %}
+				<tr bgcolor="{{ config.lightborder }}">
+					<td>
+						{% if offer.type == "item" or offer.type == "container" or offer.type == "equipment" or offer.type == "knight" or offer.type == "sorcerer" or offer.type == "druid" or offer.type == "paladin" or offer.type == "decoration" %}
+							{{ offer.item_img|raw }}
+							{% if offer.container_img is not empty %}
+								{{ offer.container_img|raw }}
+							{% endif %}
+						{% elseif offer.type == "pacc" %}
+							<img src="{{ constant('BASE_URL') }}plugins/gesior-shop-system/images/PremiumTime.png" alt="Premium Time"/>
+						{% elseif offer.type == "mount" %}
+							<img src="{{ offer.mount_img_dir }}" alt="Mount"/>
+						{% elseif offer.type == "addon" %}
+							<table>
+								<tr>
+									<td>
+										<img style="margin-left:-30px;margin-top:-30px;width:64px;height:64px;" src="{{ config.outfit_images_url }}?id={{ offer.look_male }}&addons={{ offer.addons_male }}&head={{ outfit_colors.head }}&body={{ outfit_colors.body }}&legs={{ outfit_colors.legs }}&feet={{ outfit_colors.feet }}"/>
+									</td>
+									<td>
+										<img style="margin-left:-30px;margin-top:-30px;width:64px;height:64px;" src="{{ config.outfit_images_url }}?id={{ offer.look_female }}&addons={{ offer.addons_female }}&head={{ outfit_colors.head }}&body={{ outfit_colors.body }}&legs={{ outfit_colors.legs }}&feet={{ outfit_colors.feet }}"/>
+									</td>
+								</tr>
+							</table>
 						{% endif %}
-					{% elseif offer.type == "pacc" %}
-						<img src="{{ constant('BASE_URL') }}plugins/gesior-shop-system/images/PremiumTime.png" alt="Premium Time"/>
-					{% elseif offer.type == "mount" %}
-						<img src="{{ offer.mount_img_dir }}" alt="Mount"/>
-					{% elseif offer.type == "addon" %}
-						<table>
-							<tr>
-								<td>
-									<img style="margin-left:-30px;margin-top:-30px;width:64px;height:64px;" src="{{ config.outfit_images_url }}?id={{ offer.look_male }}&addons={{ offer.addons_male }}&head={{ outfit_colors.head }}&body={{ outfit_colors.body }}&legs={{ outfit_colors.legs }}&feet={{ outfit_colors.feet }}"/>
-								</td>
-								<td>
-									<img style="margin-left:-30px;margin-top:-30px;width:64px;height:64px;" src="{{ config.outfit_images_url }}?id={{ offer.look_female }}&addons={{ offer.addons_female }}&head={{ outfit_colors.head }}&body={{ outfit_colors.body }}&legs={{ outfit_colors.legs }}&feet={{ outfit_colors.feet }}"/>
-								</td>
-							</tr>
-						</table>
-					{% endif %}
-				</td>
-				<td style="text-align: left">
-					<b>{{ offer.name }}</b><br/>
-					{{ offer.description|raw }}
-				</td>
-				<td>{{ offer.points }}</td>
-				<td>
-					{% if logged %}
-						<form action="?subtopic=gifts&action=select_player" method="post">
-							<input type="hidden" name="buy_id" value="{{ offer.id }}">
-							<input type="submit" class="btn btn-primary" value="Buy">
-						</form>
-					{% else %}
-						<b>Login to buy</b>
-					{% endif %}
-				</td>
-			</tr>
+					</td>
+					<td style="text-align: left">
+						<b>{{ offer.name }}</b><br/>
+						{{ offer.description|raw }}
+					</td>
+					<td>{{ offer.points }}</td>
+					<td>
+						{% if logged %}
+							<form action="?subtopic=gifts&action=select_player" method="post">
+								<input type="hidden" name="buy_id" value="{{ offer.id }}">
+								<input type="submit" class="btn btn-primary" value="Buy">
+							</form>
+						{% else %}
+							<b>Login to buy</b>
+						{% endif %}
+					</td>
+				</tr>
+			{% endif %}
 		{% else %}
 			{% if offer_types[get_offer_type] %}
 				<td style="text-align: left" colspan="4">There is no offer here.</td>
