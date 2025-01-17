@@ -7,3 +7,5 @@ $config['menu_categories'] = [
 	MENU_CATEGORY_LIBRARY => ['name' => 'Library'],
 	MENU_CATEGORY_SHOP => ['name' => 'Shop'],
 ];
+
+$config['menu_default_color'] = '#000000';

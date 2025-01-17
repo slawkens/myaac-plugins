@@ -1,3 +1,6 @@
+[3.1.1 - 17.01.2025]
+	* add config.menu_default_color to reset menu colors
+
 [3.1 - 08.12.2024]
 	* feat: colored buttons
 	* fix go to top button
