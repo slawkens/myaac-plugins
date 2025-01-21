@@ -1,3 +1,7 @@
+[2.0.2 - 21.01.2025]
+	* fix recaptcha, fix password_confirm
+	* require myaac v1.0
+
 [2.0.1 - 17.01.2025]
 	* Fixes regarding Twig v3 and MyAAC v1.0.1+ - no if in for loop
 

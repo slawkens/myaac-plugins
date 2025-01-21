@@ -1,13 +1,13 @@
 {
 	"name": "Theme Reborn",
 	"description": "This is Reborn theme for MyAAC.",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"type": "template",
 	"license": "GPLv3",
 	"author": "Xitobuh",
 	"contact": "otland.net",
 	"require": {
-		"myaac": "1.0-beta",
+		"myaac": "1.0",
 		"php": "8.1"
 	},
 	"uninstall": [
