@@ -17,8 +17,8 @@
 			<label for="inputEmail4" class="form-label">Email address</label>
 			<input type="email" class="form-control" name="email" id="email" required placeholder="name@example.com" value="{{ email }}"/>
 			{% if config.account_mail_verify %}
-				<strong></br>Please use real email address.</br>
-				We will send a link to validate your Email.</br></strong>
+				<strong><br/>Please use real email address.<br/>
+				We will send a link to validate your Email.<br/></strong>
 			{% endif %}
 		</div>
 		{{ hook('HOOK_ACCOUNT_CREATE_AFTER_EMAIL') }}
