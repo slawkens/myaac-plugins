@@ -1,3 +1,3 @@
 <?php
 
-require __DIR__ . '/libs/GoogleReCAPTCHA.php';
+require __DIR__ . '/src/GoogleReCAPTCHA.php';

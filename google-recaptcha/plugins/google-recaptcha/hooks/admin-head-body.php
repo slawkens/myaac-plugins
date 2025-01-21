@@ -12,10 +12,16 @@ if(GoogleReCAPTCHA::enabled()) {
 	$recaptchaType = setting('google_recaptcha.type');
 
 	if ($this->_type == HOOK_ADMIN_HEAD_END) {
-		echo '<script src="https://www.google.com/recaptcha/api.js' . (setting('google_recaptcha.type') == 'v3' ? '?render=' . setting('google_recaptcha.site_key') : '') . '"></script>';
+		echo '<script src="https://www.google.com/recaptcha/api.js' .
+			(
+			$recaptchaType == 'v3' ? '?render=' . setting('google_recaptcha.site_key') :
+				(
+				$recaptchaType === 'v2-invisible' ? '?onload=onloadCallback' :
+					'')
+			) . '" async defer></script>';
 	}
 	else if($this->_type == HOOK_ADMIN_BODY_END && $recaptchaType == 'v3') {
-		$twig->display('google-recaptcha/templates/recaptcha-v3.html.twig', [
+		$twig->display('google-recaptcha/views/recaptcha-v3.html.twig', [
 				'action' => (PAGE == 'account/create' ? 'register' : 'login')
 			]
 		);
