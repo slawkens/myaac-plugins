@@ -6,6 +6,11 @@
 	"license": "GPLv3",
 	"author": "MyAAC Authors",
 	"contact": "www.my-aac.org",
+	"require": {
+		"myaac": "1.0",
+		"php": "8.1",
+		"php-ext": "curl"
+	},
 	"hooks": {
 		"google-recaptcha-before-page": {
 			"type": "BEFORE_PAGE",
