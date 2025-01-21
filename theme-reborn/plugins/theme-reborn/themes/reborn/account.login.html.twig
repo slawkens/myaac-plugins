@@ -1,3 +1,4 @@
+{{ hook('HOOK_ACCOUNT_LOGIN_BEFORE_PAGE') }}
 <form action="{{ getLink('account/manage') }}" method="post" style="margin: 0; padding: 0;">
 	{% if redirect is not null %}
 		<input type="hidden" name="redirect" value="{{ redirect }}"/>
@@ -7,19 +8,28 @@
 	<div class="container-sm overflow-hidden">
 		<div class="container">
 			<h1>Login</h1>
-			<form>
+
+				{{ hook('HOOK_ACCOUNT_LOGIN_BEFORE_ACCOUNT') }}
+
 				<div>
 					<label for="inputEmail3">Username</label>
 					<div>
-						<input type="text" class="form-control" placeholder="Username" name="account_login" aria-label=" Username" aria-describedby=" basic-addon1">
+						<input type="text" class="form-control" placeholder="Username" name="account_login" aria-label="Username">
 					</div>
 				</div>
+
+				{{ hook('HOOK_ACCOUNT_LOGIN_AFTER_ACCOUNT') }}
+				{{ hook('HOOK_ACCOUNT_LOGIN_BEFORE_PASSWORD') }}
+
 				<div>
 					<label for="inputEmail3">Password</label>
 					<div>
-						<input type="password" class="form-control" placeholder="Password" name="password_login" aria-label="Password" aria-describedby=" basic-addon1">
+						<input type="password" class="form-control" placeholder="Password" name="password_login" aria-label="Password">
 					</div>
 				</div>
+
+				{{ hook('HOOK_ACCOUNT_LOGIN_AFTER_PASSWORD') }}
+
 				<div>
 					<div>
 						<div class="form-check">
@@ -29,6 +39,9 @@
 							</label>
 						</div>
 					</div>
+
+					{{ hook('HOOK_ACCOUNT_LOGIN_AFTER_REMEMBER_ME') }}
+
 					<div class="row">
 						<div class="col-auto">
 							<button type="submit" class="btn " name="Login">Sign in</button>
@@ -38,7 +51,6 @@
 						</div>
 					</div>
 				</div>
-			</form>
 			<br/>
 		</div>
 
@@ -46,9 +58,9 @@
 			<div style="text-align:center">
 				<br/>
 				<h1>New to {{ config.lua.serverName }}?</h1>
-				<form class="MediumButtonForm" action="{{ getLink('account/create') }}" method="post">
+				<a href="{{ getLink('account/create') }}">
 					<button type="submit" class="btn " name="Create Account">Create Account</button>
-				</form>
+				</a>
 			</div>
 		</div>
 	</div>
