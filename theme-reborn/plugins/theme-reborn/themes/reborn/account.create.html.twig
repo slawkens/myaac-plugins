@@ -41,8 +41,8 @@
 			{% if errors.password is defined %}{{ errors.password }}{% endif %}
 		</div>
 		<div class="col-sm-5">
-			<label for="password2" class="form-label">Repeat password</label>
-			<input type="password" class="form-control" name="password2" id="password2" value="" maxlength="50" required/>
+			<label for="password_confirm" class="form-label">Repeat password</label>
+			<input type="password" class="form-control" name="password_confirm" id="password_confirm" value="" maxlength="50" required/>
 			{% if errors.password is defined %}{{ errors.password }}{% endif %}
 		</div>
 		{{ hook('HOOK_ACCOUNT_CREATE_AFTER_PASSWORDS') }}
