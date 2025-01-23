@@ -1,3 +1,6 @@
+[2.0.3 - 23.01.2025]
+	* replace spaceless with apply spaceless (has been removed twig)
+
 [2.0.2 - 21.01.2025]
 	* fix recaptcha, fix password_confirm
 	* require myaac v1.0
