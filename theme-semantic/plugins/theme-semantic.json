@@ -1,13 +1,13 @@
 {
 	"name": "Theme Semantic",
 	"description": "This is Semantic UI theme for MyAAC.",
-	"version": "3.1.1",
+	"version": "3.1.2",
 	"type": "template",
 	"license": "GPLv3",
 	"author": "slawkens",
 	"contact": "slawkens@gmail.com",
 	"require": {
-		"myaac": "1.0-beta",
+		"myaac": "1.0",
 		"php": "8.1"
 	},
 	"install": "plugins/theme-semantic/install.php",
