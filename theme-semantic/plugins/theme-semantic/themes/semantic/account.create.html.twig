@@ -84,11 +84,11 @@
 			<div class="field error">
 		{% endif %}
 				<label>
-					<img id="password2_indicator" src="images/global/general/{% if not save or errors.password is defined %}n{% endif %}ok.gif" style="display: none;" />
+					<img id="password_confirm_indicator" src="images/global/general/{% if not save or errors.password is defined %}n{% endif %}ok.gif" style="display: none;" />
 					Repeat password:
-					<input type="password" name="password2" id="password2" value="" size="30" maxlength="50" />
+					<input type="password" name="password_confirm" id="password_confirm" value="" size="30" maxlength="50" />
 				</label>
-				<p id="password2_error" class="ui message red" style="display: none;">{% if errors.password is defined %}{{ errors.password }}{% endif %}</p>
+				<p id="password_confirm_error" class="ui message red" style="display: none;">{% if errors.password is defined %}{{ errors.password }}{% endif %}</p>
 		{% if errors.password is defined %}
 			</div>
 		{% endif %}
