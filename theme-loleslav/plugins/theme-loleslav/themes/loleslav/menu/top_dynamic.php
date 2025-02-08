@@ -8,11 +8,11 @@ defined('MYAAC') or die('Direct access not allowed!');
 $menus = get_template_menus();
 $i = 0;
 foreach($menus[0] as $menu) {
-	if (strpos(trim($menu['link']), 'http') === 0) {
-		echo '<li' . ($i++ == 0 ? ' class="first"' : '') . '><a href="' . $menu['link'] . '" target="_blank">' . $menu['name'] . '</a></li>';
-	} else {
-		echo '<li' . ($i++ == 0 ? ' class="first"' : '') . '><a href="' . getLink($menu['link']) . '">' . $menu['name'] . '</a></li>';
-	}
+	echo '<li' . ($i++ == 0 ? ' class="first"' : '') . '><a href="' . $menu['link_full'] . '" ' . $menu['target_blank']  . ' ' .
+		(
+		empty($menu['color']) ? '' : 'style="color: #' . $menu['color'] . ';"'
+		)
+		. '>' . $menu['name'] . '</a></li>';
 }
 ?>
 	</ul>
