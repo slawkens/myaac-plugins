@@ -22,11 +22,12 @@ if(!isset($config['downloads']))
 	);
 }
 
-$twig->addGlobal('template_name', $template_name);
-
 if(isset($_REQUEST['step']) && $_REQUEST['step'] == "download") {
-	$twig->display('better-downloads-page/views/downloads.html.twig', array('downloads_config' =>
-		$config['downloads']));
+	$twig->display('better-downloads-page/views/downloads.html.twig',
+		[
+			'downloads_config' => $config['downloads'],
+			'template_name' => $template_name
+		]);
 	$template_place_holders['body_end'][] = $twig->render('better-downloads-page/views/downloads-head-end.html.twig');
 } else {
 	$twig->display('better-downloads-page/views/downloads.agreement.html.twig');
