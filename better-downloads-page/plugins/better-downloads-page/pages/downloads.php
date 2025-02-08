@@ -22,6 +22,8 @@ if(!isset($config['downloads']))
 	);
 }
 
+$twig->addGlobal('template_name', $template_name);
+
 if(isset($_REQUEST['step']) && $_REQUEST['step'] == "download") {
 	$twig->display('better-downloads-page/views/downloads.html.twig', array('downloads_config' =>
 		$config['downloads']));

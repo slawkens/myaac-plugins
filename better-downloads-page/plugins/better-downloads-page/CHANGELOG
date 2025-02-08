@@ -1,5 +1,7 @@
-[2.0.1 - 08.02.2025]
-	* fix I agree link not working
+[2.1 - 08.02.2025]
+	* fix "I agree" link not working
+	* do not display download successful image for loleslav theme (not enough width)
+	* do not display shadow on themes different than tibiacom
 
 [2.0 - 27.01.2024]
 	* Update for MyAAC 1.0

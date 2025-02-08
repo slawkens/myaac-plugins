@@ -59,7 +59,9 @@
 							</div>
 						</div>
 					</td>
-					<td style="vertical-align:top"><div class="TableShadowContainerRightTop">
+					{% if template_name != 'loleslav' %}
+					<td style="vertical-align:top">
+						<div class="TableShadowContainerRightTop">
 							<div class="TableShadowRightTop" style="background-image:url(plugins/better-downloads-page/images/global/content/table-shadow-rt.gif)"></div>
 						</div>
 						<div class="TableContentAndRightShadow" style="background-image:url(plugins/better-downloads-page/images/global/content/table-shadow-rm.gif)">
@@ -78,6 +80,7 @@
 							</div>
 						</div>
 					</td>
+					{% endif %}
 				</tr>
 			</table>
 	<tr>
@@ -196,3 +199,10 @@ function ActivateHelperDiv(a_Object, a_Title, a_Text, a_HelperDivPositionID)
   $('#HelperDivContainer').show();
 }
 </script>
+{% if template_name != 'tibiacom' %}
+<style>
+	.TableContentAndRightShadow, .TableShadowRightTop, .TableBottomShadow, .TableBottomLeftShadow, .TableBottomRightShadow {
+		background-image: none !important;
+	}
+</style>
+{% endif %}
