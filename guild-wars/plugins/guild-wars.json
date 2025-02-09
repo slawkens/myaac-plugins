@@ -12,6 +12,11 @@
 			"file": "plugins/guild-wars/hooks/guilds-after-invited-characters.php"
 		}
 	},
+	"require": {
+		"myaac": "1.0",
+		"php": "8.1",
+		"php-ext": "curl"
+	},
 	"uninstall": [
 		"plugins/guild-wars.json",
 		"plugins/guild-wars"
