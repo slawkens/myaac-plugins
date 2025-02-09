@@ -10,3 +10,7 @@ $config['menu_categories'] = [
 	MENU_CATEGORY_SUPPORT => ['name' => 'Support', 'icon' => 'info-circle'],
 	MENU_CATEGORY_SHOP => ['name' => 'Shop', 'icon' => 'shopping-cart'],
 ];
+
+$config['menu_default_links_color'] = '#B39062';
+
+$config['menus'] = require PLUGINS . 'theme-atomio/menus.php';
