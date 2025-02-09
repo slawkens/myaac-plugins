@@ -7,13 +7,6 @@ if(!version_compare(MYAAC_VERSION, '1.0-beta', '>=')) {
 }
 
 $menus = get_template_menus();
-foreach($menus as $cat => &$_menus) {
-	foreach($_menus as &$menu) {
-		$link_full = strpos(trim($menu['link']), 'http') === 0 ? $menu['link'] : getLink($menu['link']);
-		$menu['link_full'] = $link_full;
-	}
-}
-
 if(count($menus) === 0) {
 	$text = "Please install the $template_name template in Admin Panel, so the menus will be imported too.";
 	if(version_compare(MYAAC_VERSION, '0.8.0', '>=')) {
@@ -402,10 +395,8 @@ function aldora_get_links($category)
 	global $menus;
 
 	$ret = '';
-	foreach ($menus[$category] as $menu) {
-		$ret .= '<li><a href="' . $menu['link_full'] . '" ' . ($menu['blank'] ? ' target="_blank"' :
-				'') . (strlen($menu['color']) == 0 ? '' : 'style="color: #' . $menu['color']) . ';">' .
-			$menu['name'] . '</a></li>';
+	foreach ($menus[$category] as $link) {
+		$ret .= '<li><a href="' . $link['link_full'] . '" ' . $link['target_blank'] . '>'  . $link['name'] . '</a></li>';
 	}
 
 	return $ret;

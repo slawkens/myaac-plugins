@@ -16,3 +16,5 @@ $config['menu_categories'] = array(
 	MENU_CATEGORY_LIBRARY => ['id' => 'library', 'name' => 'Library'],
 	MENU_CATEGORY_FOOTER => ['id' => 'footer', 'name' => 'Footer'],
 );
+
+$config['menus'] = require PLUGINS . 'theme-aldora/menus.php';
