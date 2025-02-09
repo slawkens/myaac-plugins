@@ -21,7 +21,8 @@ foreach(config('menu_categories') as $id => $cat) {
 		$target_blank = $link['target_blank'] ?? '';
 		$style_color = $link['style_color'] ?? '';
 
-		echo '<li class="menu-item"><a href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color .	'>' . $link['name'] . '</a></li>';
+		echo '<li class="menu-item"><a href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color . '>'
+			. $link['name'] . '</a></li>';
 	}
 
 	echo '</ul>
