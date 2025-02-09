@@ -9,12 +9,10 @@ foreach($config['menu_categories'] as $id => $cat) {
 	<li><a><i class="fa fa-<?=$cat["icon"]?>"></i> <?=$cat['name']?></a>
 		<ul>
 			<?php foreach($menus[$id] as $link) {
-				echo '<li><a href="' . $link['link_full'] . '" ' .
-			($link['blank']
-				? '
-				target="_blank"' :
-				'') . (strlen($link['color']) == 0 ? '' : 'style="color: #' . $link['color']) . ';">' .
-					$link['name'] . '</a></li>';
+				$target_blank = $link['target_blank'] ?? '';
+				$style_color = $link['style_color'] ?? '';
+
+				echo '<li><a href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color . '>' . $link['name'] . '</a></li>';
 			}
 			?>
 		</ul>
