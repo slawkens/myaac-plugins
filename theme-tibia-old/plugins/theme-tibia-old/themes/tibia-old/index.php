@@ -21,13 +21,7 @@
 
 	<aside id="topbar">
 		<?php
-		$menu_table_exist = tableExist(TABLE_PREFIX . 'menu');
-		if($menu_table_exist) {
-			require_once($template_path . '/menu_top_dynamic.php');
-		}
-		else {
-			require_once($template_path . '/menu_top.php');
-		}
+			require_once(__DIR__ . '/menu_top_dynamic.php');
 		?>
 	</aside>
 
@@ -38,12 +32,12 @@
 				<div class="line wide"></div>
 
 				<?php
-				require_once($template_path . '/menu_left_dynamic.php');
+				require_once(__DIR__ . '/menu_left_dynamic.php');
 
 				if ($logged) { ?>
 					<div class="line wide"></div>
-					<?php echo $twig->render('widgets/loggedin.html.twig');
-					if (admin()) include $template_path . '/widgets/Wadmin.php';
+					<?php echo $twig->render('widgets/logged-in.html.twig');
+					if (admin()) include __DIR__ . '/widgets/admin.php';
 				}
 				?>
 				<div class="line wide"></div>
@@ -51,7 +45,8 @@
 			</section>
 
 			<section id="sidebar-misc">
-				<?php include $template_path . '/widgets/serverinfo.php'; ?>
+				<?php include __DIR__ . '/widgets/server-info.php'; ?>
+				<?php include __DIR__ . '/widgets/top-players.php'; ?>
 			</section>
 		</aside>
 

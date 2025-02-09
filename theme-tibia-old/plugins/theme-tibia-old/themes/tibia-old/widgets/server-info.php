@@ -19,7 +19,6 @@
 			</a>
 			<div class="line"></div>
 			<?php
-			if($config['template_allow_change'])
+			if(config('template_allow_change'))
 				echo '<font color="white">Template:</font><br/>' . template_form();
 				?>
-		</ul>
