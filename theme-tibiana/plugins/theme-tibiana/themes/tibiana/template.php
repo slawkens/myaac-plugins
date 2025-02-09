@@ -86,13 +86,15 @@ if(count($menus) === 0) {
 					<?php if (admin()) { ?>
 				 <div class="line"></div>
 					<div class="line wide"></div>
-						<a href="/admin" target="_blank" class="martel"><font color="#FF0000">Admin Panel</font></a>
+						<a href="<?= ADMIN_URL; ?>" target="_blank" class="martel">
+							<span style="color: #FF0000">Admin Panel</span></a>
 					<?php } ?>
 				  <div class="line"></div>
 					<div class="line wide"></div>
 					<ul class="my-account-sidebar">
 					<li>
-						<a href="<?= getLink('account/manage') ?>" class="martel"><font color="#90EE90">My Account</font></a>
+						<a href="<?= getLink('account/manage') ?>" class="martel">
+							<span style="color: #90EE90">My Account</span></a>
 						<?php if($logged) { ?>
 							<a href="<?= getLink('account/logout') ?>" class="martel">Logout</a>
 						<?php } ?>
