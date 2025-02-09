@@ -364,7 +364,9 @@ if(count($menus) === 0) {
 <?php
 
 function getPowergamers() {
-	if (!fieldExist('exphist_lastexp', 'players')) {
+	global $db;
+
+	if (!$db->hasColumn('players', 'exphist_lastexp')) {
 		return [];
 	}
 
@@ -376,14 +378,12 @@ function getPowergamers() {
 		}
 	}
 
-	global $db, $config;
-
 	$deleted = 'deleted';
 	if($db->hasColumn('players', 'deletion'))
 		$deleted = 'deletion';
 
 	$results = [];
-	$query = $db->query('SELECT * FROM players WHERE players.id NOT IN (' . implode(', ', $config['highscores_ids_hidden']) . ') AND players.' . $deleted . ' = 0 AND players.group_id < '.$config['highscores_groups_hidden'].' ORDER BY  experience - exphist_lastexp DESC LIMIT 5;');
+	$query = $db->query('SELECT * FROM players WHERE players.id NOT IN (' . implode(', ', config('highscores_ids_hidden')) . ') AND players.' . $deleted . ' = 0 AND players.group_id < '.config('highscores_groups_hidden').' ORDER BY  experience - exphist_lastexp DESC LIMIT 5;');
 	if ($query->rowCount() > 0) {
 		$results = $query->fetchAll(\PDO::FETCH_ASSOC);
 	}
@@ -396,7 +396,9 @@ function getPowergamers() {
 }
 
 function getCasters() {
-	if (!fieldExist('broadcasting', 'players') || !fieldExist('viewers', 'players')) {
+	global $db;
+
+	if (!$db->hasColumn('players', 'broadcasting') || !$db->hasColumn('players', 'viewers')) {
 		return [];
 	}
 
@@ -408,14 +410,12 @@ function getCasters() {
 		}
 	}
 
-	global $db, $config;
-
 	$deleted = 'deleted';
 	if($db->hasColumn('players', 'deletion'))
 		$deleted = 'deletion';
 
 	$results = [];
-	$query = $db->query('SELECT * FROM players WHERE players.id NOT IN (' . implode(', ', $config['highscores_ids_hidden']) . ') AND players.' . $deleted . ' = 0 AND players.group_id < '.$config['highscores_groups_hidden'].' AND broadcasting = 1 ORDER BY  viewers DESC LIMIT 5;');
+	$query = $db->query('SELECT * FROM players WHERE players.id NOT IN (' . implode(', ', config('highscores_ids_hidden')) . ') AND players.' . $deleted . ' = 0 AND players.group_id < '.config('highscores_groups_hidden').' AND broadcasting = 1 ORDER BY  viewers DESC LIMIT 5;');
 	if ($query->rowCount() > 0) {
 		$results = $query->fetchAll(\PDO::FETCH_ASSOC);
 	}
@@ -444,12 +444,11 @@ function oldschool_menu($category) {
 				<ul>
 					<?php
 					foreach($menus[$category] as $link) {
+						$target_blank = $link['target_blank'] ?? '';
+						$style_color = $link['style_color'] ?? '';
+
 						echo '<li><a href="' . $link['link_full'] . '" ' .
-							($link['blank']
-								? '
-			target="_blank"' :
-								'') . (strlen($link['color']) == 0 ? '' : 'style="color: #' . $link['color']) . ';">' .
-							$link['name'] . '</a></li>';
+							$target_blank . ' ' . $style_color . '>' . $link['name'] . '</a></li>';
 					}
 					?>
 				</ul>

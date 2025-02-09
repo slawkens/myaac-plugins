@@ -8,3 +8,6 @@ $config['menu_categories'] = [
 	MENU_CATEGORY_LIBRARY => ['name' => 'Library', 'image' => 'library'],
 	MENU_CATEGORY_SHOP => ['name' => 'Shop', 'image' => 'shop'],
 ];
+
+$config['menu_default_links_color'] = '#ffffff';
+$config['menus'] = require PLUGINS . 'theme-old-school/menus.php';

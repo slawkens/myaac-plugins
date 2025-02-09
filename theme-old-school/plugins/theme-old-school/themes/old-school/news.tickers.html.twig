@@ -5,11 +5,12 @@
 		<div class="content">
 			<div class="rise-up-content">
 				{% if tickers|length() > 0 %}
-				<table class="stripped" cellpadding="2" style="margin: 5px 0;">
+				<table class="myaac-table" cellpadding="2" style="margin: 5px 0;">
 					{% set i = 0 %}
 					{% for ticker in tickers %}
 					<tr>
-						<td><small>{{ ticker.date|date("j M Y") }}</small> -
+						<td>
+							<small>{{ ticker.date|date("j M Y") }}</small> -
 							<div class="changelog_small{{ i }}"  style="display: inline-block;">{{ ticker.body_short|raw }}</div>
 							<div class="changelog_big{{ i }}" style="display: none;">
 								{{ ticker.body|raw }}
