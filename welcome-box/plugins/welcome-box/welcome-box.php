@@ -16,29 +16,17 @@ if('news' !== PAGE) {
 	return;
 }
 
-require PLUGINS . 'welcome-box/WelcomeBox.php';
+$values = Cache::remember('welcome-box-values', 10 * 60, function() use ($db) {
+	require PLUGINS . 'welcome-box/WelcomeBox.php';
 
-global $twig_loader;
-$twig_loader->prependPath(BASE . 'plugins/welcome-box');
-
-$tmp = null;
-$cache = Cache::getInstance();
-if(!$cache->enabled() || !$cache->fetch('welcome-box-values', $tmp)) {
 	$welcomeBox = new WelcomeBox($db);
-	$values = [
+	return [
 		'lastJoinedPlayer' => $welcomeBox->getLastJoinedPlayer(),
 		'bestPlayer' => $welcomeBox->getBestPlayer(),
 		'total' => $welcomeBox->getTotal(),
 	];
+});
 
-	if($cache->enabled()) {
-		$cache->set('welcome-box-values', serialize($values), 10 * 60); // cache for 10 minutes
-	}
-}
-else {
-	$values = unserialize($tmp);
-}
-
-$twig->display('welcome-box.html.twig', [
+$twig->display('welcome-box/welcome-box.html.twig', [
 	'values' => $values
 ]);
