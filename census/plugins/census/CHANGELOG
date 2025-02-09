@@ -1,3 +1,8 @@
+[3.1 - 09.02.2025]
+	* don't use Twig global config variable
+	* use setting + config functions
+	* change var to const in few variables
+
 [3.0 - 27.01.2024]
 	* Update for MyAAC 1.0
 	* move page to plugins folder

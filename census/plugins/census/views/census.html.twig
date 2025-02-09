@@ -4,42 +4,43 @@
 	google.charts.setOnLoadCallback(drawChart);
 
 	function drawChart() {
-		var data_vocations = google.visualization.arrayToDataTable([
+		const data_vocations = google.visualization.arrayToDataTable([
 			['Vocation', 'Amount']
 			{% for vocation, amount in vocations %}
-			,['{{ config.vocations[vocation] }}', {{ amount }}]
+			, ['{{ config.vocations[vocation] }}', {{ amount }}]
 			{% endfor %}
 		]);
 
-		var chart_vocations = new google.visualization.PieChart(document.getElementById('vocations'));
+		const chart_vocations = new google.visualization.PieChart(document.getElementById('vocations'));
 		chart_vocations.draw(data_vocations, {
 			title: 'Vocations',
 			backgroundColor: { fill:'transparent' }
 		});
 
-		var data_gender = google.visualization.arrayToDataTable([
+		const data_gender = google.visualization.arrayToDataTable([
 			['Gender', 'Amount']
 			{% for v in genders %}
-			,['{{ config.genders[v.gender] }}', {{ v.amount }}]
+			, ['{{ setting('core.genders')[v.gender] }}', {{ v.amount }}]
 			{% endfor %}
 		]);
 
-		var chart_gender = new google.visualization.PieChart(document.getElementById('gender'));
+		const chart_gender = new google.visualization.PieChart(document.getElementById('gender'));
 		chart_gender.draw(data_gender, {
 			title: 'Gender',
 			backgroundColor: { fill:'transparent' }
 		});
 
-		{% if config.account_country %}
-		var data_countries = google.visualization.arrayToDataTable([
+		{% if setting('core.account_country') %}
+		const data_countries = google.visualization.arrayToDataTable([
 			['Country', 'Amount']
+			{% set configCountries = config('countries') %}
 			{% for v in countries %}
-			,['{% if config.countries[v.country] is defined %}{{ config.countries[v.country] }}{% else %}Unknown{% endif %}', {{ v.amount }}]
+			, ['{% if configCountries[v.country] is defined %}{{ configCountries[v.country] }}{% else %}Unknown{% endif %}', {{ v.amount }}]
 			{% endfor %}
-			,['Other', {{ countriesOther }}]
+			, ['Other', {{ countriesOther }}]
 		]);
 
-		var chart_countries = new google.visualization.PieChart(document.getElementById('countries'));
+		const chart_countries = new google.visualization.PieChart(document.getElementById('countries'));
 		chart_countries.draw(data_countries, {
 			title: 'Countries',
 			backgroundColor: { fill:'transparent' }
@@ -49,6 +50,6 @@
 </script>
 <div id="vocations" style="width: 100%; height: 300px;"></div>
 <div id="gender" style="width: 100%; height: 300px;"></div>
-{% if config.account_country %}
+{% if setting('core.account_country') %}
 <div id="countries" style="width: 100%; height: 300px;"></div>
 {% endif %}

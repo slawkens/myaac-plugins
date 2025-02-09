@@ -11,8 +11,6 @@ if(!isset($config['census_countries']))
 require PLUGINS . 'census/Census.php';
 require SYSTEM . 'countries.conf.php';
 
-$twig->addGlobal('config', $config);
-
 $census = new Census($db);
 
 $twig->display('census/views/census.html.twig', [
