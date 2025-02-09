@@ -31,13 +31,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 		</div>
 	</div>
 	<?php
-		$menu_table_exist = tableExist(TABLE_PREFIX . 'menu');
-		if($menu_table_exist) {
-			require_once($template_path . '/menu/top_dynamic.php');
-		}
-		else {
-			require_once($template_path . '/menu/top.php');
-		}
+		require_once($template_path . '/menu/top_dynamic.php');
 	?>
 	<div id="bar">
 		<div class="container">
@@ -137,12 +131,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 
 <div id="sidebar">
 	<?php
-		if($menu_table_exist) {
-			require_once($template_path . '/menu/main_dynamic.php');
-		}
-		else {
-			require_once($template_path . '/menu/main.php');
-		}
+		require_once($template_path . '/menu/main_dynamic.php');
 	?>
 </div>
 <div style="clear: both;">&nbsp;</div>
