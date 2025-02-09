@@ -46,7 +46,7 @@
 
 			<section id="sidebar-misc">
 				<?php include __DIR__ . '/widgets/server-info.php'; ?>
-				<?php include __DIR__ . '/widgets/top-players.php'; ?>
+				<?php /*include __DIR__ . '/widgets/top-players.php';*/ ?>
 			</section>
 		</aside>
 
