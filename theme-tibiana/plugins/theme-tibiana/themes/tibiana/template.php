@@ -1,22 +1,11 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-if(!version_compare(MYAAC_VERSION, '1.0-beta', '>=')) {
-	echo 'MyAAC 1.0 is required.';
-	exit;
-}
-
 $menus = get_template_menus();
 
 if(count($menus) === 0) {
-	$text = "Please install the $template_name template in Admin Panel, so the menus will be imported too.";
-	if(version_compare(MYAAC_VERSION, '0.8.0', '>=')) {
-		throw new RuntimeException($text);
-	}
-	else {
-		echo $text;
-		exit;
-	}
+	$text = "Please install the $template_name Theme in Admin Panel, so the menus will be imported too.";
+	throw new RuntimeException($text);
 }
 ?>
 
@@ -85,7 +74,7 @@ if(count($menus) === 0) {
 		  <div class="box-side-footer"></div>
 		</div>
 	</div>
-		<a href="index.php" id="header"></a>
+		<a href="<?= getLink('news'); ?>" id="header"></a>
 		<div id="topbar">
 			<ul>
 				<?= tibiana_get_links(MENU_CATEGORY_TOP) ?>
@@ -144,7 +133,7 @@ if(count($menus) === 0) {
 
 					<div align="center" style="font-face:verdana; font-size:10px">
 						<?php echo template_footer();
-						if($config['template_allow_change'])
+						if(config('template_allow_change'))
 							echo template_form();
 						?>
 					</div>
@@ -181,10 +170,11 @@ function tibiana_get_links($category)
 	global $menus;
 
 	$ret = '';
-	foreach ($menus[$category] as $menu) {
-		$ret .= '<li><a href="' . $menu['link_full'] . '" ' . ($menu['blank'] ? ' target="_blank"' :
-				'') . (strlen($menu['color']) == 0 ? '' : 'style="color: #' . $menu['color']) . ';">' .
-			$menu['name'] . '</a></li>';
+	foreach ($menus[$category] as $link) {
+		$target_blank = $link['target_blank'] ?? '';
+		$style_color = $link['style_color'] ?? '';
+
+		$ret .= '<li><a href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color . '>' . $link['name'] . '</a></li>';
 	}
 
 	return $ret;

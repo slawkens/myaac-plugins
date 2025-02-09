@@ -1,3 +1,6 @@
+[2.1 - 09.02.2025]
+	* support for reset menus + menu_default_links_colors
+
 [2.0 - 27.01.2024]
 	* Update for MyAAC 1.0
 	* move template to plugins folder
