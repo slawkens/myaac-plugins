@@ -26,13 +26,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 		<div id="menu_container">
 		  <ul class="sf-menu" id="nav">
 			<?php
-				$menu_table_exist = tableExist(TABLE_PREFIX . 'menu');
-				if($menu_table_exist) {
-					require_once($template_path . '/menu_dynamic.php');
-				}
-				else {
-					require_once($template_path . '/menu.php');
-				}
+			require_once($template_path . '/menu_dynamic.php');
 			?>
 		  </ul>
 		</div>
@@ -42,17 +36,17 @@ defined('MYAAC') or die('Direct access not allowed!');
 		<div id="sidebar_container">
 			<?php
 			if($logged) {
-				include($template_path . '/widgets/loggedin.php');
+				include(__DIR__ . '/widgets/logged-in.php');
 			} else {
-				include($template_path . '/widgets/login.php');
+				include(__DIR__ . '/widgets/login.php');
 			}
-			if($logged && admin()) {
-				include($template_path . '/widgets/admin.php');
+			if(admin()) {
+				include(__DIR__ . '/widgets/admin.php');
 			}
-			
-			foreach(glob( $template_path . '/widgets/*.php') as $file) {
+
+			foreach(glob( __DIR__ . '/widgets/*.php') as $file) {
 				$filename = pathinfo($file, PATHINFO_FILENAME);
-				if($filename != "login" && $filename != "loggedin" && $filename != "admin") {
+				if($filename != 'login' && $filename != 'logged-in' && $filename != "admin") {
 					include($file);
 				}
 			}
@@ -73,7 +67,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 	<script type="text/javascript" src="js/jquery.easing-sooper.js"></script>
 	<script type="text/javascript" src="js/jquery.sooperfish.js"></script>
 	<script type="text/javascript">
-	$(document).ready(function() {
+	$(function() {
 	 	$('ul.sf-menu').sooperfish();
 		$('.top').click(function() {$('html, body').animate({scrollTop:0}, 'fast'); return false;});
 	});

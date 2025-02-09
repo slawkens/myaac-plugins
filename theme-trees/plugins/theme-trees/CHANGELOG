@@ -1,3 +1,8 @@
+[2.2 - 09.02.2025]
+	* support for reset menus + menu_default_links_color
+	* fix buttons look and feel
+	* refactoring
+
 [2.1 - 08.12.2024]
 	* better content background
 	* margin fixes

@@ -1,0 +1,12 @@
+
+{% set color = '#555747' %}
+
+{% if button_color is defined %}
+	{% if button_color == 'green' %}
+		{% set color = 'green' %}
+	{% elseif button_color == 'red' %}
+		{% set color = 'red' %}
+	{% endif %}
+{% endif %}
+
+<input class="button" style="background: {{ color }}" type="submit" name="Submit" value="Submit" />

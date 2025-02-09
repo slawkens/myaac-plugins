@@ -1,12 +1,13 @@
 <?php
 $config['menu_categories'] = array(
-	1 => array('name' => 'Home'),
-	2 => array('name' => 'Community'),
-	3 => array('name' => 'Library'),
-	4 => array('name' => 'Forum'),
-	5 => array('name' => 'Help'),
-	6 => array('name' => 'Shop'),
-	7 => array('name' => 'Account Menu')
+	1 => ['name' => 'Home'],
+	2 => ['name' => 'Community'],
+	3 => ['name' => 'Library'],
+	4 => ['name' => 'Forum'],
+	5 => ['name' => 'Help'],
+	6 => ['name' => 'Shop'],
+	7 => ['name' => 'Account Menu', 'default_links_color' => '#555555'],
 );
 
-?>
+$config['menu_default_links_color'] = '#ffffff';
+$config['menus'] = require PLUGINS . 'theme-trees/menus.php';

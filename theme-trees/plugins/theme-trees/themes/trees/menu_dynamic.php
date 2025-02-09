@@ -3,8 +3,9 @@ defined('MYAAC') or die('Direct access not allowed!');
 
 $menus = get_template_menus();
 
+$configMenuCategories = config('menu_categories');
 foreach($menus as $category => $menu) {
-	if(!isset($menus[$category]) || $category == 7 || ($category == 6 && !$config['gifts_system'])) { // ignore Account Menu and shop system if disabled
+	if(!isset($menus[$category]) || $category == 7 || ($category == 6 && !config('gifts_system'))) { // ignore Account Menu and shop system if disabled
 		continue;
 	}
 
@@ -15,9 +16,12 @@ foreach($menus as $category => $menu) {
 		continue;
 	}
 
-	echo '<li><a href="#">' . $config['menu_categories'][$category]['name'] . '</a><ul>';
-	foreach($menus[$category] as $_menu) {
-		echo '<li><a href="' . $_menu['link_full'] . '"' . $_menu['target_blank'] . '>' . $_menu['name'] . '</a></li>';
+	echo '<li><a href="#">' . $configMenuCategories[$category]['name'] . '</a><ul>';
+	foreach($menus[$category] as $link) {
+		$target_blank = $link['target_blank'] ?? '';
+		$style_color = $link['style_color'] ?? '';
+
+		echo '<li><a href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color . '>' . $link['name'] . '</a></li>';
 	}
 
 	echo '</ul></li>';
