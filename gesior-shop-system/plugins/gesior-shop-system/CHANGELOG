@@ -1,3 +1,6 @@
+[6.0.4 - 09.02.2025]
+	* change schema engine + character set
+
 [6.0.3 - 23.01.2025]
 	* Reorder some code causing problems on install with missing columns in db
 	* log additional info in paypal ipn script

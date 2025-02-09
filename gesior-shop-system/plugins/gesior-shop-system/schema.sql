@@ -12,14 +12,14 @@ CREATE TABLE IF NOT EXISTS `z_ots_comunication` (
 	`param7` VARCHAR(255) NOT NULL DEFAULT '',
 	`delete_it` INT(2) NOT NULL DEFAULT '1',
 	PRIMARY KEY  (`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `z_shop_categories` (
 	`id` INT(11) NOT NULL,
 	`name` VARCHAR(32) NOT NULL,
 	`hidden` TINYINT(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY  (`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `z_shop_history` (
 	`id` INT(11) NOT NULL auto_increment,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `z_shop_history` (
 	`trans_real` INT(11) NOT NULL DEFAULT 0,
 	`is_pacc` TINYINT(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY  (`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `z_shop_offer` (
 	`id` INT(11) NOT NULL auto_increment,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `z_shop_offer` (
 	`hidden` TINYINT(1) NOT NULL DEFAULT 0,
 	`ordering` INT(11) NOT NULL DEFAULT 0,
 	PRIMARY KEY  (`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `crypto_payments` (
   `paymentID` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `myaac_paypal` (
 	`payment_status` varchar(255) NOT NULL,
 	`created` datetime NOT NULL,
 	PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS  `stripe` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
@@ -120,4 +120,4 @@ CREATE TABLE IF NOT EXISTS  `stripe` (
 	`api_version` varchar(255) NOT NULL,
 	`created` datetime NOT NULL,
 	PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4;
