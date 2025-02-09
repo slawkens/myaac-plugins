@@ -1,28 +1,11 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-if(!version_compare(MYAAC_VERSION, '1.0-beta', '>=')) {
-	echo 'MyAAC 1.0 is required.';
-	exit;
-}
-
 $menus = get_template_menus();
-foreach($menus as $cat => &$_menus) {
-	foreach($_menus as &$menu) {
-		$link_full = strpos(trim($menu['link']), 'http') === 0 ? $menu['link'] : getLink($menu['link']);
-		$menu['link_full'] = $link_full;
-	}
-}
 
 if(count($menus) === 0) {
 	$text = "Please install the $template_name template in Admin Panel, so the menus will be imported too.";
-	if(version_compare(MYAAC_VERSION, '0.8.0', '>=')) {
-		throw new RuntimeException($text);
-	}
-	else {
-		echo $text;
-		exit;
-	}
+	throw new RuntimeException($text);
 }
 ?>
 
@@ -39,7 +22,7 @@ if(count($menus) === 0) {
 	<link rel="stylesheet" href="<?= $template_path; ?>/css/main.css" type="text/css"/>
 	<script src="<?= $template_path; ?>/js/semantic.min.js"></script>
 	<script>
-		$(document).ready(function() {
+		$(function() {
 			$(".ui.dropdown").dropdown();
 		});
 	</script>
@@ -55,7 +38,7 @@ if(count($menus) === 0) {
 <?= template_place_holder('body_start') ?>
 <div class="ui stackable container">
 	<h1 class="ui header" style="margin-top: 15px">
-		<a href="<?= getLink('') ?>"><?= $config['lua']['serverName'] ?></a>
+		<a href="<?= getLink('') ?>"><?= configLua('serverName') ?></a>
 	</h1>
 	<div class="row">
 		<div class="ui stackable container huge menu">
@@ -73,7 +56,7 @@ if(count($menus) === 0) {
 						<?php semantic_menus(MENU_CATEGORY_LIBRARY, true); ?>
 					</div>
 				</div>
-				<?php if($config['gifts_system']) { ?>
+				<?php if(config('gifts_system')) { ?>
 				<div class="ui dropdown item">
 					Shop <i class="dropdown icon"></i>
 					<div class="menu">
@@ -129,7 +112,7 @@ if(count($menus) === 0) {
 <footer>
 	<div class="ui center aligned container">
 		<?php echo template_footer();
-		if($config['template_allow_change'])
+		if(config('template_allow_change'))
 			echo template_form();
 		?>
 	</div>
@@ -149,12 +132,10 @@ function semantic_menus($category, $submenu = false)
 	}
 
 	$i = 0;
-	foreach ($menus[$category] as $menu) {
-		echo '<a class="' . ($i++ === 0 && !$submenu ? 'active ' : '') . 'item" href="' . $menu['link_full'] . '" ' .
-			($menu['blank']
-				? '
-				target="_blank"' :
-				'') . (strlen($menu['color']) == 0 ? '' : 'style="color: #' . $menu['color']) . ';">' .
-			$menu['name'] . '</a>';
+	foreach ($menus[$category] as $link) {
+		$target_blank = $link['target_blank'] ?? '';
+		$style_color = $link['style_color'] ?? '';
+
+		echo '<a class="' . ($i++ === 0 && !$submenu ? 'active ' : '') . 'item" href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color . '>' . $link['name'] . '</a>';
 	}
 }

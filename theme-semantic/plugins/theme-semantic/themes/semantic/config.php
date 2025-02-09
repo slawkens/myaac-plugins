@@ -8,4 +8,5 @@ $config['menu_categories'] = [
 	MENU_CATEGORY_SHOP => ['name' => 'Shop'],
 ];
 
-$config['menu_default_color'] = '#000000';
+$config['menu_default_links_color'] = '#000000';
+$config['menus'] = require PLUGINS . 'theme-semantic/menus.php';

@@ -1,3 +1,7 @@
+[3.2 - 09.02.2025]
+	* support for reset menus + menu_default_links_colors
+	* refactoring
+
 [3.1.2 - 17.01.2025]
 	* Fix account create template by changing password input to password_confirm (latest myaac)
 	* require MyAAC v1.0
