@@ -23,13 +23,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 				<div id="cnt-left">
 					<div id="menu">
 						<?php
-						$menu_table_exist = tableExist(TABLE_PREFIX . 'menu');
-						if($menu_table_exist) {
 							require_once($template_path . '/menu_dynamic.php');
-						}
-						else {
-							require_once($template_path . '/menu.php');
-						}
 						?>
 						<?php if(config('template_allow_change')): ?>
 							<div id="menu-top">Change template</div>

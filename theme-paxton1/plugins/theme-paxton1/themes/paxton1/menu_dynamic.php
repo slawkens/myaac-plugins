@@ -14,10 +14,11 @@ foreach($menus as $category => $menu) {
 		<li>
 			<ul>
 <?php
-	foreach($menu as $_menu) { ?>
-			<li><a href="<?= $_menu['link_full']; ?>" <?= ($_menu['blank'] ? ' target="_blank"' : '');
-			?>><?= $_menu['name']; ?></a></li>
-<?php
+	foreach($menu as $link) {
+		$target_blank = $link['target_blank'] ?? '';
+		$style_color = $link['style_color'] ?? '';
+
+		echo '<li><a href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color . '>' . $link['name'] . '</a></li>';
 	}
 ?>
 			</ul>
