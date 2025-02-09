@@ -10,7 +10,7 @@ return [
 	MENU_CATEGORY_ACCOUNT => [ // Account
 		'Account Management' => 'account/manage',
 		'Create Account' => 'account/create',
-		'Lost Account Interface' => 'account/lost',
+		'Lost Account' => 'account/lost',
 		'Downloads' => 'downloads',
 	],
 	MENU_CATEGORY_COMMUNITY => [ // Community

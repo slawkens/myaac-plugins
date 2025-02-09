@@ -7,4 +7,6 @@ $config['menu_categories'] = array(
 	MENU_CATEGORY_LIBRARY => array('id' => 'library', 'name' => 'Library'),
 	MENU_CATEGORY_SHOP => array('id' => 'shops', 'name' => 'Shop')
 );
-?>
+
+$config['menu_default_links_color'] = '#a49d9d';
+$config['menus'] = require PLUGINS . 'theme-emma/menus.php';

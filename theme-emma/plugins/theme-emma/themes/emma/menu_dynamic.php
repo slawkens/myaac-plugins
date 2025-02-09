@@ -2,8 +2,9 @@
 defined('MYAAC') or die('Direct access not allowed!');
 
 $menus = get_template_menus();
-foreach($config['menu_categories'] as $id => $cat) {
-	if(!isset($menus[$id]) || ($id == MENU_CATEGORY_SHOP && !$config['gifts_system'])) { // ignore Account Menu and shop system if disabled
+foreach(config('menu_categories') as $id => $cat) {
+	if(!isset($menus[$id]) || ($id == MENU_CATEGORY_SHOP && !setting('core.gifts_system'))) { // ignore Account Menu and
+		// shop system if disabled
 		continue;
 	}
 
@@ -16,15 +17,13 @@ foreach($config['menu_categories'] as $id => $cat) {
 	<div id="' . $cat['id'] . '_Submenu">
 		<div class="submenu">
 			<ul>';
-	foreach($menus[$id] as $_menu) {
-		if(strpos(trim($_menu['link']), 'http') === 0) {
-			echo '<li class="menu-item"><a href="' . $_menu['link'] . '" target="_blank">' . $_menu['name'] . '</a></li>';
-		}
-		else {
-			echo '<li class="menu-item"><a href="' . getLink($_menu['link']) . '">' . $_menu['name'] . '</a></li>';
-		}
+	foreach($menus[$id] as $link) {
+		$target_blank = $link['target_blank'] ?? '';
+		$style_color = $link['style_color'] ?? '';
+
+		echo '<li class="menu-item"><a href="' . $link['link_full'] . '" ' . $target_blank . ' ' . $style_color .	'>' . $link['name'] . '</a></li>';
 	}
-	
+
 	echo '</ul>
 		</div>
 	</div>
