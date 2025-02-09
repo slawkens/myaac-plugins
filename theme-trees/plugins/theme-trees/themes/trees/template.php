@@ -26,7 +26,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 		<div id="menu_container">
 		  <ul class="sf-menu" id="nav">
 			<?php
-			require_once($template_path . '/menu_dynamic.php');
+			require_once(__DIR__ . '/menu_dynamic.php');
 			?>
 		  </ul>
 		</div>
@@ -69,7 +69,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 	<script type="text/javascript">
 	$(function() {
 	 	$('ul.sf-menu').sooperfish();
-		$('.top').click(function() {$('html, body').animate({scrollTop:0}, 'fast'); return false;});
+		$('.top').on('click', function() {$('html, body').animate({scrollTop:0}, 'fast'); return false;});
 	});
 	</script>
 	<?php echo template_place_holder('body_end'); ?>
