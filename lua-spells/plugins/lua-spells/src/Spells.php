@@ -90,7 +90,7 @@ class Spells
 				$spell = eval($toBeParsed);
 			} catch (\ParseError $e) {
 				if ($show) {
-					warning('Error while parsing spell: ' . $e->getMessage());
+					warning('Error while parsing spell - ' . $file . ': ' . $e->getMessage());
 				}
 
 				continue;
