@@ -2,7 +2,7 @@
 	"name": "Lua Spells",
 	"description": "Support for Lua Spells (revscript).",
 	"version": "1.0",
-	"type": "plugin",
+	"type": "page",
 	"license": "GPLv3",
 	"author": "slawkens",
 	"contact": "slawkens@gmail.com",
