@@ -1,5 +1,5 @@
 {% set itemImagesURL = setting('core.item_images_url') %}
-
+{% set itemImagesExt = setting('core.item_images_extension') %}
 <style>
 
 	.ts_Spells > input[type="radio"] {
@@ -144,11 +144,11 @@
 								<small>
 									{% if (spell.conjure_count < 150) and ( spell.conjure_count > 0) %} {{ spell.conjure_count }}x
 										<br/>{% endif %}</small>
-								<img src="{{ itemImagesURL }}/{{ spell.conjure_id }}.gif"
+								<img src="{{ itemImagesURL }}/{{ spell.conjure_id }}{{ itemImagesExt }}"
 									 width="32" height="32" border="0"
 									 alt="{{ spell.conjure_id }}"></td>
 							<td>{% if (spell.reagent > 0) %}
-									<img src="{{ itemImagesURL }}/{{ spell.reagent }}.gif"
+									<img src="{{ itemImagesURL }}/{{ spell.reagent }}{{ itemImagesExt }}"
 										 width="32" height="32" border="0"
 										 alt="{{ spell.reagent }}">{% else %}---{% endif %}</td>
 							<td>
@@ -188,7 +188,7 @@
 							<td>{{ spell.name }}</td>
 							<td>{{ spell.level }}</td>
 							<td>{{ spell.maglevel }}</td>
-							<td><img src="{{ itemImagesURL }}/{{ spell.rune_id }}.gif"
+							<td><img src="{{ itemImagesURL }}/{{ spell.rune_id }}{{ itemImagesExt }}"
 									 width="32" height="32" border="0"
 									 alt="{{ spell.rune_id }}"></td>
 							<td>{{ spell.group|capitalize }}</td>
