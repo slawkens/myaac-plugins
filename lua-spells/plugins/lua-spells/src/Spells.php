@@ -80,12 +80,13 @@ class Spells
 
 				$toBeParsed = "if (!defined('cooldown')) {define('cooldown', 1);}  " . $toBeParsed;
 			}
+
+			//global $whoopsHandler;
+			//$whoopsHandler->addDataTable('test', [$toBeParsed]);
+
 			/**
 			 * @var LuaSpell $spell
 			 */
-			global $whoopsHandler;
-			$whoopsHandler->addDataTable('test', [$toBeParsed]);
-
 			try {
 				$spell = eval($toBeParsed);
 			} catch (\ParseError $e) {
