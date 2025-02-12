@@ -72,7 +72,7 @@ class Spells
 
 			$replacedSoundEffects = preg_replace('/SOUND_EFFECT_TYPE_([a-zA-Z0-9_]+)/', '1', $removeComments);
 
-			$toBeParsed = 'use MyAAC\Plugins\LuaSpells\LuaSpell; $spell = new LuaSpell();' . $replacedSoundEffects . ' return $spell;';
+			$toBeParsed = 'use MyAAC\Plugins\LuaSpells\LuaSpell; $spell = new LuaSpell();' . $replacedSoundEffects . '; return $spell;';
 
 			$toBeParsed = str_replace('spellId', '1', $toBeParsed);
 			if (preg_match('/local cooldown = \d+/', $spellContent, $matches)) {
@@ -82,7 +82,8 @@ class Spells
 			}
 
 			//global $whoopsHandler;
-			//$whoopsHandler->addDataTable('test', [$toBeParsed]);
+			//$whoopsHandler->addDataTable('scriptContent', [$toBeParsed]);
+			//$whoopsHandler->addDataTable('scriptName', [$file]);
 
 			/**
 			 * @var LuaSpell $spell
