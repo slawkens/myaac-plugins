@@ -1,0 +1,29 @@
+{
+	"name": "Lua Monsters",
+	"description": "Support for Lua Monsters (revscript) - currently only Canary engine.",
+	"version": "1.0",
+	"type": "page",
+	"license": "GPLv3",
+	"author": "slawkens",
+	"contact": "slawkens@gmail.com",
+	"autoload": {
+		"pages": false
+	},
+	"routes": {
+		"monsters-page": {
+			"pattern": "monsters[/{name:string}]",
+			"file": "plugins/lua-monsters/pages/monsters.php",
+			"method": "get,post"
+		}
+	},
+	"require": {
+		"myaac": "1.0-RC",
+		"php": "8.1",
+		"php-ext": "lua"
+	},
+	"install": "plugins/lua-monsters/install.php",
+	"uninstall": [
+		"plugins/lua-monsters.json",
+		"plugins/lua-monsters"
+	]
+}
