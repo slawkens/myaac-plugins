@@ -10,7 +10,20 @@ class Monsters
 	public static function reload($show = false): bool
 	{
 		self::clearDatabase($show);
-		self::loadFromLua(config('server_path') . 'data-otservbr-global/monster', $show);
+
+		$dataPackDirectory = configLua('dataPackDirectory');
+		$dataPathFull = config('server_path') . $dataPackDirectory;
+		if (empty($dataPackDirectory) || !is_dir($dataPathFull)) {
+			error("config.lua: the dataPackDirectory folder doesn't exist! Using data/");
+			$dataPathFull = config('server_path') . 'data';
+		}
+
+		$monstersPath = $dataPathFull . '/monster';
+
+		success('Loading from: ' . $monstersPath);
+		self::loadFromLua($monstersPath, $show);
+
+		success('Loaded ' . LuaMonsterModel::count() . ' monsters.');
 
 		return true;
 	}

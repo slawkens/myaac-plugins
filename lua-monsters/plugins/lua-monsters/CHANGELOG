@@ -1,5 +1,7 @@
 [1.0.1 - 15.02.2025]
 	* fix loading of few monsters in opentibiabr canary
+	* use dataPackDirectory from config.lua to determine monsters folder
+	* display monsters loaded count
 
 [1.0 - 14.02.2025]
 	* first release
