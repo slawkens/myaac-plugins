@@ -24,16 +24,15 @@ if(admin()) {
 	echo $twig->render('lua-monsters/views/reload.html.twig');
 }
 
-if (empty($_REQUEST['name'])) {
+if (empty($_GET['name'])) {
 	// display list of monsters
 	$preview = setting('core.monsters_images_preview');
-	$monsters = LuaMonsterModel::where('hide', '!=', 1)->when(!empty($_REQUEST['boss']), function ($query) {
+	$monsters = LuaMonsterModel::where('hide', '!=', 1)->when(!empty($_GET['boss']), function ($query) {
 		$query->where('rewardboss', 1);
 	})->get()->toArray();
 
 	if ($preview) {
-		foreach($monsters as $key => &$monster)
-		{
+		foreach($monsters as $key => &$monster) {
 			$monster['img_link'] = getMonsterImgPath($monster['name']);
 		}
 	}
@@ -47,15 +46,14 @@ if (empty($_REQUEST['name'])) {
 }
 
 // display monster
-$monster_name = urldecode(stripslashes(ucwords(strtolower($_REQUEST['name']))));
+$monster_name = urldecode(stripslashes(ucwords(strtolower($_GET['name']))));
 $monsterModel = LuaMonsterModel::where('hide', '!=', 1)->where('name', $monster_name)->first();
 
 if ($monsterModel && isset($monsterModel->name)) {
 	/** @var array $monster */
 	$monster = $monsterModel->toArray();
 
-	function sort_by_chance($a, $b)
-	{
+	function sort_by_chance($a, $b) {
 		if ($a['chance'] == $b['chance']) {
 			return 0;
 		}
