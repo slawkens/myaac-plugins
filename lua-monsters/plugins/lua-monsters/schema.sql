@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `myaac_lua_monsters` (
 	`defense` INT(11) NOT NULL DEFAULT '0',
 	`armor` INT(11) NOT NULL DEFAULT '0',
 	`race` varchar(255) NOT NULL DEFAULT '',
-	`loot` varchar(10000) NOT NULL DEFAULT '',
+	`loot` varchar(5000) NOT NULL DEFAULT '',
 	`summons` varchar(1000) NOT NULL DEFAULT '',
 	`flags` varchar(1000) NOT NULL DEFAULT '',
 	`hide` tinyint(1) NOT NULL default 0,
