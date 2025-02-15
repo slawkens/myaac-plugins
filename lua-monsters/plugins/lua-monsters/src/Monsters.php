@@ -51,10 +51,25 @@ class Monsters
 		$luaMonstersLoader = file_get_contents(__DIR__ . '/MonsterLoader.lua');
 
 		foreach ($files as $file) {
-			$monsterFileContent = file_get_contents($file);
-			$monsterFileContent = str_replace('dofile("data-otservbr-global/monster/', 'dofile("' . config('data_path') . 'monster/', $monsterFileContent);
+			if (str_contains($file, '_functions')) {
+				continue;
+			}
 
-			$removeStorage = preg_replace('/storage([a-zA-Z0-9\/ =_.]+)/', 'storage = 1', $monsterFileContent);
+			$monsterFileContent = file_get_contents($file);
+			//$monsterFileContent = str_replace('dofile("data-otservbr-global/monster/', 'dofile("' . config
+			//('data_path') . 'monster/', $monsterFileContent);
+
+			$explodeMonster = preg_split('/\r\n|\r|\n/', $monsterFileContent);
+			$newStr = '';
+			foreach( $explodeMonster as $line ) {
+				if (!str_contains($line, 'Zone.getByName(') && !str_contains($line, 'zone:getPositions()')) {
+					$newStr .= $line . PHP_EOL;
+				}
+			}
+
+			$replaceSoulWarQuest = str_replace('SoulWarQuest.goshnarsCrueltyWaveInterval', 1, $newStr);
+
+			$removeStorage = preg_replace('/	storage([a-zA-Z0-9\/ =_.]+)/', '	storage = 1', $replaceSoulWarQuest);
 
 			// determine name, weird hack
 			preg_match('/Game\.createMonsterType\("([a-zA-Z0-9\/ \'=\-_.()]+)"\)/', $removeStorage, $matches);
@@ -136,7 +151,9 @@ class Monsters
 			}
 			catch (\Exception $exception) {
 				error('Error in ' . $file . ' :: ' . $exception->getMessage());
+				//echo '<pre>';
 				//error($luaCode);
+				//echo '</pre>';
 			}
 		}
 	}
