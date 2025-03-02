@@ -103,3 +103,27 @@ $config['cryptobox'] = array(
 		'20.00' => 130
 	)
 );
+
+$config['hotpay'] = [
+	// it only disables possibility to create new payments, old payments will still add points
+	'enabled' => false,
+
+	/*
+	 * Adres do notyfikacji do ustawienia w panelu to: https://twoja-domena.pl/payments-notify/hotpay
+	 * Dodać w firewall, Cloudflare itp. IP serwerów HotPay. Lista jest w dokumentacji HotPay.
+	 * HotPay serwery notyfikacji: https://dokumentacja.hotpay.pl/#inicjalizacja-patnosci
+	*/
+
+	'haslo_z_ustawien' => 'haslo_ustawione_w_panelu_hotpay',
+	'sekret_uslugi' => 'token_wygenerowany_przez_hotpay',
+	'nazwa_uslugi' => 'ustawiona_nazwa_uslugi',
+
+	'adres_powrotu' => getLink('gifts'),
+
+	'options' => [
+		// PLN => points
+		'5' => 10,
+		'10' => 25,
+		'20' => 60,
+	],
+];

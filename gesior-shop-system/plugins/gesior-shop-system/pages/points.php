@@ -50,6 +50,7 @@ $enabled = array(
 	'stripe' => isset($config['stripe']) && $config['stripe']['enabled'],
 	'fortumo' => isset($config['fortumo']) && $config['fortumo']['enabled'],
 	'cryptobox' => isset($config['cryptobox']) && $config['cryptobox']['enabled'],
+	'hotpay' => isset($config['hotpay']) && $config['hotpay']['enabled'],
 );
 
 if(isset($_GET['system'])) {

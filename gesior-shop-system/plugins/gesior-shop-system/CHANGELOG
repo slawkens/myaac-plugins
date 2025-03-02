@@ -1,3 +1,6 @@
+[7.0-alpha 02.03.2025]
+	* add hotpay.pl gateway (original by @gesior)
+
 [6.0.4 - 09.02.2025]
 	* change schema engine + character set
 
