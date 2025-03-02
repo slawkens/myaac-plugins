@@ -36,6 +36,10 @@ defined('MYAAC') or die('Direct access not allowed!');
 require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 
+if(!isset($config['cryptobox']) || !count($config['cryptobox']) || !count($config['cryptobox']['options'])) {
+	die('CryptoBox disabled.');
+}
+
 if(!defined("CRYPTOBOX_WORDPRESS")) define("CRYPTOBOX_WORDPRESS", false);
 
 if (!CRYPTOBOX_WORDPRESS) include_once(PLUGINS . 'gesior-shop-system/libs/cryptobox.class.php');
