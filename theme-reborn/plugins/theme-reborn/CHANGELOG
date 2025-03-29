@@ -1,3 +1,6 @@
+[2.0.4 - 29.03.2025]
+	* Fix uninstall paths
+
 [2.0.3 - 23.01.2025]
 	* replace spaceless with apply spaceless (has been removed twig)
 
