@@ -7,7 +7,7 @@ ini_set('max_execution_time', 300);
 
 class Items
 {
-	private $exist = [];
+	private array $exist = [];
 
 	private $db;
 
@@ -17,11 +17,8 @@ class Items
 	 *
 	 * @param $db
 	 */
-	public function __construct($db)
-	{
+	public function __construct($db) {
 		$this->db = $db;
-
-		$this->ensureTableLoaded();
 	}
 
 	/**
@@ -45,7 +42,7 @@ class Items
 		}
 
 		// Deletes all rows from the list_of_items table
-		$this->db->query("DELETE FROM `list_of_items`;");
+		$this->db->query("DELETE FROM `" . TABLE_PREFIX . "list_of_items`;");
 
 		$this->loadItemsIntoDatabase($items);
 	}
@@ -85,15 +82,18 @@ class Items
 		$type = '';
 		$level = 0;
 
+		$attributes = [];
 		foreach( $item->getElementsByTagName('attribute') as $attribute)
 		{
+			$attributes[$attribute->getAttribute('key')] = $attribute->getAttribute('value');
+
 			if ($attribute->getAttribute('key') == 'description'){
 				$description = $attribute->getAttribute('value');
 				continue;
 			}
 
-			if ($attribute->getAttribute('key') == 'weaponType') {
-				$type = $attribute->getAttribute('value');
+			if (strtolower($attribute->getAttribute('key')) == 'weapontype') {
+				$type = strtolower($attribute->getAttribute('value'));
 
 				if ($type == 'axe' || $type == 'club' || $type == 'sword') {
 					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
@@ -105,7 +105,7 @@ class Items
 				}
 				if ($type == 'shield') {
 					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
-						if($_attribute->getAttribute('key') == 'defense') {
+						if(strtolower($_attribute->getAttribute('key')) == 'defense') {
 							$level = $_attribute->getAttribute('value');
 							break;
 						}
@@ -115,8 +115,8 @@ class Items
 				continue;
 			}
 
-			if ($attribute->getAttribute('key') == 'slotType' && empty($type)) {
-				$type = $attribute->getAttribute('value');
+			if (strtolower($attribute->getAttribute('key')) == 'slottype' && empty($type)) {
+				$type = strtolower($attribute->getAttribute('value'));
 
 				if ($type == 'head' || $type == 'body' || $type == 'legs' || $type == 'feet') {
 					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
@@ -128,7 +128,41 @@ class Items
 				}
 				else if ($type == 'backpack') {
 					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
-						if($_attribute->getAttribute('key') == 'containerSize') {
+						if(strtolower($_attribute->getAttribute('key')) == 'containersize') {
+							$level = $_attribute->getAttribute('value');
+							break;
+						}
+					}
+				}
+			}
+
+			if (strtolower($attribute->getAttribute('key')) == 'primarytype' && empty($type)) {
+				switch(strtolower($attribute->getAttribute('value'))) {
+					case 'helmets':
+						$type = 'head';
+						break;
+					case 'armors':
+						$type = 'body';
+						break;
+					case 'legs':
+						$type = 'legs';
+						break;
+					case 'boots':
+						$type = 'feet';
+						break;
+					case 'shields':
+						$type = 'shield';
+						break;
+					case 'rings':
+						$type = 'ring';
+						break;
+					case 'amulets and necklaces':
+						$type = 'necklace';
+				}
+
+				if ($type == 'head' || $type == 'body' || $type == 'legs' || $type == 'feet') {
+					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
+						if(strtolower($_attribute->getAttribute('key')) == 'armor') {
 							$level = $_attribute->getAttribute('value');
 							break;
 						}
@@ -138,29 +172,19 @@ class Items
 		}
 
 		if (!isset($this->exist[$id])) {
-			$this->db->insert('list_of_items', [
+			$this->db->insert(TABLE_PREFIX . 'list_of_items', [
 				'id' => $id,
 				'name' => $item->getAttribute('name'),
 				'description' => $description,
 				'level' => $level,
 				'type' => $type,
+				'attributes' => json_encode($attributes),
 			]);
 
 			$this->exist[$id] = true;
 		}
-	}
-
-	/**
-	 * Check if table for items exists in database
-	 * If not - then create it
-	 *
-	 * @return void
-	 */
-	private function ensureTableLoaded() {
-		// Checks if the list_of_items table already exists, if not, it creates it in the database.
-		if(!tableExist('list_of_items'))
-		{
-			$this->db->query(file_get_contents(__DIR__ . '/schema.sql'));
+		else {
+			warning('Duplicated item id: ' . $id);
 		}
 	}
 }

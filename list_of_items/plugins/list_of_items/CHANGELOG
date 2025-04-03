@@ -1,3 +1,12 @@
+[5.0 - 03.04.2025]
+	* Support the canary engine, with changed items.xml
+	* Save attributes of every item
+	* Display warning for duplicates
+	* Rename table to myaac_list_of_items, to prevent missing column
+	* Add install.php script
+	* Add notice about slow load
+	* Use strtolower for attribute keys
+
 [4.0.1 - 09.02.2025]
 	* change db engine to InnoDB
 

@@ -93,7 +93,7 @@ if (empty($addQuery)) {
 	$addQuery = "`type` = " . $db->quote($type);
 }
 
-$query = $db->query("SELECT * FROM `list_of_items` WHERE " . $addQuery . " ORDER BY `level` DESC");
+$query = $db->query("SELECT * FROM `" . TABLE_PREFIX . "list_of_items` WHERE " . $addQuery . " ORDER BY `level` DESC");
 
 $items = $query->fetchAll(PDO::FETCH_ASSOC);
 foreach($items as &$item) {
