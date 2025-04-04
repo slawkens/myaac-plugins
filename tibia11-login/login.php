@@ -34,7 +34,7 @@ function sendError($msg){
     $ret = array();
     $ret["errorCode"] = 3;
     $ret["errorMessage"] = $msg;
-    
+
     die(json_encode($ret));
 }
 
@@ -60,13 +60,13 @@ if ($isCasting) {
 	foreach($casts as $cast) {
 		$character = new OTS_Player();
 		$character->load($cast['player_id']);
-		
+
 		if ($character->isLoaded()) {
 			$char = array("worldid" => 0, "name" => $character->getName(), "ismale" => (($character->getSex() == 1) ? true : false), "tutorial" => true);
 			$characters[] = $char;
 		}
 	}
-	
+
 	$port = 7173;
 	$lastLogin = 0;
 
@@ -76,7 +76,7 @@ if ($isCasting) {
 else {
 	$account = new OTS_Account();
 	$account->find($accountName);
-	
+
 	if (!$account->isLoaded())
 		sendError("Failed to get account. Try again!");
 
@@ -84,12 +84,12 @@ else {
 	$current_password = encrypt(($config_salt_enabled ? $account->getCustomField('salt') : '') . $password);
 	if ($account->getPassword() != $current_password)
 		sendError("The password for this account is wrong. Try again!");
-	
+
 	foreach($account->getPlayersList() as $character) {
 		$char = array("worldid" => 0, "name" => $character->getName(), "ismale" => (($character->getSex() == 1) ? true : false), "tutorial" => true);
 		$characters[] = $char;
 	}
-	
+
 	$save = false;
 	$timeNow = time();
 
@@ -103,7 +103,7 @@ else {
 	else {
 		sendError("Error while fetching your account data. Please contact admin.");
 	}
-	
+
 	if($premDays != 0 && $premDays != PHP_INT_MAX ) {
 		if($lastDay == 0) {
 			$lastDay = $timeNow;
