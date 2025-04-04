@@ -137,25 +137,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 						<table class="table table-condensed table-content table-striped">
 							<tbody>
 							<?php
-							$fetch_from_db = true;
-							if($cache->enabled())
-							{
-								$tmp = '';
-								if($cache->fetch('top_5_level', $tmp))
-								{
-									$players = unserialize($tmp);
-									$fetch_from_db = false;
-								}
-							}
-
-							if($fetch_from_db)
-							{
-								$players = $db->query('SELECT `name`, `level`, `experience`, `looktype`' . (fieldExist('players', 'lookaddons') ? ', `lookaddons`' : '') . ', `lookhead`, `lookbody`, `looklegs`, `lookfeet` FROM `players` WHERE `group_id` < ' . $config['highscores_groups_hidden'] . ' AND `id` > 6 ORDER BY `experience` DESC LIMIT 5;')->fetchAll();
-
-								if($cache->enabled())
-									$cache->set('top_5_level', serialize($players), 120);
-							}
-
+							$players = getTopPlayers(5);
 							if ($players) {
 								$count = 1;
 								foreach($players as $player) {
