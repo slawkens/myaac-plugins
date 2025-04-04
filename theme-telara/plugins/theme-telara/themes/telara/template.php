@@ -266,7 +266,7 @@ foreach(getTopPlayers(5) as $player) {
 									</table>
 
 								</div>
-								<?php if(tableExist('killers') && tableExist('player_killers')) { ?>
+								<?php if($db->hasTable('killers') && $db->hasTable('player_killers')) { ?>
 								<div id="topfrag" class="tab-pane fade">
 <?php
 		$frags_database = $db->query('SELECT `p`.`name` AS `name`, COUNT(`p`.`name`) as `frags` FROM `killers` k LEFT JOIN `player_killers` pk ON `k`.`id` = `pk`.`kill_id` LEFT JOIN `players` p ON `pk`.`player_id` = `p`.`id` WHERE `k`.`unjustified` = 1 AND `k`.`final_hit` = 1 GROUP BY `name` ORDER BY `frags` DESC, `name` ASC LIMIT 0,30;');

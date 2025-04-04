@@ -29,7 +29,7 @@ if(!$config['gifts_system']) {
 	}
 }
 
-if(GesiorShop::getDonationType() == 'coins' && !fieldExist('coins', 'accounts')) {
+if(GesiorShop::getDonationType() == 'coins' && !$db->hasColum('accounts', 'coins')) {
 	$errors[] = "Your server doesn't support accounts.coins. Please change back config.donation_type to points.";
 	$twig->display('error_box.html.twig', array('errors' => $errors));
 	return;

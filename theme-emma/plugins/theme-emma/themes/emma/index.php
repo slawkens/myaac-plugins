@@ -60,7 +60,7 @@
 			<div id="container-main">
 				<div id="menu">
 					<?php
-					$menu_table_exist = tableExist(TABLE_PREFIX . 'menu');
+					$menu_table_exist = $db->hasTable(TABLE_PREFIX . 'menu');
 					if($menu_table_exist) {
 						require_once($template_path . '/menu_dynamic.php');
 					}

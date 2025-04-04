@@ -9,14 +9,14 @@
  */
 defined('MYAAC') or die('Direct access not allowed!');
 
-if(!tableExist('z_ots_comunication')
-	|| !tableExist('z_shop_categories')
-	|| !tableExist('z_shop_history')
-	|| !tableExist('z_shop_offer')
-	|| !tableExist('crypto_payments')
-	|| !tableExist('myaac_hotpay')
-	|| !tableExist('myaac_paypal')
-	|| !tableExist('stripe')
+if(!$db->hasTable('z_ots_comunication')
+	|| !$db->hasTable('z_shop_categories')
+	|| !$db->hasTable('z_shop_history')
+	|| !$db->hasTable('z_shop_offer')
+	|| !$db->hasTable('crypto_payments')
+	|| !$db->hasTable('myaac_hotpay')
+	|| !$db->hasTable('myaac_paypal')
+	|| !$db->hasTable('stripe')
 ) {
 	// import schema
 	try {

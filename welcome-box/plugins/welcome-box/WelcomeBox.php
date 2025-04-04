@@ -74,12 +74,12 @@ class WelcomeBox
 
 	private function getBannedPlayers()
 	{
-		if(tableExist('account_bans')) {
+		if($this->db->hasTable('account_bans')) {
 			$query = $this->db->query('SELECT count(*) as `how_much` FROM `account_bans` WHERE `expires_at` > ' . time() .' OR `expires_at` = -1;')->fetch();
 			return $query['how_much'];
 		}
-		elseif(tableExist('bans')) {
-			if (fieldExist('bans', 'active')) {
+		elseif($this->db->hasTable('bans')) {
+			if ($this->db->hasColumn('bans', 'active')) {
 				$query = $this->db->query('SELECT count(*) as `how_much` FROM `bans` WHERE (`type` = 3 OR `type` = 5) AND `active` = 1 AND (`expires` > ' . time() . ' OR `expires` = -1);')->fetch();
 				return $query['how_much'];
 			} else { // tfs 0.2

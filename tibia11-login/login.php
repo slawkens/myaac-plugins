@@ -80,7 +80,7 @@ else {
 	if (!$account->isLoaded())
 		sendError("Failed to get account. Try again!");
 
-	$config_salt_enabled = fieldExist('salt', 'accounts');
+	$config_salt_enabled = $db->hasColumn('accounts', 'salt');
 	$current_password = encrypt(($config_salt_enabled ? $account->getCustomField('salt') : '') . $password);
 	if ($account->getPassword() != $current_password)
 		sendError("The password for this account is wrong. Try again!");

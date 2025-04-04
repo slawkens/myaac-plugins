@@ -16,7 +16,7 @@ function mostPowerfulGuildsDatabase()
 	global $db, $config;
 
 	$ret = array();
-	if(tableExist('killers')) { // TFS 0.3 + 0.4
+	if($db->hasTable('killers')) { // TFS 0.3 + 0.4
 		foreach ($db->query('SELECT `g`.`id` AS `id`, `g`.`name` AS `name`,
 		`g`.`logo_name` AS `logo`, COUNT(`g`.`name`) as `frags`
 		FROM `killers` k

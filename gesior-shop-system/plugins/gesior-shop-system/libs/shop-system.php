@@ -186,7 +186,7 @@ class GesiorShop {
 
 			switch($buy_offer['type']) {
 				case 'pacc':
-					$is_othire = fieldExist('premend', 'accounts');
+					$is_othire = $db->hasColumn('accounts', 'premend');
 					if($is_othire && $buy_player->isOnline()) {
 						$errors[] = 'Player with name <b>' . $buy_name . '</b> is online. Please logout. Then <a href="' . getLink('gifts') . '?action=select_player&buy_id=' . $buy_id . '">refresh this page</a>.';
 						break;
