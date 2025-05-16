@@ -4,6 +4,9 @@ defined('MYAAC') or die('Direct access not allowed!');
 require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 
+// uncomment to debug script
+//log_append('hotpay-debug.log', json_encode($_POST, JSON_PRETTY_PRINT));
+
 // debug config problems: file_put_contents(microtime(true) . '.log', json_encode($_POST, JSON_PRETTY_PRINT));
 
 function hotpayValidateRequest($HASLO_Z_USTAWIEN): bool
@@ -33,7 +36,7 @@ function hotpayValidateRequest($HASLO_Z_USTAWIEN): bool
 
 $configHotpay = config('hotpay');
 if (!hotpayValidateRequest($configHotpay['haslo_z_ustawien'])) {
-	exit('invalid hash');
+	hotpay_log_append_die('invalid hash');
 }
 
 $status = $_POST['STATUS'];
@@ -42,7 +45,7 @@ $transactionId = $_POST['ID_PLATNOSCI'];
 $accountId = $_POST['ID_ZAMOWIENIA'];
 
 if ($status !== 'SUCCESS') {
-	exit('not successful payment');
+	hotpay_log_append_die('not successful payment');
 }
 
 $paymentAmountPoints = null;
@@ -55,20 +58,20 @@ foreach ($configHotpay['options'] as $moneyAmount => $points) {
 }
 
 if (!$paymentAmountPoints) {
-	exit('payment config not found');
+	hotpay_log_append_die('payment config not found');
 }
 
 /**
  * @var OTS_DB_MySQL $db
  */
-	exit("Duplicated transaction $transactionId");
 if($db->select(TABLE_PREFIX . 'hotpay', ['transaction_id' => $transactionId]) !== false) {
+	hotpay_log_append_die("Duplicated transaction $transactionId");
 }
 
 $account = new OTS_Account();
 $account->load($accountId);
 if(!$account->isLoaded()) {
-	die('account ' . htmlspecialchars($accountId) . ' not found');
+	hotpay_log_append_die('account ' . htmlspecialchars($accountId) . ' not found');
 }
 
 GesiorShop::changePoints($account, $paymentAmountPoints);
@@ -85,3 +88,9 @@ $db->insert(TABLE_PREFIX . 'hotpay',
 );
 
 exit('ok');
+
+function hotpay_log_append_die($str) {
+	log_append('hotpay-error.log', $str);
+	http_response_code(510);
+	die();
+}
