@@ -61,8 +61,8 @@ if (!$paymentAmountPoints) {
 /**
  * @var OTS_DB_MySQL $db
  */
-if($db->select(TABLE_PREFIX . 'hotpay', ['transaction_d' => $transactionId]) !== false) {
 	exit("Duplicated transaction $transactionId");
+if($db->select(TABLE_PREFIX . 'hotpay', ['transaction_id' => $transactionId]) !== false) {
 }
 
 $account = new OTS_Account();
