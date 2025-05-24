@@ -21,6 +21,8 @@ defined('MYAAC') or die('Direct access not allowed!');
     <link rel="stylesheet" href="<?php echo $template_path; ?>/style.css">
     <?php echo template_place_holder('head_end'); ?>
 </head>
+<body class="py-5" id="bootstrap-overrides">
+<?php echo template_place_holder('body_start'); ?>
 <nav class="navbar fixed-top navbar-expand-lg <?php echo $config['navbarColor']; ?> <?php echo $config['bgColor']; ?>" aria-label="Navigation bar">
     <div class="container">
         <a class="navbar-brand" href="?news">
@@ -131,8 +133,6 @@ defined('MYAAC') or die('Direct access not allowed!');
         </div>
     </div>
 </nav>
-<body class="py-5" id="bootstrap-overrides">
-    <?php echo template_place_holder('body_start'); ?>
     <div class="container table-responsive">
         <div class="card border-0 shadow-md my-2 my-md-5" id="bootstrap-overrides">
             <div class="card-body-md py-3 px-md-5" id="bootstrap-overrides">
