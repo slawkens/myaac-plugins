@@ -66,17 +66,40 @@ if(isset($_GET['system'])) {
 	}
 	else {
 		$file = PLUGINS . 'gesior-shop-system/payments/' . $to_load . '.php';
+
+		$args = ['file' => $file, 'enabled' => $enabled, 'system' => $system];
+		$hooks->triggerFilter(HOOK_GESIOR_SHOP_ENABLED, $args);
+
+		$file = $args['file'];
+		$enabled = $args['enabled'];
+		$system = $args['system'];
+
 		if(file_exists($file) && $enabled[$system]) {
 			require($file);
 		}
 	}
 }
 else {
-	echo $twig->render('gesior-shop-system/templates/points.html.twig', array('enabled' => $enabled));
+	$gateways = [];
+	foreach ($enabled as $key => $value) {
+		if (!$value) {
+			continue;
+		}
+
+		$gateways[] = $twig->render('gesior-shop-system/templates/gateways/' . $key . '.html.twig');
+	}
+
+	$args = ['gateways' => $gateways];
+	$hooks->triggerFilter(HOOK_GESIOR_SHOP_GATEWAYS, $args);
+	$gateways = $args['gateways'];
+
+	echo $twig->render('gesior-shop-system/templates/points.html.twig', [
+		'gateways' => $gateways,
+	]);
 }
 ?>
 <script type="text/javascript">
 $(function() {
-	$('#account-name-input').focus();
+	$('#account-name-input').trigger('focus');
 });
 </script>
