@@ -1,0 +1,31 @@
+{
+	"name": "Mercado Pago",
+	"description": "Mercado Pago gateway for Gesior Shop System plugin.",
+	"version": "1.0-alpha",
+	"type": "plugin",
+	"license": "GPLv3",
+	"author": "Clyfe, slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.6",
+		"php": "8.1",
+		"gesior-shop-system": ">=8.0-RC.1"
+	},
+	"autoload": {
+		"init": true
+	},
+	"hooks": {
+		"shop-enabled": {
+			"type": "GESIOR_SHOP_ENABLED",
+			"file": "plugins/mercado-pago/hooks/shop-enabled.php"
+		},
+		"shop-gateways": {
+			"type": "GESIOR_SHOP_GATEWAYS",
+			"file": "plugins/mercado-pago/hooks/gateways.php"
+		}
+	},
+	"uninstall": [
+		"plugins/mercado-pago.json",
+		"plugins/mercado-pago"
+	]
+}
