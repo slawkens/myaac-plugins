@@ -1,7 +1,7 @@
 {
 	"name": "Mercado Pago",
 	"description": "Mercado Pago gateway for Gesior Shop System plugin.",
-	"version": "1.0-alpha",
+	"version": "1.0-beta",
 	"type": "plugin",
 	"license": "GPLv3",
 	"author": "Clyfe, slawkens",

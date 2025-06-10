@@ -7,5 +7,10 @@ if (!$configMercadoPago['enabled']) {
 	return;
 }
 
+
+if ($args['system'] != 'mercado-pago') {
+	return;
+}
+
 $args['enabled']['mercado-pago'] = true;
 $args['file'] = PLUGINS . 'mercado-pago/payments/mercado-pago.php';
