@@ -33,6 +33,7 @@ $config['paypal'] = array(
 	'payment_type' => '_xclick', // '_xclick' (Buy Now) or '_donations'
 	'currency_code' => 'EUR', // https://developer.paypal.com/docs/integration/direct/rest/currency-codes/
 	'use_sandbox' => false, // set to true if you want to test IPN in sandbox mode
+	'return_url' => getLink('gifts') . '?success',
 	'terms' => true, // display terms?
 	'options' => array( // cost in EUR => points
 		'5.00' => 30,
