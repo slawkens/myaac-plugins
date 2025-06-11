@@ -58,7 +58,8 @@ if(!isset($paylist[$mc_gross])) {
 }
 
 if($db->select(TABLE_PREFIX . 'paypal', ['txn_id' => $txn_id, 'payment_status' => 'Completed']) !== false) {
-	paypal_log_append_die("Duplicated transaction $txn_id");
+	header('HTTP/1.1 200 OK');
+	die("Duplicated transaction $txn_id");
 }
 
 $db->insert(TABLE_PREFIX . 'paypal',
