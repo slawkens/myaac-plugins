@@ -30,7 +30,7 @@ if(!$config['gifts_system'])
 		<p style=\"margin-left: 3em;\"><b>\$config['gifts_system'] = true;</b></p>");
 }
 
-if(GesiorShop::getDonationType() == 'coins' && !$db->hasColum('accounts', 'coins')) {
+if(GesiorShop::getDonationType() == 'coins' && !$db->hasColumn('accounts', 'coins')) {
 	error("Your server doesn't support accounts.coins. Please change back config.donation_type to points.");
 	return;
 }
