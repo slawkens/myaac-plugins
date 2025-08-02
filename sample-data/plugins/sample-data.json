@@ -1,6 +1,6 @@
 {
 	"name": "Sample Data",
-	"description": "Generator of sample data - generate fake accounts, players & online players maybe in future something more.",
+	"description": "Generator of sample data - generate fake accounts, players & online players, maybe in future something more.",
 	"version": "1.0",
 	"type": "plugin",
 	"license": "GPLv3",
