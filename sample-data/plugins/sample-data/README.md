@@ -14,7 +14,7 @@ cd /var/www/html # or any other folder where myaac located is
 
 ### sample-data:accounts
 
-Generate 10 accounts with default password, which is: - **pass1234**
+Generate 10 accounts with default password, which is: **pass1234**
 ```
 php aac sample-data:accounts 10
 ```
