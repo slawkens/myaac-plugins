@@ -18,6 +18,12 @@ require_once(PLUGINS . 'gesior-shop-system/config.php');
 
 $configMercadoPago = config('mercado-pago');
 
+$x_signature = $_SERVER['HTTP_X_SIGNATURE'] ?? null;
+$x_request_id = $_SERVER['HTTP_X_REQUEST_ID'] ?? null;
+
+$webhook_body = file_get_contents('php://input');
+$webhook_data = json_decode($webhook_body, true);
+
 // Função para enviar resposta padronizada
 function sendResponse($success, $message, $status_code = 200, $data = null)
 {
@@ -36,15 +42,6 @@ function sendResponse($success, $message, $status_code = 200, $data = null)
 	echo json_encode($response);
 	exit; // Importante: encerra a execução do script
 }
-
-// Set debug mode based on the query parameter // use debug true in url to get more infos
-$debug = isset($configMercadoPago['debug']) && $configMercadoPago['debug'] === 'true';
-
-$x_signature = $_SERVER['HTTP_X_SIGNATURE'] ?? null;
-$x_request_id = $_SERVER['HTTP_X_REQUEST_ID'] ?? null;
-
-$webhook_body = file_get_contents('php://input');
-$webhook_data = json_decode($webhook_body, true);
 
 if (!$x_signature || !$configMercadoPago['webhook_x_signature']) {
 	error_log('Invalid request. Missing X-Signature.');
@@ -120,15 +117,31 @@ if (isset($webhook_data['data']['id'])) {
 			return;
 		}
 
-		if ($payment_details['payment_status'] === 'Completed' && $payment_details['payer_status'] === 'Completed') {
+		if ($payment_details['payment_status'] === 'Completed' && $payment_details['payer_status'] === 'Completed' || $payment_details['payer_status'] === 'Completed') {
 			error_log('Payment already completed. For Collector ID: ' . $collector_id);
 			sendResponse(true, 'Received. Payment already completed.', 200);
 			return;
-		} else if ($payment_details['payer_status'] === 'Completed') {
-			error_log('Payment already Completed. For Collector ID: ' . $collector_id);
-			sendResponse(true, 'Received. Payment already Completed.', 200);
-			return;
 		}
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => 'https://api.mercadopago.com/v1/payments/' . $collector_id,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_CUSTOMREQUEST => 'GET',
+			CURLOPT_HTTPHEADER => array(
+				'accept: application/json',
+				'content-type: application/json',
+				'Authorization: Bearer ' . $configMercadoPago['accessToken'],
+			),
+			CURLOPT_SSL_VERIFYPEER => $configMercadoPago['enable_ssl_verify'],
+			CURLOPT_TIMEOUT => 30,
+		));
+
+		$response = curl_exec($curl);
+
+		$payment_MP_details = json_decode($response); // Coleta as informações do pagamento
+		$payment_MP_status = isset($payment_MP_details->status) ? $payment_MP_details->status : null; // Coleta o status do pagamento
 
 		if ($payment_details['payer_status'] === 'Pending') {
 			$account_id = $payment_details['account_id'];
@@ -137,7 +150,15 @@ if (isset($webhook_data['data']['id'])) {
 
 			if ($account->isLoaded()) {
 				$time = date('Y-m-d H:i:s');
-				if (GesiorShop::changePoints($account, $payment_details['points'])) {
+				
+				if(!$payment_MP_status || $payment_MP_status !== 'approved'){
+					$db->update(TABLE_PREFIX . 'mercadopago', ['payer_status' => 'Completed', 'payment_status' => $payment_MP_status, 'updated' => $time], ['collector_id' => $collector_id, 'account_id' => $account_id]);
+					error_log('Payment not approved. For Collector ID: ' . $collector_id . ' Payment status: ' . $payment_MP_status);
+					sendResponse(true, 'Received. Payment not approved.', 200);
+					return;
+				}
+
+				if ($payment_MP_status === 'approved' && GesiorShop::changePoints($account, $payment_details['points'])) {
 
 					$db->update(TABLE_PREFIX . 'mercadopago', ['payer_status' => 'Completed', 'payment_status' => 'Completed', 'updated' => $time], ['collector_id' => $collector_id, 'account_id' => $account_id]);
 
