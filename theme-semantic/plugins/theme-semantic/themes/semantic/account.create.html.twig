@@ -2,6 +2,8 @@
 <h2 class="ui header">Create {{ config.lua.serverName }} Account</h2>
 <form class="ui form fluid segment" action="{{ getLink('account/create') }}" method="post" id="createaccount">
 
+	{{ csrf() }}
+
 	{{ hook('HOOK_ACCOUNT_CREATE_BEFORE_BOXES') }}
 	{{ hook('HOOK_ACCOUNT_CREATE_BEFORE_ACCOUNT') }}
 
