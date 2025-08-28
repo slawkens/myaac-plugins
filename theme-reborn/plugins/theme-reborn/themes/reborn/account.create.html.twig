@@ -6,6 +6,9 @@
 <div>{{ hook('HOOK_ACCOUNT_CREATE_BEFORE_FORM') }}</div>
 <div>
 	<form action="{{ getLink('account/create') }}" method="post" id="createaccount">
+
+		{{ csrf() }}
+
 		{{ hook('HOOK_ACCOUNT_CREATE_BEFORE_BOXES') }}
 		{{ hook('HOOK_ACCOUNT_CREATE_BEFORE_ACCOUNT') }}
 		<div class="col-sm-5">
