@@ -1,3 +1,7 @@
+[3.2.2 - 21.10.2025]
+	* Add missing hook: HOOK_ACCOUNT_CREATE_AFTER_PASSWORD
+	* Fix create character on the create account page
+
 [3.2.1 - 28.08.2025]
 	* Add missing csrf() - Fix token is invalid error
 
