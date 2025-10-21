@@ -1,0 +1,11 @@
+[2.1 - 16.10.2025]
+	* Support for account/change-password page
+	* Two additional settings: display_warning & display_suggestions
+	* Fixes if plugin disabled
+
+[2.0 - 23.11.2023]
+	* rewrite
+	* use ajax.php instead of zxcvbn.js (server-side processing)
+
+[1.0 - 26.05.2023]
+	* initial release
