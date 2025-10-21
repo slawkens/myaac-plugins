@@ -1,4 +1,5 @@
 {
+    "name": "slawkens/password-strength",
     "require": {
         "bjeavons/zxcvbn-php": "^1.0"
     }
