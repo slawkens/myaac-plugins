@@ -18,7 +18,7 @@ return [
 			'min_score' => [
 				'name' => 'Minimum Score',
 				'type' => 'number',
-				'default' => 3,
+				'default' => 1,
 				'min' => 1,
 				'max' => 5,
 				'desc' => 'Minimum allowed score of password. Value of 1-5. Lower value = lower protection.',
