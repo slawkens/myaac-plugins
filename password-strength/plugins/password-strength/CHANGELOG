@@ -1,3 +1,6 @@
+[2.2 - 21.10.2025]
+	* Update composer.lock - "bjeavons/zxcvbn-php" to version 1.4.2
+
 [2.1 - 16.10.2025]
 	* Support for account/change-password page
 	* Two additional settings: display_warning & display_suggestions
