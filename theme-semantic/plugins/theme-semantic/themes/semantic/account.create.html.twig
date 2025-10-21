@@ -81,6 +81,8 @@
 		{% endif %}
 	</div>
 
+	{{ hook('HOOK_ACCOUNT_CREATE_AFTER_PASSWORD') }}
+
 	<div class="field">
 		{% if errors.password is defined %}
 			<div class="field error">
