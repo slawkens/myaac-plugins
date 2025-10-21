@@ -1,5 +1,6 @@
 [2.1.1 - 21.10.2025]
 	* Fix menu to be shown on account/manage page
+	* Fix news_date_format
 
 [2.1 - 09.02.2025]
 	* support for reset menus + menu_default_links_color
