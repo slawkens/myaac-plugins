@@ -1,7 +1,7 @@
 {
 	"name": "Gesior Shop System",
 	"description": "This is shop system taken from Gesior, modified for MyAAC.",
-	"version": "8.0-RC.2",
+	"version": "8.0",
 	"type": "plugin",
 	"license": "GPLv3",
 	"author": "Gesior, slawkens, whiteblXK",
@@ -9,7 +9,7 @@
 	"hooks": {
 		"admin-menu": {
 			"type": "HOOK_ADMIN_MENU",
-			"file": "plugins/gesior-shop-system/admin/menu.php"
+			"file": "plugins/gesior-shop-system/hooks/admin-menu.php"
 		},
 		"cache-clear": {
 			"type": "HOOK_CACHE_CLEAR",

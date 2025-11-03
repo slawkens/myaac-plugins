@@ -14,7 +14,7 @@ csrfProtect();
 
 require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
 
-$link = ADMIN_URL . '?p=plugins/gesior-shop-system/admin/gifts.php';
+$link = ADMIN_URL . '?p=gifts';
 $types = [
 	'item', 'addon', 'mount', 'pacc', 'container'
 ];
