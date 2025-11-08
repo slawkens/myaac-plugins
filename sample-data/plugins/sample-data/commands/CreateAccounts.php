@@ -21,7 +21,7 @@ return new class extends Command
 				'Amount of accounts to generate'
 			)
 			->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'Password to use. Default: pass1234')
-			->addOption('country', 'c', InputOption::VALUE_OPTIONAL, 'Country to set, in shortcode. Example: pl for Poland');
+			->addOption('country', 'c', InputOption::VALUE_OPTIONAL, 'Country to set, in shortcode. Example: pl for Poland. More can be found in system/countries.conf.php');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
@@ -58,6 +58,8 @@ return new class extends Command
 
 		$faker = Factory::create();
 
+		$firstId = $lastId = 'Error';
+
 		for ($i = 0; $i < $amount; $i++) {
 			$account = new Account();
 
@@ -77,11 +79,18 @@ return new class extends Command
 				$account->salt = $salt;
 			}
 
+			$account->created = time();
 			$account->password = encrypt($passwordSalted);
 			$account->save();
+
+			if ($i == 0) {
+				$firstId = $account->id;
+			}
+
+			$lastId = $account->id;
 		}
 
-		$io->success("Successfully created $amount accounts.");
+		$io->success(["Successfully created $amount accounts.", "Generated account first id: $firstId and last id: $lastId."]);
 		return Command::SUCCESS;
 	}
 };

@@ -1,4 +1,5 @@
 {
+    "name": "slawkens/sample-data",
     "require": {
         "fakerphp/faker": "^1.24"
     }
