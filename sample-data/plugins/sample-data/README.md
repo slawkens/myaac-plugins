@@ -46,15 +46,23 @@ php aac sample-data:random-online 100
 ## Other options
 
 ### sample-data:accounts
-* --country (country code)
-  * example: --country="de" (will be set for all accounts)
+* --password=x (password to use)
+* --country=x (country code)
+  * example: --country=pl (will be set for all accounts)
   * leaving it empty, will generate random country for every account
 
 ### sample-data:players
+* --file=path/to/file.txt (list of names to use, one name per line)
 * --account=x (account id)
+* --account-from=x (first account id to use)
+* --account-to=x (Last account id to use)
 * --level=x
 * --vocation=x (id of vocation, from 0 to 10 (with monk))
 * --town=x (id of town)
 * --look-type=x (id of outfit/lookType)
-* --look-color=x (color of whole outfit (simplified), number from 0 to 132)
+* --look-colors=x (color of whole outfit (simplified), number from 0 to 132)
 * --look-addons=x (0, 1 or 2)
+* --look-head=x (color of head - number from 0 to 132)
+* --look-body=x (color of body, same as above)
+* --look-legs=x (color of legs, same as above)
+* --look-feet=x (color of feet, same as above)
