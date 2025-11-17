@@ -184,7 +184,8 @@ if(count($menus) === 0) {
 					<?php if ($logged === false) { ?>
 						<div class="login"></div>
 						<form action="<?= getLink('account/manage'); ?>" method="post" style="margin-bottom: 0;">
-							<input type="text" name="account_login" value="Account number" class="inputtext" onfocus="this.value=''" onblur="if(this.value==='') { this.value='Account number'};">
+							<?= csrf(true); ?>
+							<input type="text" name="account_login" value="<?= getAccountLoginByLabel(); ?>" class="inputtext" onfocus="this.value=''" onblur="if(this.value==='') { this.value='<?= getAccountLoginByLabel(); ?>'};">
 							<input type="password" name="password_login" value="Password" class="inputtext" onfocus="this.value=''" onblur="if(this.value==='') { this.value='Password'};">
 							<input type="submit" name="Submit" value="" class="loginbtn"> <a class="createbtn" href="<?= getLink('account/create');?>"></a>
 							<center style="font-size: 12px;">

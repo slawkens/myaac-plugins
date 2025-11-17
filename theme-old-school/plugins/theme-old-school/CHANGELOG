@@ -1,3 +1,7 @@
+[2.1.1 - 17.11.2025]
+	* add missing csrf(), fixes request has been cancelled error
+	* Change "Account Number" to proper text (name/email/number)
+
 [2.1 - 09.02.2025]
 	* support for reset menus + menu_default_links_color
 	* fix tickers table background color
