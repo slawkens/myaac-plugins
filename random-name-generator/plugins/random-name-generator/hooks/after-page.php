@@ -4,7 +4,7 @@ defined('MYAAC') or die('Direct access not allowed!');
 global $action;
 
 // MyAAC 1.0+
-if (PAGE !== 'account/characters/create' && PAGE !== 'account/create' &&
+if (PAGE !== 'account/characters/create' && PAGE != 'account/character/create' && PAGE !== 'account/create' &&
 	// MyAAC 0.8
 	PAGE !== 'createaccount' && (PAGE !== 'accountmanagement' || $action !== 'create_character')) {
 	return;
@@ -16,9 +16,14 @@ if(!isset($template_place_holders['body_end'])) {
 }
 
 ob_start();
+
+$maxLength = config('character_name_max_length');
+if (function_exists('setting')) {
+	$maxLength = setting('core.create_character_name_max_length');
+}
 ?>
 
-<button type="button" id="generate_random_name" style="margin-left: 10px; padding: 2px 8px; cursor: pointer;">Suggest name</button>
+<button type="button" id="generate_random_name" data-max-length="<?= $maxLength; ?>" style="margin-left: 10px; padding: 2px 8px; cursor: pointer;">Suggest name</button>
 <script src="https://cdn.jsdelivr.net/gh/Coldensjo/TibiaNameGen/random_name_generator.js"></script>
 <script>
 	$(function () {
