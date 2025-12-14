@@ -1,3 +1,6 @@
+[1.0.2 - 14.12.2025]
+	* Add info about install php-lua on Ubuntu in README.md
+
 [1.0.1 - 15.02.2025]
 	* fix loading of few monsters in opentibiabr canary
 	* use dataPackDirectory from config.lua to determine monsters folder

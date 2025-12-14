@@ -8,7 +8,7 @@ This is a loader of monsters written in Lua for the Canary engine. (https://gith
 * MyAAC version 1.0-RC or higher
 * PHP-extension: lua
 
-The PHP Lua extension can be installed on linux using the `sudo apt install php-lua` or `sudo apt install  php8.3-lua` (depending on your version of php).
+The PHP Lua extension can be installed on linux (Ubuntu) following this tutorial: https://stackoverflow.com/a/79846908/1055314.
 
 On Windows it's a bit tricky to install the extension, but still possible. I will write one day how to do it. For now following info should be enough: you need to download the correct version of Windows DLLs from https://pecl.php.net/package/lua, paste into php/ext folder of xampp/UniServ, and then enable the lua extension in php.ini
 

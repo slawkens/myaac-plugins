@@ -1,7 +1,7 @@
 {
 	"name": "Lua Monsters",
 	"description": "Support for Lua Monsters (revscript) - currently only Canary engine.",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"type": "page",
 	"license": "GPLv3",
 	"author": "slawkens",
