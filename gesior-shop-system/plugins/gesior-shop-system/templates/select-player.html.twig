@@ -4,19 +4,21 @@
 </div>
 <br/><br/>
 
-<table border="0" cellpadding="1" cellspacing="1" width="100%">
-	<tr bgcolor="{{ config.vdarkborder }}">
+<table class="myaac-table" border="0" cellpadding="1" cellspacing="1" width="100%">
+	<thead>
+	<tr>
 		<td colspan="2">
 			<span class="white" size="4"><b>Selected offer</b></span>
 		</td>
 	</tr>
+	</thead>
 
-	<tr bgcolor="{{ config.darkborder }}">
+	<tr>
 		<td width="100"><b>Name:</b></td>
 		<td width="550">{{ buy_offer.name }}</td>
 	</tr>
 
-	<tr bgcolor="{{ config.darkborder }}">
+	<tr>
 		<td width="100"><b>Description:</b></td>
 		<td width="550">{{ buy_offer.description|raw }}</td>
 	</tr>
@@ -27,14 +29,16 @@
 	{{ csrf() }}
 	<input type="hidden" name="buy_id" value="{{ buy_id }}">
 
-	<table border="0" cellpadding="1" cellspacing="1" width="100%">
-		<tr bgcolor="{{ config.vdarkborder }}">
+	<table class="myaac-table" border="0" cellpadding="1" cellspacing="1" width="100%">
+		<thead>
+		<tr>
 			<td colspan="2">
-				<span class="white" size="4"><b>Give item to player from your account</b></span>
+				<span class="white" size="4"><b>Give item to the player from your account</b></span>
 			</td>
 		</tr>
+		</thead>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="110"><b>Name:</b></td>
 			<td width="550">
 				{% if account_players|length <= 0 %}
@@ -55,28 +59,33 @@
 <br/>
 
 <form action="{{ getLink('gifts') }}?action=confirm_transaction" method="post">
+
 	{{ csrf() }}
+
 	<input type="hidden" name="buy_id" value="{{ buy_id }}">
 
-	<table border="0" cellpadding="1" cellspacing="1" width="100%">
-		<tr bgcolor="{{ config.vdarkborder }}">
-			<td colspan="2"><span class="white" size="4"><b>Give item to other player</b></span>
+	<table class="myaac-table" border="0" cellpadding="1" cellspacing="1" width="100%">
+		<thead>
+		<tr>
+			<td colspan="2"><span class="white" size="4"><b>Give item to another player</b></span>
 			</td>
 		</tr>
+		</thead>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="110"><b>To player:</b></td>
 			<td width="550"><input type="text" name="buy_name"> - name of player</td>
 		</tr>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="110"><b>From:</b></td>
 			<td width="550">
 				<input type="text" name="buy_from">
 				<input type="submit" value="Give"> - your nick, empty = Anonymous
 			</td>
 		</tr>
-	</table><br />
+	</table>
+	<br/>
 </form>
 
-<div style="text-align: left;"><h4>*PACC is for all characters from account of selected player name</h4></div>
+<div style="text-align: left;"><h4>*PACC is for all characters from an account of the selected player name</h4></div>

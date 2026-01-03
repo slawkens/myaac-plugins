@@ -13,6 +13,7 @@
 	.offer_table {
 		margin-left: auto;
 		margin-right: auto;
+		width: 550px !important;
 	}
 
 	.offer_table tr td {
@@ -29,21 +30,19 @@
 		<a class="offer_type" href="{{ getLink('gifts') }}?offercat={{ id }}"{% if get_offer_category == id %} style="background-color: #505050"{% endif %}>{{ name }}</a>
 	{% endfor %}
 
-	<table class="offer_table" border="0" cellpadding="1" cellspacing="1" width="550">
-		<tr width="650" bgcolor="{{ config.vdarkborder }}">
-			<td colspan="4"></td>
-		</tr>
+	<div style="margin-top: 20px;"></div>
 
-		<tr bgcolor="{{ config.darkborder }}">
-			<td width="50"><b>Picture</b></td>
-			<td width="350" style="text-align: left"><b>Description</b></td>
-			<td width="50"><b>Points</b></td>
-			<td width="100"><b>Select product</b></td>
+	<table class="offer_table myaac-table" border="0" cellpadding="1" cellspacing="1">
+		<tr>
+			<td style="width: 50px"><b>Picture</b></td>
+			<td style="width: 350px; text-align: left"><b>Description</b></td>
+			<td style="width: 50px"><b>Points</b></td>
+			<td style="width: 150px"><b>Select product</b></td>
 		</tr>
 
 		{% for offer in offers_fetch %}
 			{% if offer.category_id == get_offer_category %}
-				<tr bgcolor="{{ config.lightborder }}">
+				<tr>
 					<td>
 						{{ offer.images|raw }}
 					</td>

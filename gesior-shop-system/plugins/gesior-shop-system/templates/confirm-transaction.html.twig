@@ -5,34 +5,36 @@
 	</div>
 	<br/><br/>
 
-	<table border="0" cellpadding="1" cellspacing="1" width="100%">
-		<tr bgcolor="{{ config.vdarkborder }}">
+	<table class="myaac-table" border="0" cellpadding="1" cellspacing="1" width="100%">
+		<thead>
+		<tr>
 			<td colspan="3">
 				<span color="white" size="4"><b>Confirm transaction</b></span>
 			</td>
 		</tr>
+		</thead>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="100"><b>Name:</b></td>
 			<td width="550" colspan="2">{{ buy_offer.name }}</td>
 		</tr>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="100"><b>Description:</b></td>
 			<td width="550" colspan="2">{{ buy_offer.description|raw }}</td>
 		</tr>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="100"><b>Cost:</b></td>
 			<td width="550" colspan="2"><b>{{ buy_offer.points }} premium points</b> from your account</td>
 		</tr>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="100"><b>For Player:</b></td>
 			<td width="550" colspan="2"><span style="color: red">{{ buy_player_name }}</span></td>
 		</tr>
 
-		<tr bgcolor="{{ config.darkborder }}">
+		<tr>
 			<td width="100"><b>From:</b></td>
 			<td width="550" colspan="2"><span style="color: red">{{ buy_from }}</span></td>
 		</tr>
@@ -41,7 +43,9 @@
 			<td width="100"><b>Transaction?</b></td>
 			<td width="275" align="left">
 				<form action="{{ getLink('gifts') }}?action=confirm_transaction" method="post">
+
 					{{ csrf() }}
+
 					<input type="hidden" name="buy_confirmed" value="yes">
 					<input type="hidden" name="buy_id" value="{{ buy_id }}">
 					<input type="hidden" name="buy_from" value="{{ buy_from|url_encode }}">

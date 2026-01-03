@@ -1,8 +1,9 @@
 <div style="text-align: center"><h1>Transactions History</h1></div>
 
 <h2>Item transactions</h2>
-<table border=0 cellpadding="1" cellspacing="1" width=100%>
-	<tr bgcolor="{{ config.darkborder }}">
+<table class="myaac-table" border=0 cellpadding="1" cellspacing="1" width="100%">
+	<thead>
+	<tr>
 		<td>
 			<b>To:</b>
 		</td>
@@ -19,9 +20,10 @@
 			<b>Received on OTS</b>
 		</td>
 	</tr>
+	</thead>
 
 	{% for item_received in items_history %}
-		<tr bgcolor="{{ config.lightborder }}">
+		<tr>
 			<td>
 				<span style="color: {% if logged_id == item_received['to_account'] %}green{% else %}red{% endif %}">{{ item_received.to_name }}</span>
 			</td>
@@ -56,8 +58,9 @@
 </table>
 
 <h2>PACC transactions</h2>
-<table border=0 cellpadding="1" cellspacing="1" width=100%>
-	<tr bgcolor="{{ config.darkborder }}">
+<table class="myaac-table" border=0 cellpadding="1" cellspacing="1" width="100%">
+	<thead>
+	<tr>
 		<td>
 			<b>To:</b>
 		</td>
@@ -74,9 +77,10 @@
 			<b>Added</b>
 		</td>
 	</tr>
+	</thead>
 
 	{% for pacc_received in paccs_history %}
-		<tr bgcolor="{{ config.lightborder }}">
+		<tr>
 			<td>
 				<span style="color: {% if logged_id == pacc_received['to_account'] %}green{% else %}red{% endif %}">{{ pacc_received.to_name }}</span>
 			</td>
