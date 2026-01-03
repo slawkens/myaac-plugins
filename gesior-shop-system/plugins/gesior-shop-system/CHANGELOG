@@ -1,5 +1,6 @@
-[8.0.1 - 03.01.2025]
+[8.0.1 - 03.01.2026]
 	* Use myaac-table class for some tables
+	* Do not show hidden items in  "the Most popular items"
 
 [8.0 - x.x.2025]
 	* Move admin page gifts into admin-pages folder
