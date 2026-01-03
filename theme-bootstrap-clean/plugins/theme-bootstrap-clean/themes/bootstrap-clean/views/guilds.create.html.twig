@@ -1,0 +1,32 @@
+<div class="container">
+	<h1>Create guild</h1>
+	<form action="{{ getLink('guilds') }}?action=create" method="post">
+
+		{{ csrf() }}
+
+		<input type="hidden" name="todo" value="save" />
+
+		<div>
+			<label for="name" class="col-sm-2 col-form-label">Leader:</label>
+			<div class="col-sm-3">
+				<select name="name" id="name" class="form-control">
+					{% for player in players %}
+						<option>{{ player }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div>
+			<label for="guild" class="col-sm-2 col-form-label">Guild Name:</label>
+			<div class="col-sm-3">
+				<input type="text" class="form-control" name="guild" id="guild" value="" size="30" maxlength="50"/>
+			</div>
+		</div>
+		<div>
+			<br/>
+			{% set button_name = 'Submit' %}
+			{{ include('buttons.base.html.twig') }}
+			<a href="{{ getLink('guilds') }}" class="btn btn-secondary">Back</a>
+		</div>
+	</form>
+</div>

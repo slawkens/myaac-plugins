@@ -1,0 +1,48 @@
+{% if canEdit %}
+	<a href="{{ constant('ADMIN_URL') }}?p=changelog&action=new" class="btn btn-success btn-sm" title="Add New" target="_blank">Add New</a>
+{% endif %}
+<table border="0" cellspacing="1" cellpadding="4" width="100%" class="table table-striped">
+	<tr>
+		<td width="22"><span class="white"><b>Type</b></span></td>
+		<td width="22"><span class="white"><b>Where</b></span></td>
+		<td width="50"><span class="white"><b>Date</b></span></td>
+		<td><span class="white"><b>Description</b></span></td>
+		{% if canEdit %}
+		<td></td>
+		{% endif %}
+	</tr>
+	{% if changelogs|length > 0%}
+		{% set i = 0 %}
+		{% for log in changelogs %}
+		<tr>
+			<td align="center">
+				<img src="{{ constant('BASE_URL') }}images/changelog/{{ log.type }}.png" title="{{ log.type|capitalize }}"/>
+			</td>
+			<td align="center">
+				<img src="{{ constant('BASE_URL') }}images/changelog/{{ log.where }}.png" title="{{ log.where|capitalize }}"/>
+			</td>
+			<td>{{ log.date|date("j.m.Y") }}</td>
+			<td>{{ log.body|nl2br}}</td>
+			{% if canEdit  %}
+				<td>
+					{{ include('admin.links.html.twig', {page: 'changelog', id: log.id, hide: log.hide }) }}
+				</td>
+			{% endif %}
+		</tr>
+		{% set i = i + 1 %}
+		{% endfor %}
+	{% else %}
+	<tr>
+		<td colspan="4" bgcolor="{{ config.darkborder }}">There are no changelogs for the moment.</td>
+	</tr>
+	{% endif %}
+
+	<table border="0" cellspacing="1" cellpadding="4" width="100%">
+	{% if page > 0 %}
+		<tr><td width="100%" align="right" valign="bottom"><a href="{{ getLink('changelog/' ~ (page - 1)) }}" class="size_xxs">Previous Page</a></td></tr>
+		{% endif %}
+		{% if next_page %}
+		<tr><td width="100%" align="right" valign="bottom"><a href="{{ getLink('changelog/' ~ (page + 1)) }}" class="size_xxs">Next Page</a></td></tr>
+	{% endif %}
+	</table>
+</table>

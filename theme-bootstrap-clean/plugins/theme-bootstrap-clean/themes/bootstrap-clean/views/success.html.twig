@@ -1,0 +1,31 @@
+<table border="0" cellspacing="1" cellpadding="4" width="100%" class="table table-striped">
+	<thead>
+	<tr>
+		<td colspan="3" class="white"><b>{{ title|raw }}</b></td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			{{ description|raw }}
+		</td>
+	</tr>
+	</tbody>
+</table>
+<br/>
+{% if custom_buttons is defined %}
+{{ custom_buttons|raw }}
+{% else %}
+<div style="text-align:center">
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td style="border:0;">
+				<form action="{{ getLink('account/manage') }}" method="post">
+					{{ csrf() }}
+					{{ include('buttons.back.html.twig') }}
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>
+{% endif %}

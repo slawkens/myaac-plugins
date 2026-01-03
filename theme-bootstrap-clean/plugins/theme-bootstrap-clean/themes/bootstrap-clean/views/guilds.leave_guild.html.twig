@@ -1,0 +1,42 @@
+<form action="{{ getLink('guilds') }}?action=leave&guild={{ guild_name }}" method="post">
+	<table border="0" cellspacing="1" cellpadding="4" width="100%" class="table table-striped">
+
+		{{ csrf() }}
+
+		<input type="hidden" name="todo" value="save" />
+
+		<tr>
+			<td><b>Leave guild</b></td></tr>
+		{% if players|length > 0 %}
+		<tr>
+			<td width="100%">Select a character to leave the guild:</td>
+		</tr>
+		<tr>
+			<td>
+				{% for player in players %}
+					<input type="radio" id="name_{{ player.getId() }}" name="name" value="{{ player }}" /> <label for="name_{{ player.getId() }}">{{ player }}</label><br/>
+				{% endfor %}
+			</td>
+		</tr>
+		{% else %}
+		<tr><td width="100%">Any of your characters can't leave guild.</td></tr>
+		{% endif %}
+	</table>
+	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tr>
+			{% if players|length > 0 %}
+			<td width="130" valign="top">
+				{{ include('buttons.submit.html.twig') }}
+			</td>
+			{% endif %}
+
+			<td>
+				<a href="{{ getGuildLink(guild_name, false) }}">
+					{% set noSubmit = true %}
+					{% set button_name = "Back" %}
+					{{ include('buttons.base.html.twig') }}
+				</a>
+			</td>
+		</tr>
+	</table>
+</form>

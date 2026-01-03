@@ -1,0 +1,184 @@
+{% set onlineTTL = setting('core.online_cache_ttl') %}
+{% if onlineTTL > 0 and cache.enabled() %}
+	<small>*Note: Online List is updated every {{ onlineTTL > 1 ? ' ' ~ onlineTTL : '' }} minute{{ onlineTTL > 1 ? 's' : '' }}.</small>
+	<br/>
+{% endif %}
+
+<br/>
+
+{# vocation statistics #}
+{% if setting('core.online_vocations') %}
+
+	{% set title = 'Vocation statistics' %}
+	{% set tableClass = 'Table3' %}
+	{% set background = config('darkborder') %}
+	{% set content %}
+
+		{% if setting('core.online_vocations_images') %}
+			<table width="200" cellspacing="1" cellpadding="0" border="0" align="center" class="myaac-table">
+				<thead>
+				<tr>
+					<td class="white" style="text-align: center;"><strong>Sorcerers</strong></td>
+					<td class="white" style="text-align: center;"><strong>Druids</strong></td>
+					<td class="white" style="text-align: center;"><strong>Paladins</strong></td>
+					<td class="white" style="text-align: center;"><strong>Knights</strong></td>
+				</tr>
+				</thead>
+
+				<tr>
+					<td><img src="images/sorcerer.png" /></td>
+					<td><img src="images/druid.png" /></td>
+					<td><img src="images/paladin.png" /></td>
+					<td><img src="images/knight.png" /></td>
+				</tr>
+
+				<tr>
+					<td style="text-align: center;">{{ vocs[1] }}</td>
+					<td style="text-align: center;">{{ vocs[2] }}</td>
+					<td style="text-align: center;">{{ vocs[3] }}</td>
+					<td style="text-align: center;">{{ vocs[4] }}</td>
+				</tr>
+			</table>
+			<div style="text-align: center;">&nbsp;</div>
+		{% else %}
+			<table border="0" cellspacing="1" cellpadding="4" width="100%" class="myaac-table">
+				{% for i in 1..config.vocations_amount %}
+					<tr>
+						<td width="25%">{{ config.vocations[i] }}</td>
+						<td width="75%">{{ vocs[i] }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+			<br/>
+		{% endif %}
+
+	{% endset %}
+	{% include 'tables.headline.html.twig' %}
+
+{% endif %}
+
+<br/>
+
+{# show skulls #}
+{% if setting('core.online_skulls') %}
+	<table width="100%" cellspacing="1" class="myaac-table">
+		<tr>
+			<td align="center">
+				<img src="images/white_skull.gif"/> - 1 - 6 Frags<br/>
+				<img src="images/red_skull.gif"/> - 6+ Frags or Red Skull<br/>
+				<img src="images/black_skull.gif"/> - 10+ Frags or Black Skull
+			</td>
+		</tr>
+	</table>
+{% endif %}
+
+<br/>
+
+{% set title = 'World Information' %}
+{% set tableClass = 'Table3' %}
+{% set background = config('darkborder') %}
+{% set content %}
+	<table width="100%">
+		<tr>
+			<td class="LabelV150"><b>Status:</b></td>
+			<td>{% if not status.online %}Offline{% else %}Online{% endif %}</td>
+		</tr>
+		<tr>
+			<td class="LabelV150"><b>Players Online:</b></td>
+			<td>
+				{% if setting('core.online_afk') %}
+					{% set players_count = players|length %}
+					{% set afk = players_count - status.players %}
+					{% if afk < 0 %}
+						{% set players_count = players_count + afk|abs %}
+						{% set afk = 0 %}
+					{% endif %}
+					Currently there are <b>{{ status.players }}</b> active and <b>{{ afk }}</b> AFK players.<br/>
+					Total number of players: <b>{{ players_count }}</b>.<br/>
+				{% else %}
+					{{ players|length }}
+				{% endif %}
+			</td>
+		</tr>
+
+		{% if setting('core.online_record') and record|length > 0 %}
+			<tr>
+				<td class="LabelV150"><b>Online Record:</b></td>
+				<td>
+					{{ record }}
+				</td>
+			</tr>
+		{% endif %}
+
+		<tr>
+			<td class="LabelV150"><b>Location Datacenter:</b></td>
+			<td>{{ setting('core.online_datacenter')|raw }} <small>(Server date & time: - {{ "now"|date("d/m/Y H:i:s") }})</small></td>
+		</tr>
+		<tr>
+			<td class="LabelV150"><b>PvP Type:</b></td>
+			<td>
+				{% set worldType = config('lua')['worldType']|lower %}
+				{% if worldType in ['pvp','2','normal','open','openpvp'] %}
+					Open PvP
+				{% elseif worldType in ['no-pvp','nopvp','non-pvp','nonpvp','1','safe','optional','optionalpvp'] %}
+					Optional PvP
+				{% elseif worldType in ['pvp-enforced','pvpenforced','pvp-enfo','pvpenfo','pvpe','enforced','enfo','3','war','hardcore','hardcorepvp'] %}
+					Hardcore PvP
+				{% endif %}
+			</td>
+		</tr>
+	</table>
+{% endset %}
+{% include 'tables.headline.html.twig' %}
+<br/>
+<br/>
+
+{% set title = 'Players Online' %}
+{% set tableClass = 'Table2' %}
+{% set content %}
+	<table width="100%" class="table table-striped">
+
+		<tr class="LabelH" style="z-index: 20;">
+			{% if setting('core.account_country') %}
+				<td style="width: 6px;"><a href="{{ getLink('online')}}?order=country_{{ order == 'country_asc' ? 'desc' : 'asc' }}">#&#160;&#160;</a>
+				</td>
+			{% endif %}
+			{% if setting('core.online_outfit') %}
+				<td style="width: 32px;"><b>Outfit</b></td>
+			{% endif %}
+			<td style="text-align:left;">Name&#160;&#160;
+				<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=name_{{ order == 'name_asc' ? 'desc' : 'asc' }}">sort</a>]</small>
+				<img class="sortarrow" src="images/{{ order == 'name_asc' ? 'order_desc' : (order == 'name_desc' ? 'order_asc' : 'news/blank') }}.gif"/></td>
+			<td style="text-align:left;width:10%">Level&#160;&#160;
+				<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=level_{{ order == 'level_asc' ? 'desc' : 'asc' }}">sort</a>]</small>
+				<img class="sortarrow" src="images/{{ order == 'level_asc' ? 'order_desc' : (order == 'level_desc' ? 'order_asc' : 'news/blank') }}.gif"/>
+			</td>
+			<td style="text-align:left;width:20%">Vocation&#160;&#160;
+				<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=vocation_{{ order == 'vocation_asc' ? 'desc' : 'asc' }}">sort</a>]</small>
+				<img class="sortarrow" src="images/{{ order == 'vocation_asc' ? 'order_desc' : (order == 'vocation_desc' ? 'order_asc' : 'news/blank') }}.gif"/>
+			</td>
+		</tr>
+
+		{% set i = 0 %}
+		{% for player in players %}
+			{% set i = i + 1 %}
+
+			<tr style="text-align: right; height: 40px;">
+				{% if setting('core.account_country') %}
+					<td>{{ player.country_image|raw }}</td>
+				{% endif %}
+
+				{% if setting('core.online_outfit') %}
+					<td><img style="position:absolute;margin-top:-38px;margin-left:-70px;" src="{{ player.outfit }}" alt="player outfit"/></td>
+				{% endif %}
+
+				<td style="text-align:left">
+					{{ player.name|raw }}{{ player.skull|raw }}
+				</td>
+				<td>{{ player.level }}</td>
+				<td>{{ player.vocation }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endset %}
+{{ include('tables.headline.html.twig') }}

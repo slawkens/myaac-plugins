@@ -1,0 +1,15 @@
+<table style="width: 100%" class="table table-striped">
+	<tr class="white">
+		<td colspan="3">Tickers</td>
+	</tr>
+	{% set i = 0 %}
+	{% for ticker in tickers %}
+	<tr>
+		<td style="width: 16px;"><img src="{{ constant('BASE_URL') }}images/news/icon_{{ ticker.icon }}_small.gif"/></td>
+		<td style="width: 100px;">{{ ticker.date|date("j M Y") }}</td>
+		<td>{{ ticker.body|raw }}</td>
+	</tr>
+	{% set i = i + 1 %}
+	{% endfor %}
+</table>
+<br/>

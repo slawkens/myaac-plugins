@@ -1,0 +1,13 @@
+<form class="row g-1" action="{{ getLink('guilds') }}?action=invite&guild={{ guild_name }}" method="post">
+
+	<input type="hidden" name="todo" value="save" />
+
+	{{ csrf() }}
+
+	<div class="col-auto">
+		<input type="text" name="name" id="name" placeholder="Player name..">
+	</div>
+	<div class="col-auto">
+		<input type="submit" name="Submit" value="Submit" class="btn btn-secondary">
+	</div>
+</form>

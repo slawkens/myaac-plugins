@@ -1,0 +1,26 @@
+<table>
+	<tr>
+		<td>
+			<form action="{{ constant('ADMIN_URL') }}?p={{ page }}" method="post" style="float: left">
+				{{ csrf() }}
+				<input type="hidden" name="action" value="edit" />
+				<input type="hidden" name="id" value="{{ id }}" />
+				<button type="submit" class="btn" title="Edit"><i class="bi bi-pen"></i> Edit</button>
+			</form>
+
+			<form action="{{ constant('ADMIN_URL') }}?p={{ page }}" method="post" style="float: left">
+				{{ csrf() }}
+				<input type="hidden" name="action" value="delete" />
+				<input type="hidden" name="id" value="{{ id }}" />
+				<button type="submit" class="btn" onclick="return confirm('Are you sure?');" title="Delete"><i class="bi bi-trash"></i> Delete</button>
+			</form>
+
+			<form action="{{ constant('ADMIN_URL') }}?p={{ page }}" method="post" style="float: left">
+				{{ csrf() }}
+				<input type="hidden" name="action" value="hide" />
+				<input type="hidden" name="id" value="{{ id }}" />
+				<button type="submit" class="btn {{ hide != 1 ? 'btn-success' : 'btn-outline-danger' }}" title="{% if hide != 1 %}Hide{% else %}Show{% endif %}"><i class="bi bi-check-circle"></i>{{ hide != 1 ? 'Hide' : 'Show' }}</button>
+			</form>
+		</td>
+	</tr>
+</table>

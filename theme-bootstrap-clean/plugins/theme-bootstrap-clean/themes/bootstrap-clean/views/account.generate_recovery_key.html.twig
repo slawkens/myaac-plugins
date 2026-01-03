@@ -1,0 +1,46 @@
+To generate recovery key for your account please enter your password.<br/><br/>
+{% set title = 'Generate recovery key' %}
+{% set background = config('darkborder') %}
+{% set content %}
+	<table style="width:100%;" >
+		<tr>
+			<td class="LabelV">
+				<label for="reg_password">Password:</label>
+			</td>
+			<td>
+				<input form="form" type="password" id="reg_password" name="reg_password" size="30" maxlength="29" class="form-control" autofocus/>
+			</td>
+		</tr>
+	</table>
+{% endset %}
+{% include 'tables.headline.html.twig' %}
+<br/>
+<table style="width:100%">
+	<tr align="center">
+		<td>
+			<table border="0" cellspacing="0" cellpadding="0" >
+				<tr>
+					<td style="border:0;">
+						<form id="form" action="{{ getLink('account/register') }}" method="post">
+							{{ csrf() }}
+							<input type="hidden" name="registeraccountsave" value="1"/>
+							{{ include('buttons.submit.html.twig') }}
+						</form>
+					</td>
+				<tr>
+			</table>
+		</td>
+		<td>
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td style="border: 0;">
+						<form action="{{ getLink('account/manage') }}" method="post">
+							{{ csrf() }}
+							{{ include('buttons.back.html.twig') }}
+						</form>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
