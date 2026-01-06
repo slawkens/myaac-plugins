@@ -35,7 +35,7 @@
 			if (isset($menus[MENU_CATEGORY_TOP])): ?>
 			<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 				<?php foreach ($menus[MENU_CATEGORY_TOP] as $menu): ?>
-					<li><a href="<?= $menu['link']; ?>" class="nav-link px-2 <?= $menu['target_blank']; ?> <?= $menu['style_color']; ?>"><?= $menu['name']; ?></a></li>
+					<li><a href="<?= $menu['link']; ?>" class="nav-link px-2"<?= $menu['target_blank']; ?> <?= $menu['style_color']; ?>><?= $menu['name']; ?></a></li>
 				<?php endforeach; ?>
 			</ul>
 			<?php endif; ?>
