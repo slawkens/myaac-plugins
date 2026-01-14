@@ -1,7 +1,7 @@
 {
 	"name": "Lua Spells",
 	"description": "Support for Lua Spells (revscript).",
-	"version": "1.0",
+	"version": "1.1",
 	"type": "page",
 	"license": "GPLv3",
 	"author": "slawkens",

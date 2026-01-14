@@ -19,13 +19,13 @@ class LuaSpell
 		}
 
 		if ($name == 'vocation') {
-			$settingVocations = (setting('core.vocations'));
+			$configVocations = (config('vocations'));
 
-			foreach ($settingVocations as $id => &$name) {
+			foreach ($configVocations as $id => &$name) {
 				$name = strtolower($name);
 			}
 
-			$vocationsFlipped = array_flip($settingVocations);
+			$vocationsFlipped = array_flip($configVocations);
 
 			$vocations = [];
 			foreach ($arguments as &$voc) {

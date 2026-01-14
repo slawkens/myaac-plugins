@@ -11,7 +11,10 @@ $reload = isset($_REQUEST['reload']) && (int)$_REQUEST['reload'] == 1;
 
 if($reload && admin()) {
 	Spells::reload(true);
-	success('Spells reloaded.');
+
+	$totals = Spells::$totalsAdded;
+
+	success("Spells reloaded. (Total instant: {$totals[Spells::TYPE_INSTANT]}, conjure: {$totals[Spells::TYPE_CONJURE]}, runes: {$totals[Spells::TYPE_RUNE]})");
 }
 
 if(admin()) {
@@ -24,7 +27,7 @@ if(isset($_REQUEST['vocation_id'])) {
 		$vocation = 'all';
 	}
 	else {
-		$vocation = setting('core.vocations')[$vocation_id];
+		$vocation = config('vocations')[$vocation_id];
 	}
 }
 else {
@@ -34,13 +37,13 @@ else {
 		$vocation_id = 'all';
 	}
 	else {
-		$vocation_ids = array_flip(setting('core.vocations'));
+		$vocation_ids = array_flip(config('vocations'));
 		$vocation_id = $vocation_ids[$vocation];
 	}
 }
 
 $order = 'name';
-$spells = array();
+$spells = [];
 $spells_db = LuaSpellModel::where('hide', '!=', 1)->where('type', '<', 4)->orderBy($order)->get();
 
 if((string)$vocation_id != 'all') {
@@ -68,23 +71,14 @@ else {
 	}
 }
 
-?>
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>tools/css/datatables.min.css">
-<?php
+$showColumns = [
+	'group' => LuaSpellModel::where('group', '!=', '')->count() > 0,
+	'level' => LuaSpellModel::where('level', '>', 0)->count() > 0,
+];
+
 $twig->display('lua-spells/views/spells.html.twig', array(
 	'post_vocation_id' => $vocation_id,
 	'post_vocation' => $vocation,
 	'spells' => $spells,
+	'showColumns' => $showColumns,
 ));
-?>
-
-<script>
-	$(document).ready( function () {
-		$("#tb_instantSpells").DataTable();
-		$("#tb_conjureSpells").DataTable();
-		$("#tb_runeSpells").DataTable();
-	} );
-
-</script>
-<script src="<?php echo BASE_URL; ?>tools/js/datatables.min.js"></script>
-

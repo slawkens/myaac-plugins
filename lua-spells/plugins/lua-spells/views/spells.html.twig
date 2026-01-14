@@ -1,3 +1,15 @@
+<link rel="stylesheet" href="{{ constant('BASE_URL') }}tools/css/datatables.min.css">
+<script src="{{ constant('BASE_URL') }}tools/js/datatables.min.js"></script>
+<script>
+
+	$(function () {
+		$("#tb_instantSpells").DataTable();
+		$("#tb_conjureSpells").DataTable();
+		$("#tb_runeSpells").DataTable();
+	});
+
+</script>
+
 {% set itemImagesURL = setting('core.item_images_url') %}
 {% set itemImagesExt = setting('core.item_images_extension') %}
 <style>
@@ -31,6 +43,7 @@
 		font-weight: 600;
 		background-color: {{ config.vdarkborder }};
 	}
+
 </style>
 
 <form action="{{ getLink('spells') }}" method="post">
@@ -78,9 +91,17 @@
 					<th>Name</th>
 					<th>Words</th>
 					<th>Prem</th>
+
+					{% if showColumns.level %}
 					<th>Lvl</th>
+					{% endif %}
+
 					<th>Mana</th>
+
+					{% if showColumns.group %}
 					<th>Group</th>
+					{% endif %}
+
 					<th>Vocations</th>
 				</tr>
 				</thead>
@@ -95,9 +116,17 @@
 							<td>{{ spell.name }}</td>
 							<td>{{ spell.words }}</td>
 							<td>{{ spell.premium == 1 ? '✅' : '❌' }}</td>
+
+							{% if showColumns.level %}
 							<td>{{ spell.level }}</td>
+							{% endif %}
+
 							<td>{{ spell.mana }}</td>
+
+							{% if showColumns.group %}
 							<td>{{ spell.group|capitalize }}</td>
+							{% endif %}
+
 							<td>
 								{% if spell.vocations|length > 0 %}
 									<span style="font-size: 10px">{{ spell.vocations|raw }}</span>
@@ -118,7 +147,11 @@
 					<th>Name</th>
 					<th>Words</th>
 					<th>Prem</th>
+
+					{% if showColumns.level %}
 					<th>Lvl</th>
+					{% endif %}
+
 					<th>Mana</th>
 					<th>Soul</th>
 					<th>Item</th>
@@ -137,7 +170,11 @@
 							<td>{{ spell.name }}</td>
 							<td>{{ spell.words }}</td>
 							<td>{{ spell.premium == 1 ? '✅' : '❌' }}</td>
+
+							{% if showColumns.level %}
 							<td>{{ spell.level }}</td>
+							{% endif %}
+
 							<td>{{ spell.mana }}</td>
 							<td>{{ spell.soul }}</td>
 							<td>
@@ -173,7 +210,9 @@
 					<th>Lvl</th>
 					<th>Mag Lvl</th>
 					<th>Item</th>
+					{% if showColumns.group %}
 					<th>Group</th>
+					{% endif %}
 					<th>Vocations</th>
 				</tr>
 				</thead>
@@ -191,7 +230,11 @@
 							<td><img src="{{ itemImagesURL }}{{ spell.rune_id }}{{ itemImagesExt }}"
 									 width="32" height="32" border="0"
 									 alt="{{ spell.rune_id }}"></td>
+
+							{% if showColumns.group %}
 							<td>{{ spell.group|capitalize }}</td>
+							{% endif %}
+
 							<td>
 								{% if spell.vocations|length > 0 %}
 									<span style="font-size: 10px">{{ spell.vocations|raw }}</span>
