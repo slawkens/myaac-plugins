@@ -151,7 +151,7 @@ return new class extends Command
 			$player->vocation = $vocation ?? random_int(0, 8);
 			$player->town_id = $town ?? 1;
 
-			$player->level = $level ?? ($player->vocation == VOCATION_NONE ? random_int(0, 8) : random_int(1, 2000));
+			$player->level = $level ?? ($player->vocation == VOCATION_NONE ? random_int(1, 8) : random_int(1, 2000));
 			$player->experience = getExperienceForLevel($player->level);
 
 			$player->health = getHealthPointsForLevel($player->vocation, $player->level);
@@ -160,7 +160,9 @@ return new class extends Command
 			$player->mana = getManaPointsForLevel($player->vocation, $player->level);
 			$player->manamax = getManaPointsForLevel($player->vocation, $player->level);
 
-			$player->cap = getCapacityForLevel($player->vocation, $player->level);
+			if ($db->hasColumn('players', 'cap')) {
+				$player->cap = getCapacityForLevel($player->vocation, $player->level);
+			}
 
 			$player->sex = random_int(0, 1);
 			$player->looktype = $lookType ?? ($player->sex == 0 ? 136 : 128);
@@ -170,9 +172,13 @@ return new class extends Command
 			$player->looklegs = $lookColors ?? $lookLegs ?? 0;
 			$player->lookfeet = $lookColors ?? $lookFeet ?? 0;
 
-			$player->lookaddons = $lookAddons ?? 0;
+			if ($db->hasColumn('players', 'lookaddons')) {
+				$player->lookaddons = $lookAddons ?? 0;
+			}
 
-			$player->conditions = '';
+			if ($db->hasColumn('players', 'conditions')) {
+				$player->conditions = '';
+			}
 
 			$player->created = time();
 

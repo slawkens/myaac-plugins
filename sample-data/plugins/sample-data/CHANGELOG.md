@@ -1,5 +1,9 @@
 # Changelog sample-data
 
+## v1.1.1 - 2025-01-16
+* Support for servers without cap, conditions or lookaddons columns (create players command)
+* Fixed level being set to 0, which caused command to fail
+
 ## v1.1 - 2025-11-04
 * Created this changelog
 * Added "name" into composer.json, to prevent duplicated class name
