@@ -1,6 +1,6 @@
 # sample-data
 
-Generator of sample data - generate fake accounts, players & online players, maybe in future something more.
+Generator of sample data – generate fake accounts, players & online players, maybe in future something more.
 
 ## Commands included
 * sample-data:accounts - accounts generator
@@ -12,9 +12,12 @@ Generator of sample data - generate fake accounts, players & online players, may
 cd /var/www/html # or any other folder where myaac located is
 ```
 
+Info:
+`php aac` is a command, that executes the "aac" file by php interpreter from the myaac root folder.
+
 ### sample-data:accounts
 
-Generate 10 accounts with default password, which is: **pass1234**
+Generate 10 accounts with the default password, which is: **pass1234**
 ```
 php aac sample-data:accounts 10
 ```
@@ -49,7 +52,7 @@ php aac sample-data:random-online 100
 * --password=x (password to use)
 * --country=x (country code)
   * example: --country=pl (will be set for all accounts)
-  * leaving it empty, will generate random country for every account
+  * leaving it empty will generate a random country for every account
 
 ### sample-data:players
 * --file=path/to/file.txt (list of names to use, one name per line)
@@ -60,7 +63,7 @@ php aac sample-data:random-online 100
 * --vocation=x (id of vocation, from 0 to 10 (with monk))
 * --town=x (id of town)
 * --look-type=x (id of outfit/lookType)
-* --look-colors=x (color of whole outfit (simplified), number from 0 to 132)
+* --look-colors=x (color of the whole outfit (simplified), number from 0 to 132)
 * --look-addons=x (0, 1 or 2)
 * --look-head=x (color of head - number from 0 to 132)
 * --look-body=x (color of body, same as above)
