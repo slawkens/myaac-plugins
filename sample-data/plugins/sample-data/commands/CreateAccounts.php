@@ -41,12 +41,12 @@ return new class extends Command
 		}
 
 		$password = trim($input->getOption('password') ?? '');
-		if (!$password) {
+		if (empty($password)) {
 			$password = 'pass1234';
 		}
 
-		$country = trim($input->getOption('country') ?? '');
-		if (!$country) {
+		$country = strtolower(trim($input->getOption('country') ?? ''));
+		if (empty($country)) {
 			$country = 'random';
 		}
 
@@ -67,8 +67,26 @@ return new class extends Command
 			$lastName = $faker->lastName();
 
 			$account->rlname = $firstName . ' ' . $lastName;
-			$account->name = strtolower($firstName . '_' . $lastName);
+
+			if (USE_ACCOUNT_NAME) {
+				$account->name = strtolower($firstName . '_' . $lastName);
+			}
+			else {
+				do {
+					$id = rand(1, 99999999);
+				}
+				while (Account::where('id', $id)->exists());
+
+				if (USE_ACCOUNT_NUMBER) {
+					$account->number = $id;
+				}
+				else {
+					$account->id = $id;
+				}
+			}
+
 			$account->email = $faker->email();
+			$account->email_verified = 1;
 
 			$account->country = ($country == 'random' ? array_rand($configCountries) : $country);
 
@@ -90,7 +108,12 @@ return new class extends Command
 			$lastId = $account->id;
 		}
 
-		$io->success(["Successfully created $amount accounts.", "Generated account first id: $firstId and last id: $lastId."]);
+		$success = ["Successfully created $amount accounts."];
+		if (USE_ACCOUNT_NAME) {
+			$success[] = "Generated account first id: $firstId and last id: $lastId.";
+		}
+
+		$io->success($success);
 		return Command::SUCCESS;
 	}
 };

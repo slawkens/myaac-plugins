@@ -1,8 +1,13 @@
 # Changelog sample-data
 
 ## v1.1.1 - 2025-01-16
-* Support for servers without cap, conditions or lookaddons columns (create players command)
-* Fixed level being set to 0, which caused command to fail
+* Accounts generator:
+  * Support for servers without accounts name column
+  * Make the --country parameter case-insensitive
+  * Set email_verified to 1 by default
+* Players generator:
+  * Support for servers without players cap, conditions or lookaddons columns
+  * Fixed level being set to 0 for non-vocation, which caused command to fail
 
 ## v1.1 - 2025-11-04
 * Created this changelog
