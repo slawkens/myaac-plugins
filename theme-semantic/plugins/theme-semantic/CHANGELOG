@@ -1,3 +1,6 @@
+[3.2.3 - 30.01.2026]
+	* Fix account/manage link in the success.html.twig (missing csrf token)
+
 [3.2.2 - 21.10.2025]
 	* Add missing hook: HOOK_ACCOUNT_CREATE_AFTER_PASSWORD
 	* Fix create character on the create account page
