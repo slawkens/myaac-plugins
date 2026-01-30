@@ -1,3 +1,6 @@
+[2.3 - 30.01.2026]
+	* Update for myaac 2.0 - support for change-password page
+
 [2.2 - 21.10.2025]
 	* Update composer.lock - "bjeavons/zxcvbn-php" to version 1.4.2
 
