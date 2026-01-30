@@ -9,4 +9,4 @@
 	{% endif %}
 {% endif %}
 
-<input class="button" style="background: {{ color }}" type="submit" name="Submit" value="Submit" />
+<input class="button" style="background: {{ color }}" {% if noSubmit is not defined %}type="submit"{% endif %} name="{{ button_name }}" value="{{ button_name }}" />
