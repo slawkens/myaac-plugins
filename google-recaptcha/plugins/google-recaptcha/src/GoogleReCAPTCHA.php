@@ -2,15 +2,15 @@
 
 class GoogleReCAPTCHA
 {
-	private static $errorMessage = '';
-	private static $errorType;
+	private static string $errorMessage = '';
+	private static int $errorType;
 
 	const ERROR_MISSING_RESPONSE = 1;
 	const ERROR_INVALID_ACTION = 2;
 	const ERROR_LOW_SCORE = 3;
 	const ERROR_NO_SUCCESS = 4;
 
-	public static function verify($action = '')
+	public static function verify($action = ''): bool
 	{
 		if (empty($_POST['g-recaptcha-response'])) {
 			self::$errorType = self::ERROR_MISSING_RESPONSE;
@@ -69,19 +69,50 @@ class GoogleReCAPTCHA
 	/**
 	 * @return string
 	 */
-	public static function getErrorMessage() {
+	public static function getErrorMessage(): string
+	{
 		return self::$errorMessage;
 	}
 
 	/**
 	 * @return int
 	 */
-	public static function getErrorType() {
+	public static function getErrorType(): int {
 		return self::$errorType;
 	}
 
 	public static function enabled(): bool {
 		return (setting('google_recaptcha.enabled') && !empty(setting('google_recaptcha.site_key')) && !empty(setting
 			('google_recaptcha.secret_key')));
+	}
+
+	public static function placeholders(): void
+	{
+		global $template_place_holders;
+		$recaptchaType = setting('google_recaptcha.type');
+
+		if(!isset($template_place_holders['head_end'])) {
+			$template_place_holders['head_end'] = [];
+		}
+
+		if(!isset($template_place_holders['body_end'])) {
+			$template_place_holders['body_end'] = [];
+		}
+
+		// insert into page head
+		$template_place_holders['head_end'][] = '<script src="https://www.google.com/recaptcha/api.js' .
+			(
+			$recaptchaType == 'v3' ? '?render=' . setting('google_recaptcha.site_key') :
+				(
+				$recaptchaType === 'v2-invisible' ? '?onload=onloadCallback' :
+					'')
+			) . '" async defer></script>';
+
+		if ($recaptchaType == 'v3') {
+			$template_place_holders['body_end'][] = $twig->render('google-recaptcha/views/recaptcha-v3.html.twig', [
+					'action' => (PAGE == 'account/create' ? 'register' : 'login')
+				]
+			);
+		}
 	}
 }

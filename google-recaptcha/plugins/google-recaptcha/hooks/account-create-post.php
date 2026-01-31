@@ -1,8 +1,6 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-require_once __DIR__ . '/../init.php';
-
 if(GoogleReCAPTCHA::enabled()) {
 	if (!GoogleReCAPTCHA::verify('register')) {
 		global $logged, $errors;

@@ -1,3 +1,9 @@
+[2.2 - 31.01.2026]
+	* Do not require curl
+	* Use autoload init
+	* Extract GoogleReCAPTCHA::placeholders() to use in other plugins
+	* Minimum myaac version: v1.6
+
 [2.1 - 21.01.2025]
 	* fix v2-invisible
 	* refactor code

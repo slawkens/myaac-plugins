@@ -1,15 +1,14 @@
 {
 	"name": "Google ReCaptcha",
 	"description": "Support for Google ReCaptcha.",
-	"version": "2.1",
+	"version": "2.2",
 	"type": "plugin",
 	"license": "GPLv3",
 	"author": "MyAAC Authors",
 	"contact": "www.my-aac.org",
 	"require": {
-		"myaac": "1.0",
-		"php": "8.1",
-		"php-ext": "curl"
+		"myaac": "1.6",
+		"php": "8.1"
 	},
 	"hooks": {
 		"google-recaptcha-before-page": {
@@ -48,6 +47,9 @@
 			"type": "ADMIN_BODY_END",
 			"file": "plugins/google-recaptcha/hooks/admin-head-body.php"
 		}
+	},
+	"autoload": {
+		"init": true
 	},
 	"settings": "plugins/google-recaptcha/settings.php",
 	"uninstall": [
