@@ -1,5 +1,9 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
+
+if (PAGE != 'account/create' && PAGE != 'account/manage' && method_exists('GoogleReCAPTCHA', 'placeholders')) {
+	GoogleReCAPTCHA::placeholders();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -82,12 +86,18 @@ defined('MYAAC') or die('Direct access not allowed!');
 									<div class="row">
 										<div class="col-md-12">
 											<form action="<?= getLink('account/manage'); ?>" method="post">
+
+												<?= csrf(true); ?>
+
 												<div class="form-group">
 													<input type="password" name="account_login" class="form-control" placeholder="Account Name" required />
 												</div>
 												<div class="form-group">
 													<input type="password" name="password_login" class="form-control" placeholder="Password" required />
 												</div>
+
+												<?php $hooks->trigger(HOOK_ACCOUNT_LOGIN_AFTER_REMEMBER_ME); ?>
+
 												<div class="form-group">
 													<button type="submit" class="btn btn-primary btn-block">Sign in</button>
 												</div>

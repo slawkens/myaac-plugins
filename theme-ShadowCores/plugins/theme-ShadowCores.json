@@ -1,13 +1,13 @@
 {
 	"name": "Theme ShadowCores",
 	"description": "This is ShadowCores theme for MyAAC.",
-	"version": "2.0",
-	"type": "template",
+	"version": "2.0.1",
+	"type": "theme",
 	"license": "GPLv3",
 	"author": "Webo, slawkens",
 	"contact": "slawkens@gmail.com",
 	"require": {
-		"myaac": "1.0-beta",
+		"myaac": "1.0",
 		"php": "8.1"
 	},
 	"uninstall": [
