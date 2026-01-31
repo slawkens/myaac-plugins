@@ -38,17 +38,24 @@ defined('MYAAC') or die('Direct access not allowed!');
 			<div id="login">
 				<?php
 					if ($logged) {
-						echo'<form method="post" action="' . getLink('account/logout') . '">
-						<fieldset><p>Hello.&nbsp;&nbsp;&nbsp;&nbsp;<a href="' . getLink('account/manage') . '">Account Management</a>&nbsp;</p>
-						<input value="Logout" class="input-submit" type="submit" />
-						</fieldset>
-						</form>';
-					}else{
-						echo'<form method="post" action="' . getLink('account/manage') . '">
-							<fieldset> <span class="input-text"> <input name="account_login" value="" placeholder="Account" type="text" /> </span><span class="input-text"> <input name="password_login" value="" placeholder="Password" type="password" /> </span> <input value="Login" class="input-submit" type="submit" />
-							<p><a href="' . getLink('account/lost') . '">Lost Account?</a>&nbsp;</p>
+						?>
+							<form method="post" action="<?= getLink('account/logout'); ?>">
+							<fieldset>
+								<p>Hello.&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?= getLink('account/manage'); ?>">Account Management</a>&nbsp;</p>
+								<input value="Logout" class="input-submit" type="submit" />
 							</fieldset>
-						</form>';
+						</form>
+					<?php
+					}
+					else {
+						?>
+						<form method="post" action="<?= getLink('account/manage'); ?>">
+							<?= csrf(true); ?>
+
+							<input value="Login" class="input-submit" type="submit" style="cursor: pointer;"/>
+						</form>
+						<p><a href="<?= getLink('account/lost'); ?>">Lost Account?</a>&nbsp;</p>
+				<?php
 					}
 				?>
 			</div>

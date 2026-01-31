@@ -1,3 +1,6 @@
+[2.1.1 - 31.01.2026]
+	* Remove login box (doesn't look good with recaptcha) until I find a better solution to display it
+
 [2.1 - 09.02.2025]
 	* support for reset menus + menu_default_links_color
 
