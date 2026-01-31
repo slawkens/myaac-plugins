@@ -5,6 +5,10 @@ if (!function_exists('mostPowerfulGuildsList') && !function_exists('mostPowerful
 	require_once __DIR__ . '/powerful_guilds.php';
 }
 
+if (PAGE != 'account/create' && PAGE != 'account/manage' && method_exists('GoogleReCAPTCHA', 'placeholders')) {
+	GoogleReCAPTCHA::placeholders();
+}
+
 $topData = '';
 $i = 0;
 foreach(getTopPlayers(5) as $player) {
@@ -186,12 +190,26 @@ foreach(getTopPlayers(5) as $player) {
 					<?php } else { ?>
 						<div class="tab-pane active" id="login">
 							<form class="form" role="form" action="<?= getLink('account/manage') ?>" method="post">
+
+								<?= csrf(true); ?>
+
 								<div class="form-group">
-									<input type="text" maxlength="35" name="account_login" class="form-control" placeholder="Account Name" required />
+									<input type="text" maxlength="35" name="account_login" class="form-control" placeholder="<?= getAccountLoginByLabel(); ?>" required />
 								</div>
+
 								<div class="form-group">
 									<input type="password" maxlength="30" name="password_login" class="form-control" placeholder="Password" required/>
 								</div>
+
+								<div class="form-group">
+									<input type="checkbox" id="remember_me_v2" name="remember_me" value="true" />
+									<label for="remember_me_v2"> Remember me</label>
+								</div>
+
+								<div class="form-group">
+									<?php $hooks->trigger(HOOK_ACCOUNT_LOGIN_AFTER_REMEMBER_ME); ?>
+								</div>
+
 								<div class="form-group">
 									<button type="submit" class="btn btn-primary btn-block">Sign in</button>
 								</div>

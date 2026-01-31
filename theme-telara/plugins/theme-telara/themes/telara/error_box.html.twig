@@ -1,0 +1,12 @@
+<ul class="alert alert-danger">
+	<b>The Following Errors Have Occurred:</b><br/>
+	{% for error in errors %}
+	<li>{{ error|raw }}</li>
+	{% endfor %}
+</ul>
+
+<style>
+	.alert {
+		padding: revert;
+	}
+</style>
