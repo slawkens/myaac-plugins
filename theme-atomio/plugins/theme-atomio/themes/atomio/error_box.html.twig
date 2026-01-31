@@ -1,0 +1,6 @@
+<ul class="error" style="margin-bottom: 20px; margin-top: 20px; padding: 10px">
+	<strong>The Following Errors Have Occurred:</strong>
+	{% for error in errors %}
+		<li style="padding-left: 20px">* {{ error|striptags('<b><a>')|raw }}</li>
+	{% endfor %}
+</ul>

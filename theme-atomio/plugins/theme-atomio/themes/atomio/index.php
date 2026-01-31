@@ -1,6 +1,10 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
+if (PAGE != 'account/create' && PAGE != 'account/manage' && method_exists('GoogleReCAPTCHA', 'placeholders')) {
+	GoogleReCAPTCHA::placeholders();
+}
+
 $menus = get_template_menus();
 if(count($menus) === 0) {
 	$text = "Please install the $template_name template in Admin Panel, so the menus will be imported too.";
@@ -77,7 +81,7 @@ if(count($menus) === 0) {
 					<?php
 					foreach(scandir(__DIR__ . '/widgets', SCANDIR_SORT_ASCENDING) as $widget) {
 						$file = __DIR__ . '/widgets/' . $widget;
-						if(strpos($widget, '.php') !== false && file_exists($file)) {
+						if(str_contains($widget, '.php') && file_exists($file)) {
 							include($file); ?>
 							<?php
 						}

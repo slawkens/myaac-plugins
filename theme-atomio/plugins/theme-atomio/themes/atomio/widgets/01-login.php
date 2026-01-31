@@ -1,8 +1,6 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-$accountType = (USE_ACCOUNT_NAME ? 'name' : 'number');
-
 if ($logged) {
 	return;
 }
@@ -14,12 +12,27 @@ if ($logged) {
 	</div>
 	<div class="body">
 		<form class="loginForm" action="<?= getLink('account/manage') ?>" method="post">
+
+			<?= csrf(true); ?>
+
 			<div class="well">
-				<label for="account_login">Account <?= $accountType ?>:</label><input type="text" name="account_login" id="account_login">
+				<label for="account_login"><?= getAccountLoginByLabel(); ?>:</label>
+				<input type="text" name="account_login" id="account_login" required>
 			</div>
 			<div class="well">
-				<label for="password_login">Password:</label><input type="password" name="password_login" id="password_login">
+				<label for="password_login">Password:</label>
+				<input type="password" name="password_login" id="password_login" required>
 			</div>
+
+			<div class="well">
+				<input type="checkbox" id="remember_me" name="remember_me" value="true" />
+				<label for="remember_me"> Remember me</label>
+			</div>
+
+			<div class="well">
+				<?php $hooks->trigger(HOOK_ACCOUNT_LOGIN_AFTER_REMEMBER_ME); ?>
+			</div>
+
 			<div class="well">
 				<input type="submit" value="Login">
 			</div>
