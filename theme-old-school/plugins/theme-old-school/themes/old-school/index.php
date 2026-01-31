@@ -1,6 +1,10 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
+if (PAGE != 'account/create' && PAGE != 'account/manage' && method_exists('GoogleReCAPTCHA', 'placeholders')) {
+	GoogleReCAPTCHA::placeholders();
+}
+
 $menus = get_template_menus();
 if(count($menus) === 0) {
 	$text = "Please install the $template_name template in Admin Panel, so the menus will be imported too.";
@@ -31,6 +35,12 @@ if(count($menus) === 0) {
 
 		.display-inline {
 			display: inline !important;
+		}
+
+		.login .g-recaptcha {
+			transform:scale(0.60);
+			transform-origin:0 0;
+			margin-left: 10px;
 		}
 	</style>
 	<script>
@@ -181,23 +191,40 @@ if(count($menus) === 0) {
 			<div class="title"><img src="<?= $template_path; ?>/images/quick.gif"><span style="background-image: url(<?= $template_path; ?>/widget_texts/quicklogin.png);"></span></div>
 			<div class="content">
 				<div class="rise-up-content">
-					<?php if ($logged === false) { ?>
-						<div class="login"></div>
-						<form action="<?= getLink('account/manage'); ?>" method="post" style="margin-bottom: 0;">
-							<?= csrf(true); ?>
-							<input type="text" name="account_login" value="<?= getAccountLoginByLabel(); ?>" class="inputtext" onfocus="this.value=''" onblur="if(this.value==='') { this.value='<?= getAccountLoginByLabel(); ?>'};">
-							<input type="password" name="password_login" value="Password" class="inputtext" onfocus="this.value=''" onblur="if(this.value==='') { this.value='Password'};">
-							<input type="submit" name="Submit" value="" class="loginbtn"> <a class="createbtn" href="<?= getLink('account/create');?>"></a>
-							<center style="font-size: 12px;">
-								<a href="<?= getLink('account/lost');?>">Lost Account?</a>
-							</center>
-						</form>
+					<?php if (!$logged) { ?>
+						<div class="login">
+							<form action="<?= getLink('account/manage'); ?>" method="post" style="margin-bottom: 0;">
+
+								<?= csrf(true); ?>
+
+								<input
+									type="text" name="account_login" value="<?= getAccountLoginByLabel(); ?>"
+									class="inputtext" onfocus="this.value=''" onblur="if(this.value==='') { this
+									.value='<?= getAccountLoginByLabel(); ?>'};" required />
+
+								<input type="password" name="password_login" value="Password" class="inputtext" onfocus="this.value=''" onblur="if(this.value==='') { this.value='Password'};" required />
+
+								<div style="text-align: center; margin-top: 10px;">
+									<label><input type="checkbox" id="remember_me" name="remember_me" value="true" />Remember me</label>
+								</div>
+
+								<div style="text-align: center; margin-top: 10px;">
+									<?php $hooks->trigger(HOOK_ACCOUNT_LOGIN_AFTER_REMEMBER_ME); ?>
+								</div>
+
+								<input type="submit" name="Submit" value="" class="loginbtn"> <a class="createbtn" href="<?= getLink('account/create');?>"></a>
+								<center style="font-size: 12px;">
+									<a href="<?= getLink('account/lost');?>">Lost Account?</a>
+								</center>
+							</form>
+						</div>
 					<?php }else{ ?>
 						<div class="acc_menu">
 							<center>
 								Welcome, <?php echo(USE_ACCOUNT_NAME ? $account_logged->getName() : $account_logged->getId()); ?>
 								<a href="<?= getLink('account/manage'); ?>" class="inputbtn">Manage Account</a>
-								<a style="color: orange;" href="<?= getLink('account/character/create'); ?>" class="inputbtn">Create Character</a>
+								<a style="color: orange;" href="<?= getLink('account/characters/create'); ?>"
+									class="inputbtn">Create Character</a>
 								<a href="<?= getLink('account/logout'); ?>" class="inputbtn">Logout</a>
 
 								<?php if ($account_logged->isAdmin()){ ?>

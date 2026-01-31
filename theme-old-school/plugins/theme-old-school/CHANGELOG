@@ -1,3 +1,8 @@
+[2.1.2 - 31.01.2026]
+	* Login widget:
+		* Support for Google reCAPTCHA
+		* Add Remember me checkbox
+
 [2.1.1 - 17.11.2025]
 	* add missing csrf(), fixes request has been cancelled error
 	* Change "Account Number" to proper text (name/email/number)
