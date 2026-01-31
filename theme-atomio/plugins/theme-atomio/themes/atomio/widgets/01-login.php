@@ -25,8 +25,8 @@ if ($logged) {
 			</div>
 
 			<div class="well">
-				<input type="checkbox" id="remember_me" name="remember_me" value="true" />
-				<label for="remember_me"> Remember me</label>
+				<input type="checkbox" id="remember_me_v2" name="remember_me" value="true" />
+				<label for="remember_me_v2"> Remember me</label>
 			</div>
 
 			<div class="well">
