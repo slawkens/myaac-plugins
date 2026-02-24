@@ -88,7 +88,7 @@ class GoogleReCAPTCHA
 
 	public static function placeholders(): void
 	{
-		global $template_place_holders;
+		global $template_place_holders, $twig;
 		$recaptchaType = setting('google_recaptcha.type');
 
 		if(!isset($template_place_holders['head_end'])) {
