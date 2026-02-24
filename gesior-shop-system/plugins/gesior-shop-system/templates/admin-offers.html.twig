@@ -61,7 +61,7 @@
 									<input type="hidden" name="action" value="offer_form" />
 									<input type="hidden" name="id" value="{{ offer.id }}" />
 
-									<button type="submit" class="btn btn-success btn-sm edit btn-flat" title="{% if offer.hidden != 1 %}Hide{% else %}Show{% endif %}">
+									<button type="submit" class="btn btn-success btn-sm edit btn-flat" title="Edit">
 										<i class="fa fa-edit"></i>
 									</button>
 								</form>
@@ -93,7 +93,7 @@
 										<input type="hidden" name="action" value="movedown" />
 										<input type="hidden" name="id" value="{{ offer.id }}" />
 
-										<button type="submit" class="btn btn-info btn-sm delete btn-flat" title="Move up">
+										<button type="submit" class="btn btn-info btn-sm delete btn-flat" title="Move down">
 											<i class="fa fa-arrow-down"></i>
 										</button>
 									</form>
