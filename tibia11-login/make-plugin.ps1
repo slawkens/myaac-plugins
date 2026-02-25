@@ -1,2 +1,2 @@
 . "..\MyAAC-Make-Plugin.ps1"
-MyAAC-Make-Plugin "tibia11-login"
+MyAAC-Make-Plugin "tibia11-login" "login.php"
