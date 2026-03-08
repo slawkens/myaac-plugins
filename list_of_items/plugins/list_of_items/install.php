@@ -9,4 +9,10 @@ if (!$db->hasTable(TABLE_PREFIX . 'list_of_items')) {
 	success('Table ' . TABLE_PREFIX . 'list_of_items created!');
 }
 
-warning(sprintf('The items needs to be loaded - go to <a href="%s"  target="_blank">items</a> page and click on Reload button.', getLink('items')));
+if (IS_CLI) {
+	echo 'The items needs to be loaded - go to /items page and click on Reload button.';
+}
+else {
+	warning(sprintf('The items needs to be loaded - go to <a href="%s"  target="_blank">items</a> page and click on Reload button.', getLink('items')));
+}
+
