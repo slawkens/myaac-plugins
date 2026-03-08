@@ -11,32 +11,14 @@ class Items
 
 	private $db;
 
-	/**
-	 * Constructor
-	 * Just ensure that table is loaded
-	 *
-	 * @param $db
-	 */
 	public function __construct($db) {
 		$this->db = $db;
 	}
 
-	/**
-	 * Loads items.xml or display error
-	 *
-	 * @param $itemsXMLPath
-	 * @return void
-	 */
-	public function load($itemsXMLPath)
+	public function load($file): void
 	{
 		// Checks the items.xml file on your server.
-		if(file_exists($itemsXMLPath)) {
-			$items = new \DOMDocument();
-			if(!$items->load($itemsXMLPath)) {
-				throw new \RuntimeException('ERROR: Cannot load <i>items.xml</i> - the file is malformed. Check the file with xml syntax validator.');
-			}
-		}
-		else {
+		if(!file_exists($file)) {
 			error("Error: cannot load <b>items.xml</b>! File doesn't exist.");
 			return;
 		}
@@ -44,69 +26,64 @@ class Items
 		// Deletes all rows from the list_of_items table
 		$this->db->query("DELETE FROM `" . TABLE_PREFIX . "list_of_items`;");
 
-		$this->loadItemsIntoDatabase($items);
+		$this->loadItemsIntoDatabase($file);
 	}
 
-	/**
-	 * Load items to database
-	 * Works with fromid and toit too!
-	 *
-	 * @param $items
-	 * @return void
-	 */
-	private function loadItemsIntoDatabase($items)
+	private function loadItemsIntoDatabase(string $file): void
 	{
+		try {
+			$xml = new \SimpleXMLElement(file_get_contents($file));
+		} catch (\Exception $e) {
+			error('Error: Cannot load items.xml. More info in system/logs/error.log file.');
+			log_append('error.log', "[" . __CLASS__ . "] Fatal error: Cannot load items.xml - $file. Error: " . $e->getMessage());
+			return;
+		}
+
 		// Insert items into the database
-		foreach($items->getElementsByTagName('item') as $item)
-		{
-			if ($item->getAttribute('fromid')) {
-				for ($id = $item->getAttribute('fromid'); $id <= $item->getAttribute('toid'); $id++) {
+		foreach($xml->xpath('item') as $item) {
+			if ($item->attributes()->fromid) {
+				for ($id = (int)$item->attributes()->fromid; $id <= (int)$item->attributes()->toid; $id++) {
 					$this->parseItem($id, $item);
 				}
 			} else {
-				$this->parseItem($item->getAttribute('id'), $item);
+				$this->parseItem((int)$item->attributes()->id, $item);
 			}
 		}
 	}
 
-	/**
-	 * Parse item node
-	 *
-	 * @param $id
-	 * @param $item
-	 * @return void
-	 */
-	function parseItem($id, $item)
+	function parseItem(int $id, $item): void
 	{
 		$description = '';
 		$type = '';
 		$level = 0;
 
 		$attributes = [];
-		foreach( $item->getElementsByTagName('attribute') as $attribute)
-		{
-			$attributes[$attribute->getAttribute('key')] = $attribute->getAttribute('value');
+		foreach($item->xpath('attribute') as $attribute) {
+			$key = strtolower((string)$attribute->attributes()->key);
+			$value = strtolower((string)$attribute->attributes()->value);
 
-			if ($attribute->getAttribute('key') == 'description'){
-				$description = $attribute->getAttribute('value');
+			$attributes[$key] = $value;
+
+			if ($key == 'description'){
+				$description = $value;
 				continue;
 			}
 
-			if (strtolower($attribute->getAttribute('key')) == 'weapontype') {
-				$type = strtolower($attribute->getAttribute('value'));
+			if ($key == 'weapontype') {
+				$type = $value;
 
 				if ($type == 'axe' || $type == 'club' || $type == 'sword') {
-					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
-						if($_attribute->getAttribute('key') == 'attack') {
-							$level = $_attribute->getAttribute('value');
+					foreach($item->xpath('attribute') as $_attribute) {
+						if (strtolower((string)$_attribute->attributes()->key) == 'attack') {
+							$level = strtolower((string)$_attribute->attributes()->value);
 							break;
 						}
 					}
 				}
 				if ($type == 'shield') {
-					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
-						if(strtolower($_attribute->getAttribute('key')) == 'defense') {
-							$level = $_attribute->getAttribute('value');
+					foreach($item->xpath('attribute') as $_attribute) {
+						if (strtolower((string)$_attribute->attributes()->key) == 'defense') {
+							$level = strtolower((string)$_attribute->attributes()->value);
 							break;
 						}
 					}
@@ -115,29 +92,29 @@ class Items
 				continue;
 			}
 
-			if (strtolower($attribute->getAttribute('key')) == 'slottype' && empty($type)) {
-				$type = strtolower($attribute->getAttribute('value'));
+			if ($key == 'slottype' && empty($type)) {
+				$type = $value;
 
 				if ($type == 'head' || $type == 'body' || $type == 'legs' || $type == 'feet') {
-					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
-						if($_attribute->getAttribute('key') == 'armor') {
-							$level = $_attribute->getAttribute('value');
+					foreach ($item->xpath('attribute') as $_attribute) {
+						if (strtolower((string)$_attribute->attributes()->key) == 'armor') {
+							$level = strtolower((string)$_attribute->attributes()->value);
 							break;
 						}
 					}
 				}
 				else if ($type == 'backpack') {
-					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
-						if(strtolower($_attribute->getAttribute('key')) == 'containersize') {
-							$level = $_attribute->getAttribute('value');
+					foreach ($item->xpath('attribute') as $_attribute) {
+						if (strtolower((string)$_attribute->attributes()->key) == 'containersize') {
+							$level = strtolower((string)$_attribute->attributes()->value);
 							break;
 						}
 					}
 				}
 			}
 
-			if (strtolower($attribute->getAttribute('key')) == 'primarytype' && empty($type)) {
-				switch(strtolower($attribute->getAttribute('value'))) {
+			if ($key == 'primarytype' && empty($type)) {
+				switch($value) {
 					case 'helmets':
 						$type = 'head';
 						break;
@@ -161,9 +138,9 @@ class Items
 				}
 
 				if ($type == 'head' || $type == 'body' || $type == 'legs' || $type == 'feet') {
-					foreach( $item->getElementsByTagName('attribute') as $_attribute) {
-						if(strtolower($_attribute->getAttribute('key')) == 'armor') {
-							$level = $_attribute->getAttribute('value');
+					foreach ($item->xpath('attribute') as $_attribute) {
+						if (strtolower((string)$_attribute->attributes()->key) == 'armor') {
+							$level = strtolower((string)$_attribute->attributes()->value);
 							break;
 						}
 					}
@@ -174,7 +151,7 @@ class Items
 		if (!isset($this->exist[$id])) {
 			$this->db->insert(TABLE_PREFIX . 'list_of_items', [
 				'id' => $id,
-				'name' => $item->getAttribute('name'),
+				'name' => (string)$item->attributes()->name,
 				'description' => $description,
 				'level' => $level,
 				'type' => $type,

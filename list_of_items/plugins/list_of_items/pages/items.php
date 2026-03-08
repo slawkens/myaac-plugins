@@ -5,18 +5,25 @@
  * @author    Endless <walistonbelles1@gmail.com>
  * @author    Slawkens <slawkens@gmail.com>
  */
+
+use MyAAC\Plugin\Items;
+
 defined('MYAAC') or die('Direct access not allowed!');
 
 $title = 'List Of Items';
 
 require PLUGINS . 'list_of_items/Items.php';
-$items = new \MyAAC\Plugin\Items($db);
+$items = new Items($db);
 
 $reload = isset($_REQUEST['reload']) && (int)$_REQUEST['reload'] == 1;
 
 if($reload && admin()) {
-	$items->load($config['data_path'] . '/items/items.xml');
-	success('Items reloaded.');
+	$start = microtime(true);
+	$items->load(config('data_path') . '/items/items.xml');
+	$end = $start - microtime(true);
+
+	$totalTime = round(abs($end), 2);
+	success("Items reloaded in {$totalTime}s.");
 }
 
 // Checks if you have an Administrator account

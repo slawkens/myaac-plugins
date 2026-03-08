@@ -1,3 +1,8 @@
+[5.1 - 03.08.2026]
+	* Rewrite to use simplexml for loading items, for better performance
+	* Fix installation through command line
+	* Add loading time
+
 [5.0 - 03.04.2025]
 	* Support the canary engine, with changed items.xml
 	* Save attributes of every item
