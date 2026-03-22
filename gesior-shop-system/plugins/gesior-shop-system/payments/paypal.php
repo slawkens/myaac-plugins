@@ -43,10 +43,10 @@ if(empty($config['paypal']['contact_email'])) {
 }
 
 if($config['paypal']['terms'] && !isset($_REQUEST['agree'])) {
-	$twig->display('gesior-shop-system/templates/paypal-terms.html.twig');
+	$twig->display('gesior-shop-system/views/paypal-terms.html.twig');
 }
 else {
-	$twig->display('gesior-shop-system/templates/paypal.html.twig', array('is_localhost' => $is_localhost));
+	$twig->display('gesior-shop-system/views/paypal.html.twig', array('is_localhost' => $is_localhost));
 }
 
 $config['friendly_urls'] = $was_before;

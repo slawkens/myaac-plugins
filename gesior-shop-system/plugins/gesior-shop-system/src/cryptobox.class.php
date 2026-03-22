@@ -69,8 +69,8 @@
 if(!defined("CRYPTOBOX_WORDPRESS")) define("CRYPTOBOX_WORDPRESS", false);
 
 if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
-    require_once(PLUGINS . 'gesior-shop-system/libs/' . "cryptobox.config.php" );
-    require_once(PLUGINS . 'gesior-shop-system/libs/' . "cryptobox.newpayment.php" );
+    require_once(PLUGINS . 'gesior-shop-system/src/' . "cryptobox.config.php" );
+    require_once(PLUGINS . 'gesior-shop-system/src/' . "cryptobox.newpayment.php" );
 }
 elseif (!defined('ABSPATH')) exit; // Wordpress
 

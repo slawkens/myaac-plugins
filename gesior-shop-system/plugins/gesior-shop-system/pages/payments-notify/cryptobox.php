@@ -33,7 +33,7 @@
 
 defined('MYAAC') or die('Direct access not allowed!');
 
-require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
+require_once PLUGINS . 'gesior-shop-system/src/Shop.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 
 if(!isset($config['cryptobox']) || !count($config['cryptobox']) || !count($config['cryptobox']['options'])) {
@@ -42,7 +42,7 @@ if(!isset($config['cryptobox']) || !count($config['cryptobox']) || !count($confi
 
 if(!defined("CRYPTOBOX_WORDPRESS")) define("CRYPTOBOX_WORDPRESS", false);
 
-if (!CRYPTOBOX_WORDPRESS) include_once(PLUGINS . 'gesior-shop-system/libs/cryptobox.class.php');
+if (!CRYPTOBOX_WORDPRESS) include_once(PLUGINS . 'gesior-shop-system/src/cryptobox.class.php');
 elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
 
 

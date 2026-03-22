@@ -1,7 +1,7 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
+require_once PLUGINS . 'gesior-shop-system/src/Shop.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 
 if(!isset($config['fortumo']) || !count($config['fortumo']) || empty($config['fortumo']['service_id'])) {
@@ -36,7 +36,7 @@ $account_id = (int)$_GET['cuid'];
 $account->load($account_id);
 if($account->isLoaded()) {
 	$points = (int)$_GET['amount'];
-	if(GesiorShop::changePoints($account, $points)) {
+	if(Shop::changePoints($account, $points)) {
 		$time = date('d.m.Y, g:i A');
 		$account_id = $account->getId();
 		$price = $_GET['price'];

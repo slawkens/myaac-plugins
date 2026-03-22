@@ -13,39 +13,35 @@ $title = 'Gifts';
 
 csrfProtect();
 
-require_once(PLUGINS . 'gesior-shop-system/libs/shop-system.php');
+require_once(PLUGINS . 'gesior-shop-system/src/Shop.php');
 require_once(PLUGINS . 'gesior-shop-system/config.php');
 
-if(!$config['gifts_system']) {
+if(!setting('core.gifts_system')) {
 	if(!admin()) {
 		$errors[] = 'The gifts system is disabled.';
 		$twig->display('error_box.html.twig', array('errors' => $errors));
 		return;
 	} else {
-		warning("You're able to access this page but it is disabled for normal users.<br/>
-		Its enabled for you so you can view/edit shop offers before displaying them to users.<br/>
-		You can enable it by editing this line in myaac config.local.php file:<br/>
-		<p style=\"margin-left: 3em;\"><b>\$config['gifts_system'] = true;</b></p>");
+		warning("You're able to access this page, but it is disabled for normal users.<br/>
+		It's enabled for you so you can view shop offers before displaying them to users.
+		You can enable it by going into admin panel → Settings → Shop:");
 	}
 }
 
-if(GesiorShop::getDonationType() == 'coins' && !$db->hasColumn('accounts', 'coins')) {
+if(Shop::getDonationType() == 'coins' && !$db->hasColumn('accounts', 'coins')) {
 	$errors[] = "Your server doesn't support accounts.coins. Please change back config.donation_type to points.";
 	$twig->display('error_box.html.twig', array('errors' => $errors));
 	return;
 }
 
 if($logged) {
-	$user_premium_points = $account_logged->getCustomField(GesiorShop::getDonationType());
+	$user_premium_points = $account_logged->getCustomField(Shop::getDonationType());
 } else {
-	$was_before = $config['friendly_urls'];
-	$config['friendly_urls'] = true;
 	$user_premium_points = generateLink(getLink('account/manage') . '?redirect=' . urlencode(getLink('gifts')), 'Login first');
-	$config['friendly_urls'] = $was_before;
 }
 
 if(!empty($action)) {
-	$errors = array();
+	$errors = [];
 	if(!$logged || !$account_logged->isLoaded()) {
 		$errors[] = 'Please login first';
 		$twig->display('error_box.html.twig', array('errors' => $errors));
@@ -60,7 +56,7 @@ if(!empty($action)) {
 				break;
 			}
 
-			$buy_offer = GesiorShop::getOfferById($buy_id);
+			$buy_offer = Shop::getOfferById($buy_id);
 			if(!isset($buy_offer['id']) || $buy_offer['hidden'] == '1') {
 				$errors[] = 'Offer with ID <b>' . $buy_id . '</b> doesn\'t exist. Please <a href="' . getLink('gifts') . '">select item</a> again.';
 				break;
@@ -71,7 +67,7 @@ if(!empty($action)) {
 				break;
 			}
 
-			GesiorShop::selectPlayerAction($account_logged, $buy_id, $buy_offer, $user_premium_points);
+			Shop::selectPlayerAction($account_logged, $buy_id, $buy_offer, $user_premium_points);
 			break;
 
 		case 'confirm_transaction':
@@ -81,7 +77,7 @@ if(!empty($action)) {
 				break;
 			}
 
-			$buy_offer = GesiorShop::getOfferById($buy_id);
+			$buy_offer = Shop::getOfferById($buy_id);
 			if(!isset($buy_offer['id']) || $buy_offer['hidden'] == '1') {
 				$errors[] = 'Offer with ID <b>' . $buy_id . '</b> doesn\'t exist. Please <a href="' . getLink('gifts') . '">select item</a> again.';
 				break;
@@ -120,21 +116,21 @@ if(!empty($action)) {
 				break;
 			}
 
-			GesiorShop::confirmTransactionAction($account_logged, $buy_player, $buy_id, $buy_offer, $buy_from, $buy_name, $user_premium_points, $errors);
+			Shop::confirmTransactionAction($account_logged, $buy_player, $buy_id, $buy_offer, $buy_from, $buy_name, $user_premium_points, $errors);
 			break;
 
 		case 'show_history':
-			GesiorShop::showHistoryAction($account_logged);
+			Shop::showHistoryAction($account_logged);
 			break;
 	}
 
 	if(!empty($errors)) {
-		$twig->display('error_box.html.twig', array('errors' => $errors));
+		$twig->display('error_box.html.twig', ['errors' => $errors]);
 	}
 } else {
 	unset($_SESSION['viewed_confirmation_page']);
 
-	$offer_categories = array();
+	$offer_categories = [];
 	$tmp_query = $db->query('SELECT `id`, `name` FROM `' . 'z_shop_categories` WHERE `hidden` != 1')
 		->fetchAll();
 	foreach($tmp_query as $tmp_res) {
@@ -169,12 +165,12 @@ if(!empty($action)) {
 		}
 	}
 
-	$offers_fetch = array();
+	$offers_fetch = [];
 	$tmp = null;
 	if($cache->enabled() && $cache->fetch('shop_offers_fetch', $tmp)) {
 		$offers_fetch = unserialize($tmp);
 	} else {
-		$offers_fetch = GesiorShop::getOffers();
+		$offers_fetch = Shop::getOffers();
 
 		if($cache->enabled()) {
 			$cache->set('shop_offers_fetch', serialize($offers_fetch), 120);
@@ -182,24 +178,24 @@ if(!empty($action)) {
 	}
 
 	if (isset($_REQUEST['success'])) {
-		$twig->display('gesior-shop-system/templates/success.html.twig');
+		$twig->display('gesior-shop-system/views/success.html.twig');
 	}
 
 	if (isset($_REQUEST['cancel'])) {
-		$twig->display('gesior-shop-system/templates/cancel.html.twig');
+		$twig->display('gesior-shop-system/views/cancel.html.twig');
 	}
 
-	$twig->display('gesior-shop-system/templates/gifts-header.html.twig', [
+	$twig->display('gesior-shop-system/views/gifts-header.html.twig', [
 		'user_premium_points' => $user_premium_points,
 	]);
 
 	if (config('enable_most_popular_items')) {
-		$twig->display('gesior-shop-system/templates/most-popular.html.twig', [
-			'offers' => GesiorShop::getMostPopular(),
+		$twig->display('gesior-shop-system/views/most-popular.html.twig', [
+			'offers' => Shop::getMostPopular(),
 		]);
 	}
 
-	$twig->display('gesior-shop-system/templates/gifts.html.twig', array(
+	$twig->display('gesior-shop-system/views/gifts.html.twig', array(
 		'title' => $title,
 		'logged' => !empty($logged) ? $logged : false,
 		'user_premium_points' => $user_premium_points,

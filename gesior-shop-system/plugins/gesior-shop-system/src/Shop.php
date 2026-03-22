@@ -10,19 +10,21 @@
  */
 defined('MYAAC') or die('Direct access not allowed!');
 
-class GesiorShop {
-	public static function getDonationType() {
-		global $config, $db;
+class Shop {
+	public static function getDonationType(): string
+	{
+		global $db;
 
+		$configDonationType = config('donation_type');
 		$field = 'premium_points';
-		if($db->hasColumn('accounts', strtolower($config['donation_type']))) {
-			$field = strtolower($config['donation_type']);
+		if($db->hasColumn('accounts', strtolower($configDonationType))) {
+			$field = strtolower($configDonationType);
 		}
 
 		return $field;
 	}
 
-	public static function getOfferImage($offer)
+	public static function getOfferImage($offer): string
 	{
 		if ($offer['type'] == 'pacc') {
 			return '<img src="' . BASE_URL . 'plugins/gesior-shop-system/images/PremiumTime.png" alt="Premium Time"/>';
@@ -42,7 +44,7 @@ class GesiorShop {
 
 		if ($offer['type'] == 'addon') {
 			global $twig;
-			return $twig->render('gesior-shop-system/templates/addon.html.twig', [
+			return $twig->render('gesior-shop-system/views/addon.html.twig', [
 				'outfit_colors' => config('shop_outfit_colors'),
 				'offer' => $offer,
 			]);
@@ -70,7 +72,8 @@ class GesiorShop {
 		return 'No Image';
 	}
 
-	public static function changePoints(OTS_Account $account, $amount) {
+	public static function changePoints(OTS_Account $account, $amount): bool
+	{
 		if (!$account->isLoaded()) {
 			return false;
 		}
@@ -135,7 +138,8 @@ class GesiorShop {
 		return self::parseOffer($data);
 	}
 
-	public static function getOffers($with_hidden = false) {
+	public static function getOffers($with_hidden = false): array
+	{
 		global $db;
 		$offers = array();
 
@@ -150,7 +154,8 @@ class GesiorShop {
 		return $offers;
 	}
 
-	public static function selectPlayerAction(OTS_Account $account, $buy_id, $buy_offer, $user_premium_points) {
+	public static function selectPlayerAction(OTS_Account $account, $buy_id, $buy_offer, $user_premium_points): void
+	{
 		global $twig;
 		unset($_SESSION['viewed_confirmation_page']);
 
@@ -164,7 +169,7 @@ class GesiorShop {
 			}
 		}
 
-		$twig->display('gesior-shop-system/templates/select-player.html.twig', array(
+		$twig->display('gesior-shop-system/views/select-player.html.twig', array(
 			'buy_offer' => $buy_offer,
 			'buy_id' => $buy_id,
 			'account_players' => $account_players,
@@ -172,7 +177,8 @@ class GesiorShop {
 		));
 	}
 
-	public static function confirmTransactionAction(OTS_Account $account, OTS_Player $buy_player, $buy_id, $buy_offer, $buy_from, $buy_name, &$user_premium_points, &$errors) {
+	public static function confirmTransactionAction(OTS_Account $account, OTS_Player $buy_player, $buy_id, $buy_offer, $buy_from, $buy_name, &$user_premium_points, &$errors): void
+	{
 		global $db, $twig;
 		$set_session = false;
 
@@ -259,7 +265,7 @@ class GesiorShop {
 		}
 
 		if(empty($errors)) {
-			$twig->display('gesior-shop-system/templates/confirm-transaction.html.twig', array(
+			$twig->display('gesior-shop-system/views/confirm-transaction.html.twig', array(
 				'show_confirmation_page' => (!$viewed_confirmation_page || !$buy_confirmed) ? true : false,
 				'buy_offer' => $buy_offer,
 				'buy_player_name' => $buy_player->getName(),
@@ -275,16 +281,17 @@ class GesiorShop {
 		}
 	}
 
-	private static function fetchHistory(OTS_Account $account) {
+	private static function fetchHistory(OTS_Account $account): array
+	{
 		global $db;
 
-		$history_items = array();
-		$history_paccs = array();
+		$history_items = [];
+		$history_paccs = [];
 
 		$shop_history_query = $db->query('SELECT * FROM ' . $db->tableName('z_shop_history') . ' WHERE (' . $db->fieldName('to_account') . ' = ' . $db->quote($account->getId()) . ' OR ' . $db->fieldName('from_account') . ' = ' . $db->quote($account->getId()) . ');');
 		if(is_object($shop_history_query)) {
 			foreach($shop_history_query as $shop_history) {
-				$offer = GesiorShop::getOfferById($shop_history['offer_id']);
+				$offer = Shop::getOfferById($shop_history['offer_id']);
 				if (!$offer) {
 					continue;
 				}
@@ -299,21 +306,23 @@ class GesiorShop {
 			}
 		}
 
-		return array($history_items, $history_paccs);
+		return [$history_items, $history_paccs];
 	}
 
-	public static function showHistoryAction(OTS_Account $account) {
+	public static function showHistoryAction(OTS_Account $account): void
+	{
 		global $twig;
 
 		list($items_history, $paccs_history) = self::fetchHistory($account);
-		$twig->display('gesior-shop-system/templates/show-history.html.twig', array(
+		$twig->display('gesior-shop-system/views/show-history.html.twig', array(
 			'logged_id' => !empty($account) ? $account->getId() : null,
 			'items_history' => $items_history,
 			'paccs_history' => $paccs_history
 		));
 	}
 
-	public static function createOfferInformation($offer, $offer_type) {
+	public static function createOfferInformation($offer, $offer_type): string
+	{
 		$information = '';
 		if (empty($offer) || empty($offer_type)) {
 			return $information;
@@ -349,7 +358,8 @@ class GesiorShop {
 		return $db->select('z_shop_offer', ['id' => $id]);
 	}
 
-	public static function deleteOffer($id, &$errors) {
+	public static function deleteOffer($id, &$errors): bool
+	{
 		global $db;
 
 		if(isset($id)) {
@@ -365,7 +375,8 @@ class GesiorShop {
 		return !count($errors);
 	}
 
-	public static function toggleOffer($id, &$errors, &$status) {
+	public static function toggleOffer($id, &$errors, &$status): bool
+	{
 		global $db;
 
 		if(isset($id)) {
@@ -383,7 +394,7 @@ class GesiorShop {
 		return !count($errors);
 	}
 
-	static public function move($id, $i, &$errors)
+	static public function move($id, $i, &$errors): bool
 	{
 		global $db;
 		$query = self::get($id);
@@ -434,7 +445,7 @@ class GesiorShop {
 		return $categories;
 	}
 
-	public static function getMostPopular()
+	public static function getMostPopular(): array
 	{
 		$offers = [];
 

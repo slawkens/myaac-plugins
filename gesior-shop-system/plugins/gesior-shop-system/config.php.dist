@@ -1,10 +1,4 @@
 <?php
-/**
- * enable gifts system?
- * paste this into config.local.php in your main directory:
- * 		$config['gifts_system'] = true;
- */
-
 $config['donation_type'] = 'points'; // what should be added to player account? points/coins
 
 // display most popular items bought in shop (top #3)?

@@ -1,7 +1,7 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
+require_once PLUGINS . 'gesior-shop-system/src/Shop.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 
 // uncomment to debug script
@@ -74,7 +74,7 @@ if(!$account->isLoaded()) {
 	hotpay_log_append_die('account ' . htmlspecialchars($accountId) . ' not found');
 }
 
-GesiorShop::changePoints($account, $paymentAmountPoints);
+Shop::changePoints($account, $paymentAmountPoints);
 
 $db->insert(TABLE_PREFIX . 'hotpay',
 	[

@@ -84,7 +84,7 @@
 	</div>
 
 	<div class="stripe-offers">
-		{% for id, offer in config.stripe.payments %}
+		{% for id, offer in config('stripe').payments %}
 			<div class="stripe-offer">
 				<div class="stripe-offer-content">
 					<!--img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" /-->
@@ -129,7 +129,7 @@
 	<div class="rules">
 		<h1>Rules:</h1>
 		<p>
-			{{ include('gesior-shop-system/templates/stripe-rules.html.twig') }}
+			{{ include('gesior-shop-system/views/stripe-rules.html.twig') }}
 		</p>
 	</div>
 </div>

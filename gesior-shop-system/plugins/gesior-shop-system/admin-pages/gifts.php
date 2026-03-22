@@ -12,7 +12,7 @@ $title = 'Gifts';
 
 csrfProtect();
 
-require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
+require_once PLUGINS . 'gesior-shop-system/src/Shop.php';
 
 $link = ADMIN_URL . '?p=gifts';
 $types = [
@@ -24,7 +24,7 @@ if(!empty($action)) {
 	$errors = [];
 
 	if($action == 'offer_form') {
-		$categories = GesiorShop::getCategories();
+		$categories = Shop::getCategories();
 
 		$values = [
 			'categories' => $categories,
@@ -34,10 +34,10 @@ if(!empty($action)) {
 
 		$offer_id = $_REQUEST['id'] ?? null;
 		if ($offer_id !== null) {
-			$values['offer'] = GesiorShop::getOfferById($offer_id);
+			$values['offer'] = Shop::getOfferById($offer_id);
 		}
 
-		$twig->display('gesior-shop-system/templates/admin-offers-add.html.twig', $values);
+		$twig->display('gesior-shop-system/views/admin-offers-add.html.twig', $values);
 	}
 
 	if (!isRequestMethod('post')) {
@@ -168,17 +168,17 @@ if(!empty($action)) {
 			}
 		}
 	} else if($action == 'delete') {
-		GesiorShop::deleteOffer($id, $errors);
+		Shop::deleteOffer($id, $errors);
 		success("Deleted successful.");
 	} else if($action == 'toggle_hidden') {
-		GesiorShop::toggleOffer($id, $errors, $status);
+		Shop::toggleOffer($id, $errors, $status);
 		success(($status == 1 ? 'Show' : 'Hide') . " successful.");
 	}
 	else if($action == 'moveup') {
-		GesiorShop::move($id, -1, $errors);
+		Shop::move($id, -1, $errors);
 	}
 	else if($action == 'movedown') {
-		GesiorShop::move($id, 1, $errors);
+		Shop::move($id, 1, $errors);
 	}
 	else if($action == 'edit_categories') {
 		$categoriesPost = $_REQUEST['categories'] ?? null;
@@ -188,13 +188,13 @@ if(!empty($action)) {
 
 		$categoriesExploded = explode(',', $categoriesPost);
 
-		if (GesiorShop::saveCategories($categoriesExploded, $errors)) {
+		if (Shop::saveCategories($categoriesExploded, $errors)) {
 			success('Saved categories.');
 		}
 	}
 	else if($action == 'reset_categories') {
 		$categoriesReset = ['Items', 'Addons', 'Mounts', 'Premium Account', 'Containers', 'Other'];
-		if (GesiorShop::saveCategories($categoriesReset, $errors)) {
+		if (Shop::saveCategories($categoriesReset, $errors)) {
 			success('Reset categories successful.');
 		}
 	}
@@ -203,26 +203,26 @@ if(!empty($action)) {
 		error(implode(", ", $errors));
 }
 
-$categories = GesiorShop::getCategories();
+$categories = Shop::getCategories();
 
 $offers = array();
-$offers_fetch = GesiorShop::getOffers(true);
+$offers_fetch = Shop::getOffers(true);
 if(!empty($offers_fetch)) {
 	foreach ($offers_fetch as $offer_id => $offer) {
-		$tmp_information = GesiorShop::createOfferInformation($offer, $offer['type']);
+		$tmp_information = Shop::createOfferInformation($offer, $offer['type']);
 		$offers[] = array_merge($offer, array('information' => $tmp_information));
 	}
 }
 
 if ($action !== 'offer_form') {
-	$twig->display('gesior-shop-system/templates/admin-categories.html.twig', [
+	$twig->display('gesior-shop-system/views/admin-categories.html.twig', [
 		'categories' => implode(',', array_values($categories)),
 		'link' => $link,
 	]);
 }
 
 $last = count($offers_fetch);
-$twig->display('gesior-shop-system/templates/admin-offers.html.twig', [
+$twig->display('gesior-shop-system/views/admin-offers.html.twig', [
 	'offers' => $offers,
 	'categories' => $categories,
 	'last' => $last,

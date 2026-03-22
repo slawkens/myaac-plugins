@@ -2,7 +2,7 @@
 defined('MYAAC') or die('Direct access not allowed!');
 $title = 'Gifts History';
 
-require_once(PLUGINS . 'gesior-shop-system/libs/shop-system.php');
+require_once(PLUGINS . 'gesior-shop-system/src/Shop.php');
 
 $errors = [];
 if(!$logged || !$account_logged->isLoaded()) {
@@ -11,4 +11,4 @@ if(!$logged || !$account_logged->isLoaded()) {
 	return;
 }
 
-GesiorShop::showHistoryAction($account_logged);
+Shop::showHistoryAction($account_logged);

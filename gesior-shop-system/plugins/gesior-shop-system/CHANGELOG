@@ -1,3 +1,10 @@
+[8.1 - 22.03.2026]
+	* Refactoring:
+		* Rename templates/ to views/
+		* Use config function instead of config variable in twig
+		* Unify naming of the Shop class
+	* Update info about gifts_system in Settings page
+
 [8.0.3 - 24.02.2026]
 	* Fix titles in the options in admin panel/gifts page (nothing important)
 		* Thanks to Kimus (@Arcies023)

@@ -1,7 +1,7 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
+require_once PLUGINS . 'gesior-shop-system/src/Shop.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 
 if(!isset($config['paypal']) || !count($config['paypal']) || !count($config['paypal']['options']))
@@ -9,7 +9,7 @@ if(!isset($config['paypal']) || !count($config['paypal']) || !count($config['pay
 
 $ip = $_SERVER['REMOTE_ADDR'];
 
-require PLUGINS . 'gesior-shop-system/libs/paypal.php';
+require PLUGINS . 'gesior-shop-system/src/paypal.php';
 $ipn = new PaypalIPN();
 
 // Use the sandbox endpoint during testing.
@@ -78,7 +78,7 @@ $db->insert(TABLE_PREFIX . 'paypal',
 $account = new OTS_Account();
 $account->load($custom);
 if($account->isLoaded()) {
-	if(GesiorShop::changePoints($account, $paylist[$mc_gross])) {
+	if(Shop::changePoints($account, $paylist[$mc_gross])) {
 		log_append('paypal.log', "$time;$custom;$payer_email;$mc_gross:$mc_currency;$mc_fee;$receiver_email;$payment_status;$ip;$business;$payer_status");
 	}
 }

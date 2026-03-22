@@ -17,4 +17,4 @@ if (!$logged) {
 	return;
 }
 
-$twig->display('gesior-shop-system/templates/stripe.html.twig');
+$twig->display('gesior-shop-system/views/stripe.html.twig');

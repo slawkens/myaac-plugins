@@ -2,7 +2,7 @@
 
 defined('MYAAC') or die('Direct access not allowed!');
 
-require_once PLUGINS . 'gesior-shop-system/libs/shop-system.php';
+require_once PLUGINS . 'gesior-shop-system/src/Shop.php';
 require_once PLUGINS . 'gesior-shop-system/config.php';
 require_once PLUGINS . 'gesior-shop-system/vendor/autoload.php';
 
@@ -67,7 +67,7 @@ if (isset($paymentIntent->customer_details->email)) {
 	$payerMail = $paymentIntent->customer_details->email;
 }
 
-if (GesiorShop::changePoints($account, $offer['points'])) {
+if (Shop::changePoints($account, $offer['points'])) {
 	$db->insert('stripe', [
 		'payment_id' => $paymentIntent->id,
 		'account_id' => $accountId,

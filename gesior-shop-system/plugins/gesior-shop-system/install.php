@@ -108,7 +108,7 @@ if($db->select(TABLE_PREFIX . 'admin_menu', ['name' => 'Gifts']) !== false) {
 	$db->delete(TABLE_PREFIX . 'admin_menu', ['name' => 'Gifts']);
 }
 
-if(!@copy('https://curl.se/ca/cacert.pem', PLUGINS . 'gesior-shop-system/libs/' . 'cert/cacert.pem')) {
+if(!@copy('https://curl.se/ca/cacert.pem', __DIR__ . '/src/cert/cacert.pem')) {
 	$errors = error_get_last();
 	error($errors['type'] . "<br />\n" . $errors['message']);
 } else {

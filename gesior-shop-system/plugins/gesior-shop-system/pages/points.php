@@ -12,25 +12,22 @@ $title = 'Points';
 
 csrfProtect();
 
-require_once(PLUGINS . 'gesior-shop-system/libs/shop-system.php');
+require_once(PLUGINS . 'gesior-shop-system/src/Shop.php');
 require_once(PLUGINS . 'gesior-shop-system/config.php');
-$twig->addGlobal('config', $config);
 
-if(!$config['gifts_system'])
-{
-	if(!admin())
-	{
-		echo 'The gifts system is disabled there, sorry.';
+if(!setting('core.gifts_system')) {
+	if(!admin()) {
+		$errors[] = 'The gifts system is disabled.';
+		$twig->display('error_box.html.twig', array('errors' => $errors));
 		return;
+	} else {
+		warning("You're able to access this page, but it is disabled for normal users.<br/>
+		It's enabled for you so you can view shop offers before displaying them to users.
+		You can enable it by going into admin panel → Settings → Shop:");
 	}
-	else
-		warning("You're able to access this page but it is disabled for normal users.<br/>
-		Its enabled for you so you can view/edit shop offers before displaying them to users.<br/>
-		You can enable it by editing this line in myaac config.local.php file:<br/>
-		<p style=\"margin-left: 3em;\"><b>\$config['gifts_system'] = true;</b></p>");
 }
 
-if(GesiorShop::getDonationType() == 'coins' && !$db->hasColumn('accounts', 'coins')) {
+if(Shop::getDonationType() == 'coins' && !$db->hasColumn('accounts', 'coins')) {
 	error("Your server doesn't support accounts.coins. Please change back config.donation_type to points.");
 	return;
 }
@@ -86,14 +83,14 @@ else {
 			continue;
 		}
 
-		$gateways[] = $twig->render('gesior-shop-system/templates/gateways/' . $key . '.html.twig');
+		$gateways[] = $twig->render('gesior-shop-system/views/gateways/' . $key . '.html.twig');
 	}
 
 	$args = ['gateways' => $gateways];
 	$hooks->triggerFilter(HOOK_GESIOR_SHOP_GATEWAYS, $args);
 	$gateways = $args['gateways'];
 
-	echo $twig->render('gesior-shop-system/templates/points.html.twig', [
+	echo $twig->render('gesior-shop-system/views/points.html.twig', [
 		'gateways' => $gateways,
 	]);
 }
