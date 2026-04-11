@@ -4,6 +4,7 @@ namespace MyAAC\Commands;
 
 use Faker\Factory;
 use MyAAC\Models\Account;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,6 +13,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 return new class extends Command
 {
+	const INVALID_DATE_FORMAT_ERROR = 'Invalid date format for random-created';
+
 	protected function configure(): void
 	{
 		$this->setName('sample-data:accounts')
@@ -21,7 +24,8 @@ return new class extends Command
 				'Amount of accounts to generate'
 			)
 			->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'Password to use. Default: pass1234')
-			->addOption('country', 'c', InputOption::VALUE_OPTIONAL, 'Country to set, in shortcode. Example: pl for Poland. More can be found in system/countries.conf.php');
+			->addOption('country', 'c', InputOption::VALUE_OPTIONAL, 'Country to set, in shortcode. Example: pl for Poland. More can be found in system/countries.conf.php')
+			->addOption('random-created', 'rc', InputOption::VALUE_OPTIONAL, 'Set random created time in the past year instead of current time. Can be two dates separated by comma. Check README.md for mor einfo');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
@@ -54,6 +58,32 @@ return new class extends Command
 		if(!empty($country) && $country != 'random' && !isset($configCountries[$country])) {
 			$io->error("Country $country doesn't exist");
 			return Command::FAILURE;
+		}
+
+		$randomCreated = $input->getOption('random-created');
+		if ($randomCreated) {
+			if (str_contains($randomCreated, ',')) {
+				$randomCreated = explode(',', $randomCreated);
+
+				$createdFrom = strtotime($randomCreated[0]);
+				if (!$createdFrom) {
+					$io->error(self::INVALID_DATE_FORMAT_ERROR);
+					return Command::FAILURE;
+				}
+
+				$createdTo = strtotime($randomCreated[1]);
+				if (!$createdTo) {
+					$io->error(self::INVALID_DATE_FORMAT_ERROR);
+					return Command::FAILURE;
+				}
+			}
+			else {
+				$createdFrom = strtotime($randomCreated);
+				if (!$createdFrom) {
+					$io->error(self::INVALID_DATE_FORMAT_ERROR);
+					return Command::FAILURE;
+				}
+			}
 		}
 
 		$faker = Factory::create();
@@ -97,7 +127,13 @@ return new class extends Command
 				$account->salt = $salt;
 			}
 
-			$account->created = time();
+			if ($randomCreated) {
+				$account->created = rand($createdFrom, $createdTo ?? time());
+			}
+			else {
+				$account->created = time();
+			}
+
 			$account->password = encrypt($passwordSalted);
 			$account->save();
 

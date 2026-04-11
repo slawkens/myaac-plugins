@@ -53,6 +53,10 @@ php aac sample-data:random-online 100
 * --country=x (country code)
   * example: --country=pl (will be set for all accounts)
   * leaving it empty will generate a random country for every account
+* --random-created="-5 year, -4 year"
+  * The first parameter is start-date, the second is end-date 
+  * Can be a comma-separated list of dates: "2010-01-01,2012-01-01" will create accounts with created date between those two
+  * Can be also: "10 September 2000", "last Monday", or date in format "2010-01-01"
 
 ### sample-data:players
 * --file=path/to/file.txt (list of names to use, one name per line)

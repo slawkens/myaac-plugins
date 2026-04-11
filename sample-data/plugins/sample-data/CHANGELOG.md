@@ -1,5 +1,11 @@
 # Changelog sample-data
 
+## v1.1.2 - 2025-04-11
+* Set the plugin type to "command" in plugin.json
+* Accounts generator:
+  * Add new option --random-created="2020-01-01,2025-01-01"
+    * Can be used to set a random initially created date
+
 ## v1.1.1 - 2025-01-16
 * Accounts generator:
   * Support for servers without accounts name column
