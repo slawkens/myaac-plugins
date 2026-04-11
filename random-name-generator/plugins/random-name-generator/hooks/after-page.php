@@ -1,7 +1,7 @@
 <?php
 defined('MYAAC') or die('Direct access not allowed!');
 
-global $action;
+global $action, $template_name;
 
 // MyAAC 1.0+
 if (PAGE !== 'account/characters/create' && PAGE != 'account/character/create' && PAGE !== 'account/create' &&
@@ -21,13 +21,26 @@ $maxLength = config('character_name_max_length');
 if (function_exists('setting')) {
 	$maxLength = setting('core.create_character_name_max_length');
 }
-?>
 
-<button type="button" id="generate_random_name" data-max-length="<?= $maxLength; ?>" style="margin-left: 10px; padding: 2px 8px; cursor: pointer;">Suggest name</button>
+$divId = 'generate_random_name';
+if (in_array($template_name, ['tibiacom', 'canary'])) {
+	$divId = 'div_generate_random_name';
+?>
+	<small id="div_generate_random_name">
+		<br/>
+		[<a href="#" id="generate_random_name" data-max-length="<?= $maxLength; ?>">suggest name</a>]
+	</small>
+	<?php
+}
+else{ ?>
+	<button type="button" id="generate_random_name" data-max-length="<?= $maxLength; ?>" style="margin-left: 10px; padding: 2px 8px; cursor: pointer;">Suggest name</button>
+	<?php
+}
+?>
 <script src="https://cdn.jsdelivr.net/gh/Coldensjo/TibiaNameGen/random_name_generator.js"></script>
 <script>
 	$(function () {
-		$('#generate_random_name').insertAfter('#character_indicator');
+		$('#<?= $divId; ?>').insertAfter('#character_indicator');
 	})
 </script>
 
