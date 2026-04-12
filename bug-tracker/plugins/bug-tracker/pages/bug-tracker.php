@@ -16,6 +16,8 @@ use MyAAC\Plugins\BugTracker\BugTracker;
 defined('MYAAC') || die('Direct access not allowed!');
 $title = 'Bug tracker';
 
+csrfProtect();
+
 if(!$logged) {
 	echo  'You are not logged in. <a href="' . getLink('account/manage') . '&redirect=' . BASE_URL . urlencode
 ('bug-tracker') . '">Log in</a> to post on the bug tracker.<br /><br />';
@@ -153,7 +155,7 @@ if(admin() && isset($_REQUEST['control']) && $_REQUEST['control'] == 'true')
 					}
 				}
 
-				echo '<br><form method="post" action=""><table><tr><td><i>Description</i></td><td><textarea name="text" rows="15" cols="35">' . escapeHtml($_POST['text'] ?? '') . '</textarea></td></tr><tr><td>Status[OPEN]</td><td><input type=radio name=status value=2></td></tr><tr><td>Status[CLOSED]</td><td><input type=radio name=status value=3></td></tr></table><br><input type="submit" name="finish" value="Submit" class="input2"/></form>';
+				echo '<br><form method="post">' . csrf(true) . '<table><tr><td><i>Description</i></td><td><textarea name="text" rows="15" cols="35">' . escapeHtml($_POST['text'] ?? '') . '</textarea></td></tr><tr><td>Status[OPEN]</td><td><input type=radio name=status value=2></td></tr><tr><td>Status[CLOSED]</td><td><input type=radio name=status value=3></td></tr></table><br><input type="submit" name="finish" value="Submit" class="input2"/></form>';
 			}
 			else {
 				echo '<br><span style="color: black"><b>You can\'t add answer to closed bug thread.</b></span>';
@@ -286,7 +288,8 @@ else {
 					}
 				}
 
-				echo '<br><form method="post" action=""><table><tr><td><i>Description</i></td><td><textarea name="text" rows="15" cols="35"></textarea></td></tr></table><br><input type="submit" name="finish" value="Submit" class="input2"/></form>';
+				echo '<br><form method="post">' . csrf(true) . '<table><tr><td><i>Description</i></td><td><textarea name="text" rows="15" 
+				cols="35"></textarea></td></tr></table><br><input type="submit" name="finish" value="Submit" class="input2"/></form>';
 			}
 			else {
 				echo '<br><span style="color: black"><b>You can\'t add answer to closed bug thread.</b></span>';
@@ -372,7 +375,7 @@ else {
 				}
 			}
 
-			echo '<br><form method="post" action=""><table><tr><td><i>Subject</i></td><td><input type=text name="subject" value="' . escapeHtml($_POST['subject'] ?? '') . '"/></td></tr><tr><td><i>Description</i></td><td><textarea name="text" rows="15" cols="35">' . escapeHtml($_POST['text'] ?? '') . '</textarea></td></tr><tr><td>TAG</td><td><select name="tags"><option value="">SELECT</option>';
+			echo '<br><form method="post">' . csrf(true) . '<table><tr><td><i>Subject</i></td><td><input type=text name="subject" value="' . escapeHtml($_POST['subject'] ?? '') . '"/></td></tr><tr><td><i>Description</i></td><td><textarea name="text" rows="15" cols="35">' . escapeHtml($_POST['text'] ?? '') . '</textarea></td></tr><tr><td>TAG</td><td><select name="tags"><option value="">SELECT</option>';
 
 			for($i = 1; $i <= count($tags); $i++) {
 				echo '<option value="' . $i . '">' . $tags[$i] . '</option>';
