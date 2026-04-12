@@ -34,7 +34,7 @@ $tags = [1 => '[MAP]', '[WEBSITE]', '[CLIENT]', '[MONSTER]', '[NPC]', '[OTHER]']
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$link = 'bug-tracker';
 
-	if (!empty($_REQUEST['control']) && $_REQUEST['control'] == 'true') {
+	if (!empty($_REQUEST['control']) && $_REQUEST['control'] == 'true' && isset($_REQUEST['id'])) {
 		$link = 'bug-tracker?control=true';
 	}
 
