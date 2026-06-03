@@ -1,0 +1,27 @@
+{
+	"name": "Mail Queue",
+	"description": "Queue outgoing emails. Will be sent in batches by a cron job.",
+	"version": "1.0",
+	"type": "plugin",
+	"license": "GPLv3",
+	"author": "slawkens, Gesior.pl",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "1.8.9",
+		"php": "8.1"
+	},
+	"autoload": {
+		"init": true
+	},
+	"hooks": [
+		{
+			"type": "HOOK_FILTER_MAIL",
+			"file": "plugins/mail-queue/hooks/mail.php"
+		}
+	],
+	"install": "plugins/mail-queue/install.php",
+	"uninstall": [
+		"plugins/mail-queue.json",
+		"plugins/mail-queue"
+	]
+}

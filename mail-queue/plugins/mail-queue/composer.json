@@ -1,0 +1,8 @@
+{
+    "name": "myaac/mail-queue",
+    "autoload": {
+        "psr-4": {
+            "MyAAC\\Plugins\\MailQueue\\": "src"
+        }
+    }
+}
