@@ -1,3 +1,6 @@
+[2.0.9 - 10.06.2026]
+	* Fix/remove forum.fullscreen.html.twig
+
 [2.0.8 - 21.10.2025]
 	* Add missing hook: HOOK_ACCOUNT_CREATE_AFTER_PASSWORD
 	* Fix create character on the create account page
