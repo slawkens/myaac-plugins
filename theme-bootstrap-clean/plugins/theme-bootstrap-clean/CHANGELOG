@@ -1,6 +1,9 @@
-[1.0.1 - 06.01.2025]
+[1.0.2 - 10.06.2026]
+	* Fix/remove forum.fullscreen.html.twig
+
+[1.0.1 - 06.01.2026]
 	* Fixed top menu color and blank not working
 	* Fixed characters page - quests + signature background color
 
-[1.0 - 03.01.2025]
+[1.0 - 03.01.2026]
 	* first release
