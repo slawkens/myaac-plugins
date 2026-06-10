@@ -1,0 +1,18 @@
+{
+	"name": "OTS Info",
+	"description": "Extracted from MyAAC Core. Provides automatic parsed information about the OpenTibia server.",
+	"version": "1.0",
+	"type": "page",
+	"license": "GPLv3",
+	"author": "MyAAC Authors",
+	"contact": "www.my-aac.org",
+	"require": {
+		"myaac": "2.0-dev",
+		"php": "8.1"
+	},
+	"install": "plugins/ots-info/install.php",
+	"uninstall": [
+		"plugins/ots-info.json",
+		"plugins/ots-info"
+	]
+}
