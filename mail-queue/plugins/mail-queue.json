@@ -7,7 +7,7 @@
 	"author": "slawkens, Gesior.pl",
 	"contact": "slawkens@gmail.com",
 	"require": {
-		"myaac": "1.8.9",
+		"myaac": "1.9.1",
 		"php": "8.1"
 	},
 	"autoload": {
