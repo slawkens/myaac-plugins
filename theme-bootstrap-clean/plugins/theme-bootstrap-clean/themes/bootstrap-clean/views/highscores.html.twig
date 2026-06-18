@@ -16,8 +16,7 @@
 				<label for="vocationFilter" class="col-form-label">Vocation</label>
 				<select class="form-control" onchange="location = this.value;" aria-label="vocationFilter" id="vocationFilter">
 					<option value="{{ getLink('highscores') }}/{{ list }}" class="size_xs">[ALL]</option>
-					{% set i = 0 %}
-					{% for i in 1..config.vocations_amount %}
+					{% for i in 0..config.vocations_amount %}
 						<option value="{{ getLink('highscores') }}/{{ list|urlencode }}/{{ config.vocations[i]|lower|urlencode }}" class="size_xs" {% if vocationId is not null and vocationId == i %}selected{% endif %}>{{ config.vocations[i]}}</option>
 					{% endfor %}
 				</select>
@@ -36,11 +35,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					{% if config.account_country %}
+					{% if setting('core.account_country') %}
 						<th scope="col">#</th>
 					{% endif %}
 					<th scope="col">Rank</th>
-					{% if config.highscores_outfit %}
+					{% if setting('core.highscores_outfit') %}
 						<th scope="col">Outfit</th>
 					{% endif %}
 					<th scope="col">Name</th>
@@ -57,18 +56,18 @@
 				{% for player in highscores %}
 					<tr>
 						{% set row = row + 1 %}
-						{% if config.account_country %}
+						{% if setting('core.account_country') %}
 							<td style="width:20px;">{{ player.flag|raw }}</td>
 						{% endif %}
 						<th scope="row" class="text-center">{{ player.rank }}</th>
-						{% if config.highscores_outfit %}
+						{% if setting('core.highscores_outfit') %}
 							<td style="height:64px;width:64px;padding-top:35px;">{{ player.outfit|raw }}</td>
 						{% endif %}
 						<td>
 							<a href="{{ player.link }}">
-								<span style="color: {% if player.online > 0 %}green{% else %}red{% endif %}">{{ player.name }}</span>
+								<span {% if setting('core.highscores_online_status') %}style="color: {% if player.online > 0 %}green{% else %}red{% endif %}"{% endif %}>{{ player.name }}</span>
 							</a>
-							{% if config.highscores_vocation %}
+							{% if setting('core.highscores_vocation') %}
 								<br/><small>{{ player.vocation }}</small>
 							{% endif %}
 						</td>

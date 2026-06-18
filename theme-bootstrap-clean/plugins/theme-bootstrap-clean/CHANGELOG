@@ -1,3 +1,7 @@
+[1.1 - 18.06.2026]
+	* Update views to latest versions
+		* Fixing csrf, settings, links, code style etc.
+
 [1.0.2 - 10.06.2026]
 	* Fix/remove forum.fullscreen.html.twig
 

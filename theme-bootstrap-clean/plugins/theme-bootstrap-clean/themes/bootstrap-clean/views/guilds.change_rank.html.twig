@@ -1,7 +1,9 @@
 <div>
 	<h1>Edit Ranks</h1>
-	<form action="{{ getLink('guilds')}}?action=change_rank&guild={{ guild_name }}&todo=save" method="post">
+	<form action="{{ getLink('guilds')}}?action=change_rank&guild={{ guild_name }}" method="post">
 		<div>
+			{{ csrf() }}
+			<input type="hidden" name="todo" value="save" />
 
 				Name: <select name="name">
 				{% for player in players %}
@@ -17,7 +19,7 @@
 		</br>
 		<div class="float-end">
 			{{ include('buttons.submit.html.twig') }}
-			<a class="btn btn-secondary" href="?subtopic=guilds&action=show&guild={{ guild_name }}">Back</a>
+			<a class="btn btn-secondary" href="{{ getLink('guilds') }}?action=show&guild={{ guild_name }}">Back</a>
 		</div>
 	</form>
 </div>

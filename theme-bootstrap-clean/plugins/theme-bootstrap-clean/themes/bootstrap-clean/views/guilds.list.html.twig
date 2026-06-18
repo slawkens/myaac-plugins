@@ -63,7 +63,7 @@
 		There are no guilds on this server.
 		{% if logged %}
 			Create the first guild!
-			<form action="?subtopic=guilds&action=create" method="post">
+			<form action="{{ getLink('guilds') }}?action=create" method="post">
 				{{ csrf() }}
 
 				{% set button_name = 'Found Guild' %}
@@ -76,10 +76,10 @@
 		<br/>
 		If you have any problem with guilds, try:
 		<br/>
-		<a href="?subtopic=guilds&action=cleanup_players">Cleanup players</a>
+		<a href="{{ getLink('guilds') }}?action=cleanup_players">Cleanup players</a>
 		- can't join a guild /be invited? Can't create a guild? Try to cleanup players.
 		<br/>
-		<a href="?subtopic=guilds&action=cleanup_guilds">Cleanup guilds</a>
+		<a href="{{ getLink('guilds') }}?action=cleanup_guilds">Cleanup guilds</a>
 		- made guild, you are a leader, but you are not on the players list? Cleanup guilds!
 	{% endif %}
 </div>

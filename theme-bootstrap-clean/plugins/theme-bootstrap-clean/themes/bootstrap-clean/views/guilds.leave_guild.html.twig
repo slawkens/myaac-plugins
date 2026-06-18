@@ -1,10 +1,10 @@
 <form action="{{ getLink('guilds') }}?action=leave&guild={{ guild_name }}" method="post">
+
+	{{ csrf() }}
+
+	<input type="hidden" name="todo" value="save" />
+
 	<table border="0" cellspacing="1" cellpadding="4" width="100%" class="table table-striped">
-
-		{{ csrf() }}
-
-		<input type="hidden" name="todo" value="save" />
-
 		<tr>
 			<td><b>Leave guild</b></td></tr>
 		{% if players|length > 0 %}

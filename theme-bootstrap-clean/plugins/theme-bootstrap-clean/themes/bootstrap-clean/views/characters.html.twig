@@ -17,9 +17,9 @@
 	</script>
 	{% set rows = 0 %}
 
-	{{ hook(constant('HOOK_CHARACTERS_BEFORE_INFORMATIONS')) }}
+	{{ hook('HOOK_CHARACTERS_BEFORE_INFORMATIONS') }}
 	{% if canEdit %}
-		<a href="admin/?p=players&id={{ player.getId() }}" title="Edit in Admin Panel" target="_blank">
+		<a href="{{ constant('ADMIN_URL') }}?p=players&id={{ player.getId() }}" title="Edit in Admin Panel" target="_blank">
 			<img src="images/edit.png" alt="Edit Icon"/>Edit
 		</a>
 	{% endif %}
@@ -165,7 +165,7 @@
 			{% set rows = rows + 1 %}
 			<tr bgcolor="{{ getStyle(rows) }}">
 				<td valign="top">Comment:</td>
-				<td>{{ comment|raw }}</td>
+				<td style="word-break: break-all">{{ comment|raw }}</td>
 			</tr>
 		{% endif %}
 
@@ -178,10 +178,13 @@
 			</td>
 		</tr>
 	</table>
-	{{ hook(constant('HOOK_CHARACTERS_AFTER_INFORMATIONS')) }}
+
+	{{ hook('HOOK_CHARACTERS_AFTER_INFORMATIONS') }}
+
 	<br/>
 	<div class="row">
 
+			{{ hook('HOOK_CHARACTERS_BEFORE_SKILLS') }}
 
 			{% if config.characters.skills %}
 				<!-- SKILLS -->
@@ -206,6 +209,8 @@
 				<!-- SKILLS_END -->
 			{% endif %}
 
+			{{ hook('HOOK_CHARACTERS_AFTER_SKILLS') }}
+
 			{% if quests_enabled %}
 				<!-- QUESTS -->
 				<div class="col">
@@ -229,6 +234,8 @@
 				</div>
 				<!-- QUESTS_END -->
 			{% endif %}
+
+			{{ hook('HOOK_CHARACTERS_AFTER_QUESTS') }}
 
 			{% if config.characters.equipment %}
 				<!-- EQUIPMENT -->
@@ -303,8 +310,12 @@
 					</table>
 				</div>
 				<!-- EQUIPMENT_END -->
+
 			{% endif %}
+
+			{{ hook('HOOK_CHARACTERS_AFTER_EQUIPMENT') }}
 	</div>
+	{{ hook('HOOK_CHARACTERS_BEFORE_DEATHS') }}
 
 	{% if deaths|length > 0 %}
 		<!-- DEATHS -->
@@ -355,20 +366,21 @@
 		<!-- FRAGS_END -->
 	{% endif %}
 
-	{{ hook(constant('HOOK_CHARACTERS_BEFORE_SIGNATURE')) }}
+	{{ hook('HOOK_CHARACTERS_BEFORE_SIGNATURE') }}
 
-	{% if config.signature_enabled %}
+	{% if setting('core.signature_enabled') %}
 		<!-- SIGNATURE -->
 		<script type="text/javascript">
-			function showSignLinks() {
-if (document.getElementById('signLinks').style.display == "none") {
-document.getElementById('signLinks').style.display = "inline";
-document.getElementById('signText').innerHTML = "Hide links";
-} else {
-document.getElementById('signLinks').style.display = "none";
-document.getElementById('signText').innerHTML = "Show links";
-}
-}
+			function showSignLinks()
+			{
+				if (document.getElementById('signLinks').style.display == "none") {
+					document.getElementById('signLinks').style.display = "inline";
+					document.getElementById('signText').innerHTML = "Hide links";
+				} else {
+					document.getElementById('signLinks').style.display = "none";
+					document.getElementById('signText').innerHTML = "Show links";
+				}
+			}
 		</script>
 		<br/>
 		<table class="table" border="0" cellspacing="1" cellpadding="4" width="100%">
@@ -406,8 +418,8 @@ document.getElementById('signText').innerHTML = "Show links";
 		</table>
 		<!-- SIGNATURE_END -->
 	{% endif %}
-	{{ hook(constant('HOOK_CHARACTERS_AFTER_SIGNATURE')) }}
-	{% if not hidden %}
+		{{ hook('HOOK_CHARACTERS_AFTER_SIGNATURE') }}
+		{% if not player.isHidden() %}
 		{% set rows = 0 %}
 		<!-- ACCOUNT_INFORMATION -->
 		<br/><br/>
@@ -463,7 +475,7 @@ document.getElementById('signText').innerHTML = "Show links";
 			</tr>
 		</table>
 		<!-- ACCOUNT_INFORMATION_END -->
-		{{ hook(constant('HOOK_CHARACTERS_AFTER_ACCOUNT')) }}
+		{{ hook('HOOK_CHARACTERS_AFTER_ACCOUNT') }}
 		<!-- CHARACTERS_LIST -->
 		<br/><br/>
 		<div>
@@ -527,9 +539,11 @@ document.getElementById('signText').innerHTML = "Show links";
 		</table>
 		<!-- CHARACTERS_LIST_END -->
 	{% endif %}
-	{{ hook(constant('HOOK_CHARACTERS_AFTER_CHARACTERS')) }}
+
+	{{ hook('HOOK_CHARACTERS_AFTER_CHARACTERS') }}
+
 	{% if canEdit %}
-		<a href="admin/?p=players&id={{ player.getId() }}" title="Edit in Admin Panel" target="_blank">
+		<a href="{{ constant('ADMIN_URL') }}?p=players&id={{ player.getId() }}" title="Edit in Admin Panel" target="_blank">
 			<img src="images/edit.png"/>Edit
 		</a>
 	{% endif %}
