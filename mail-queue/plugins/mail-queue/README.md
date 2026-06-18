@@ -33,4 +33,4 @@ while true; do
 done
 ```
 
-In this example, 2 emails will be send per second.
+In this example, 2 emails will be processed per second.
