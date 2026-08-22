@@ -1,7 +1,7 @@
 {
 	"name": "Mercado Pago",
 	"description": "Mercado Pago gateway for Gesior Shop System plugin.",
-	"version": "1.0-RC.2",
+	"version": "1.0",
 	"type": "plugin",
 	"license": "GPLv3",
 	"author": "Underewarrr, Clyfe, slawkens",
@@ -9,7 +9,7 @@
 	"require": {
 		"myaac": "1.6",
 		"php": "8.1",
-		"gesior-shop-system": ">=8.0-RC.1"
+		"gesior-shop-system": ">=8.1"
 	},
 	"autoload": {
 		"init": true

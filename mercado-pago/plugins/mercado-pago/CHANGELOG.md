@@ -1,5 +1,9 @@
 # Changelog mercado-pago
 
+## v1.0 - 2026-08-22
+* Tag as stable release
+* Code refactoring (gesior-shop-system v8.1 required)
+
 ## v1.0-RC.2 - 2026-01-30
 * Just removed some useless margin-top
 

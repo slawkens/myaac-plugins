@@ -13,7 +13,7 @@
 
 defined('MYAAC') or die('Direct access not allowed!');
 
-require_once(PLUGINS . 'gesior-shop-system/libs/shop-system.php');
+require_once(PLUGINS . 'gesior-shop-system/src/Shop.php');
 require_once(PLUGINS . 'gesior-shop-system/config.php');
 
 $configMercadoPago = config('mercado-pago');
@@ -150,7 +150,7 @@ if (isset($webhook_data['data']['id'])) {
 
 			if ($account->isLoaded()) {
 				$time = date('Y-m-d H:i:s');
-				
+
 				if(!$payment_MP_status || $payment_MP_status !== 'approved'){
 					$db->update(TABLE_PREFIX . 'mercadopago', ['payer_status' => 'Completed', 'payment_status' => $payment_MP_status, 'updated' => $time], ['collector_id' => $collector_id, 'account_id' => $account_id]);
 					error_log('Payment not approved. For Collector ID: ' . $collector_id . ' Payment status: ' . $payment_MP_status);
@@ -158,7 +158,7 @@ if (isset($webhook_data['data']['id'])) {
 					return;
 				}
 
-				if ($payment_MP_status === 'approved' && GesiorShop::changePoints($account, $payment_details['points'])) {
+				if ($payment_MP_status === 'approved' && Shop::changePoints($account, $payment_details['points'])) {
 
 					$db->update(TABLE_PREFIX . 'mercadopago', ['payer_status' => 'Completed', 'payment_status' => 'Completed', 'updated' => $time], ['collector_id' => $collector_id, 'account_id' => $account_id]);
 
