@@ -16,6 +16,7 @@ return new class extends Command
 	protected function configure(): void
 	{
 		$this->setName('sample-data:random-online')
+			->setAliases(['sample-data:online'])
 			->setDescription('Generate random online players')
 			->addArgument('amount',
 				InputArgument::REQUIRED,
