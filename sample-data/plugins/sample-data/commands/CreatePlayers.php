@@ -13,6 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 return new class extends Command
 {
+	const SEX_FEMALE = 0;
+	const SEX_MALE = 1;
+
 	protected function configure(): void
 	{
 		$this->setName('sample-data:players')
@@ -121,6 +124,20 @@ return new class extends Command
 			}
 		}
 
+		$lookTypesMales = [];
+		$lookTypesFemales = [];
+
+		$outfits = Outfits_loadfromXML();
+		if ($outfits) {
+			foreach ($outfits as $outfit) {
+				if ($outfit['type'] == self::SEX_MALE) {
+					$lookTypesMales[] = $outfit['id'];
+				} else {
+					$lookTypesFemales[] = $outfit['id'];
+				}
+			}
+		}
+
 		$faker = Factory::create();
 
 		$skipped = 0;
@@ -164,8 +181,15 @@ return new class extends Command
 				$player->cap = getCapacityForLevel($player->vocation, $player->level);
 			}
 
-			$player->sex = random_int(0, 1);
-			$player->looktype = $lookType ?? ($player->sex == 0 ? 136 : 128);
+			$player->sex = random_int(self::SEX_FEMALE, self::SEX_MALE);
+
+			if ($outfits && !empty($lookTypesMales) && !empty($lookTypesFemales)) {
+				$random = ($player->sex == self::SEX_MALE ? array_rand($lookTypesMales) : array_rand($lookTypesFemales));
+				$player->looktype = $lookType ?? ($player->sex == self::SEX_MALE ? $lookTypesMales[$random] : $lookTypesFemales[$random]);
+			}
+			else {
+				$player->looktype = $lookType ?? ($player->sex == self::SEX_FEMALE ? 136 : 128);
+			}
 
 			$player->lookhead = $lookColors ?? $lookHead ?? random_int(0, 132);
 			$player->lookbody = $lookColors ?? $lookBody ?? random_int(0, 132);

@@ -2,6 +2,7 @@
 
 ## v1.1.3 - 2026-08-22
 * players: Make look random by default as intended
+* players: Generate random outfit looktype by default
 * online: Ignore hidden and deleted players
 * Add sample-data:online as alias
 
