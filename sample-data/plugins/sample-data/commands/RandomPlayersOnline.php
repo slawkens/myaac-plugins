@@ -11,8 +11,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 return new class extends Command
 {
-	private string $deletedColumn = '';
-
 	protected function configure(): void
 	{
 		$this->setName('sample-data:random-online')
@@ -37,17 +35,14 @@ return new class extends Command
 			return Command::FAILURE;
 		}
 
-		if ($db->hasColumn('players', 'deleted')) {
-			$this->deletedColumn = 'deleted';
-		}
-		elseif ($db->hasColumn('players', 'deletion')) {
-			$this->deletedColumn = 'deletion';
-		}
-
 		$lastId = Player::orderBy('id', 'desc')->first();
 		$unique = [];
 
-		$totalCount = Player::where($this->deletedColumn, 0)->count();
+		$totalCount = Player::whereNotIn('players.id', setting('core.highscores_ids_hidden'))
+			->notDeleted()
+			->where('players.group_id', '<', setting('core.highscores_groups_hidden'))
+			->count();
+
 		if ($amount > $totalCount) {
 			$io->warning("Amount must be less than or equal to $totalCount");
 			return Command::FAILURE;
@@ -98,15 +93,16 @@ return new class extends Command
 		return Command::SUCCESS;
 	}
 
-	private function getExistingPlayerId($lastId): int
+	private function getExistingPlayerId(int $lastId): int
 	{
 		do {
 			$id = random_int(1, $lastId);
 
 			$playerQuery = Player::where('id', $id);
-			if (!empty($this->deletedColumn)) {
-				$playerQuery = $playerQuery->where($this->deletedColumn, 0);
-			}
+
+			$playerQuery->whereNotIn('players.id', setting('core.highscores_ids_hidden'))
+				->notDeleted()
+				->where('players.group_id', '<', setting('core.highscores_groups_hidden'));
 		}
 		while (!$playerQuery->exists());
 

@@ -1,7 +1,8 @@
 # Changelog sample-data
 
 ## v1.1.3 - 2026-08-22
-* Make look random by default as intended
+* players: Make look random by default as intended
+* online: Ignore hidden and deleted players
 * Add sample-data:online as alias
 
 ## v1.1.2 - 2025-04-11
