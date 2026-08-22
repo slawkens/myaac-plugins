@@ -167,13 +167,13 @@ return new class extends Command
 			$player->sex = random_int(0, 1);
 			$player->looktype = $lookType ?? ($player->sex == 0 ? 136 : 128);
 
-			$player->lookhead = $lookColors ?? $lookHead ?? 0;
-			$player->lookbody = $lookColors ?? $lookBody ?? 0;
-			$player->looklegs = $lookColors ?? $lookLegs ?? 0;
-			$player->lookfeet = $lookColors ?? $lookFeet ?? 0;
+			$player->lookhead = $lookColors ?? $lookHead ?? random_int(0, 132);
+			$player->lookbody = $lookColors ?? $lookBody ?? random_int(0, 132);
+			$player->looklegs = $lookColors ?? $lookLegs ?? random_int(0, 132);
+			$player->lookfeet = $lookColors ?? $lookFeet ?? random_int(0, 132);
 
 			if ($db->hasColumn('players', 'lookaddons')) {
-				$player->lookaddons = $lookAddons ?? 0;
+				$player->lookaddons = $lookAddons ?? random_int(0, 3);
 			}
 
 			if ($db->hasColumn('players', 'conditions')) {

@@ -1,5 +1,8 @@
 # Changelog sample-data
 
+## v1.1.3 - 2026-08-22
+* Make look random by default as intended
+
 ## v1.1.2 - 2025-04-11
 * Set the plugin type to "command" in plugin.json
 * Accounts generator:
