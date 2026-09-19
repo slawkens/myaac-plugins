@@ -11,15 +11,12 @@ If you are using older version, then it's enough to patch this PR manually: http
 Also change the version in mail-queue.json accordingly to install the plugin.
 
 ## Usage
-Add following script to the crontab:
-`php /var/www/html/aac mail-queue:process 5`
+Use the included run.sh script to run it continously in screen.
 
-Adjust the path to your aac instance accordingly.
+`cd plugins/mail-queue`
+`screen -dmS mailer ./run.sh`
 
-Optionally you can provide a number - how many emails to process, in this example - 5.
-
-You can also specifiy -v (verbose) or -f (re-run failed messages).
-
-## Example bash script for linux
-
-The script is located in this folder - **run.sh**
+## Options
+* -v (Verbose)
+* -q (Quiet)
+* -f (Re-run failed emails)
