@@ -1,0 +1,16 @@
+{
+	"name": "Dashboard Insights",
+	"description": "Show some statistics in the admin dashboard.",
+	"version": "1.0",
+	"type": "plugin",
+	"license": "GPLv3",
+	"author": "slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "3.0-dev"
+	},
+	"uninstall": [
+		"plugins/dashboard-insights.json",
+		"plugins/dashboard-insights"
+	]
+}
