@@ -1,7 +1,7 @@
 {
 	"name": "Mail Queue",
 	"description": "Queue outgoing emails. Will be sent in batches by a cron job.",
-	"version": "1.0",
+	"version": "1.0.1",
 	"type": "plugin",
 	"license": "GPLv3",
 	"author": "slawkens, Gesior.pl",

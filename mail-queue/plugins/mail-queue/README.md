@@ -22,15 +22,4 @@ You can also specifiy -v (verbose) or -f (re-run failed messages).
 
 ## Example bash script for linux
 
-You can run this inside of the `screen` command
-
-```bash
-#!/bin/bash
-
-while true; do
-	php aac mail-queue:process 2>&1 | tee -a system/logs/send_mails.log
-	sleep 1
-done
-```
-
-In this example, 2 emails will be processed per second.
+The script is located in this folder - **run.sh**
