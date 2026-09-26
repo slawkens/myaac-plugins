@@ -190,6 +190,14 @@ class Spells extends Base
 			}
 
 			if (isset($spell->attr['words'])) {
+				if (str_contains($spell->attr['words'], '###')) {
+					if ($show) {
+						warning('Ignoring spell with words containing ### (' . $spell->attr['words'] . ')');
+					}
+
+					continue;
+				}
+
 				$spell->attr['words'] = str_replace(',', '', $spell->attr['words']);
 			}
 
