@@ -20,5 +20,7 @@ CREATE TABLE IF NOT EXISTS `myaac_monsters` (
 	`summons` varchar(1000) NOT NULL DEFAULT '',
 	`flags` varchar(1000) NOT NULL DEFAULT '',
 	`hide` tinyint(1) NOT NULL default 0,
+	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4;

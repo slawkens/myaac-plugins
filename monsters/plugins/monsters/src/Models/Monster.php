@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Monster extends Model
 {
 	protected $table = 'myaac_monsters';
+
 	protected $fillable = [
 		'name',
 		'mana', 'exp', 'health',
@@ -19,6 +20,4 @@ class Monster extends Model
 		'summonable', 'convinceable', 'rewardboss',
 		'hide'
 	];
-
-	public $timestamps = false;
 }

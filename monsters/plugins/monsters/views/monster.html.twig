@@ -109,7 +109,7 @@
 			{% if ( monster.summons is not empty) %}
 				<td>
 					{% for summon in monster.summons %}
-						<span>{{ summon.chance }}% chance to summon a <b>{{ getMonsterLink(summon.name, true)|raw }}</b><br/></span>
+						<span>{{ summon.chance }}% chance to summon a <b>{{ summon.link|raw }}</b><br/></span>
 					{% endfor %}
 				</td>
 			{% endif %}
@@ -148,17 +148,42 @@
 {% if (not monster.loot is empty) %}
 	<table class="MonsterLoot" border="0" cellspacing="0" cellpadding="4" width="100%">
 		<tr><th>Loot</th></tr>
+
+		{% set lootNames = '' %}
+
 		<tr>
 			<td>
 				{% for item in monster.loot %}
-					<span class="loot_bg">
-					{% if (item.count > 1) %}
-						<span class="loot_amount">{{ item.count }}</span>
+
+					{% if (item.id is not empty) %}
+
+						<span class="loot_bg">
+
+							{% if (item.count > 1) %}
+								<span class="loot_amount">{{ item.count }}</span>
+							{% endif %}
+
+							<a href="{{ setting('monsters.monsters_items_url') }}{{ item.name|title }}">
+								<img title="{{ item.tooltip }}" src="{{ setting('core.item_images_url') }}{{ item.id }}{{ setting('core.item_images_extension') }}" class="loot_image"/>
+							</a>
+
+						</span>
+
+					{% elseif (item.name is not empty) %}
+						{% set lootNames = lootNames ~ ' <strong>' ~ (item.count > 1 ? item.count ~ ' ' : '') ~ item.name ~ '</strong> |' %}
 					{% endif %}
-					<a href="{{ setting('core.monsters_items_url') }}{{ item.name|title }}"><img title="{{ item.tooltip }}" src="{{ setting('core.item_images_url') }}{{ item.id }}{{ setting('core.item_images_extension') }}" class="loot_image"/></a>
-				</span>
+
 				{% endfor %}
+
 			</td>
+
 		</tr>
+
+		{% if (lootNames is not empty) %}
+			<tr>
+				<td>{{ lootNames|slice(0, -1)|raw }}</td>
+			</tr>
+		{% endif %}
+
 	</table>
 {% endif %}

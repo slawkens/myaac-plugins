@@ -1,4 +1,5 @@
 {
+    "name": "myaac/monsters",
     "autoload": {
         "psr-4": {
             "MyAAC\\Plugins\\Monsters\\": "src"

@@ -23,15 +23,16 @@ Game.__index = Game
 local monster_ = nil
 
 function Game:createMonsterType(name)
-   local monsterType = {}             	-- our new object
-   setmetatable(monsterType,Game)  		-- make Game handle lookup
-   monsterType.name = name      		-- initialize our object
-   monsterType.register = function (self, monster)
-   	monster_ = monster
-   	monster_['testing'] = self.name
-   end
+	local monsterType = {}             	-- our new object
+	setmetatable(monsterType,Game)  		-- make Game handle lookup
+	monsterType.name = name      		-- initialize our object
 
-   return monsterType
+	monsterType.register = function (self, monster)
+		monster_ = monster
+		monster_['testing'] = self.name
+	end
+
+	return monsterType
 end
 
 function getMonster()

@@ -1,41 +1,49 @@
 <?php
+/**
+ * Monsters
+ *
+ * @package   myaac-monsters
+ * @author    Gesior <jerzyskalski@wp.pl>
+ * @author    Slawkens <slawkens@gmail.com>
+ * @author    Lee
+ * @copyright 2020 MyAAC
+ * @link      https://my-aac.org
+ */
 defined('MYAAC') or die('Direct access not allowed!');
 $title = 'Monsters';
 
 require_once PLUGINS . 'monsters/vendor/autoload.php';
 
-use MyAAC\Plugins\Monsters\Monsters;
 use MyAAC\Plugins\Monsters\Models\Monster as MonsterModel;
-use MyAAC\Timer;
+use \MyAAC\Plugins\Monsters\Base as BaseMonsters;
 
 $reload = isset($_REQUEST['reload']) && (int)$_REQUEST['reload'] == 1;
 
 if($reload && admin()) {
-	$timer = new Timer();
-
-	Monsters::reload(true);
-
-	$timeTotal = round($timer->elapsed(), 2);
-
-	success("Monsters reloaded in $timeTotal seconds.");
+	BaseMonsters::reloadMonsters(true);
 }
 
 if(admin()) {
 	echo $twig->render('monsters/views/reload.html.twig');
 }
 
-if (empty($_GET['name'])) {
-	// display list of monsters
-	$preview = setting('core.monsters_images_preview');
-	$monsters = MonsterModel::where('hide', '!=', 1)->when(!empty($_GET['boss']), function ($query) {
-		$query->where('rewardboss', 1);
-	})->get()->toArray();
+if (empty($_REQUEST['name'])) {
+	$preview = setting('monsters.monsters_images_preview');
 
-	if ($preview) {
-		foreach($monsters as $key => &$monster) {
-			$monster['img_link'] = getMonsterImgPath($monster['name']);
+	// display list of monsters
+	$monsters = MyAAC\Cache::remember('monsters', 30 * 60, function () use ($preview) {
+		$monsters = MonsterModel::where('hide', '!=', 1)->when(!empty($_REQUEST['boss']), function ($query) {
+			$query->where('rewardboss', 1);
+		})->get()->toArray();
+
+		foreach($monsters as &$monster) {
+			$monster['img_link'] = _getMonsterImage($monster);
+			$monster['link_full'] = getMonsterLink($monster['name'], true);
+			$monster['link'] = getMonsterLink($monster['name'], false);
 		}
-	}
+
+		return $monsters;
+	});
 
 	$twig->display('monsters/views/monsters.html.twig', array(
 		'monsters' => $monsters,
@@ -46,14 +54,15 @@ if (empty($_GET['name'])) {
 }
 
 // display monster
-$monster_name = urldecode(stripslashes(ucwords(strtolower($_GET['name']))));
+$monster_name = urldecode(stripslashes(ucwords(strtolower($_REQUEST['name']))));
 $monsterModel = MonsterModel::where('hide', '!=', 1)->where('name', $monster_name)->first();
 
 if ($monsterModel && isset($monsterModel->name)) {
 	/** @var array $monster */
 	$monster = $monsterModel->toArray();
 
-	function sort_by_chance($a, $b) {
+	function sort_by_chance($a, $b): int
+	{
 		if ($a['chance'] == $b['chance']) {
 			return 0;
 		}
@@ -62,37 +71,29 @@ if ($monsterModel && isset($monsterModel->name)) {
 
 	$title = $monster['name'] . " - Monsters";
 
-	$outfit = json_decode($monster['outfit'], true);
+	$monster['img_link']= _getMonsterImage($monster);
 
-	if (isset($outfit['lookTypeEx'])) {
-		$monster['img_link'] = setting('core.item_images_url') . $outfit['lookTypeEx'] . setting('core.item_images_extension');
-	}
-	else {
-		$monster['img_link'] = setting('core.outfit_images_url') . '?id=' . $outfit['lookType'] . (!empty($outfit['lookAddons'])
-				? '&addons=' . $outfit['lookAddons'] : '') . '&head=' . $outfit['lookHead'] . '&body=' . $outfit['lookBody']
-			. '&legs=' . $outfit['lookLegs'] . '&feet=' . $outfit['lookFeet'];
-	}
-
-	$voices = json_decode($monster['voices'], true);
-	$summons = json_decode($monster['summons'], true);
-	$elements = json_decode($monster['elements'], true);
-	$immunities = json_decode($monster['immunities'], true);
-	$loot = json_decode($monster['loot'], true);
+	$voices = json_decode($monster['voices'] ?? '', true);
+	$summons = json_decode($monster['summons'] ?? '', true);
+	$elements = json_decode($monster['elements'] ?? '', true);
+	$immunities = json_decode($monster['immunities'] ?? '', true);
+	$loot = json_decode($monster['loot'] ?? '', true);
 	if (!empty($loot)) {
 		usort($loot, 'sort_by_chance');
 	}
 
 	foreach ($loot as &$item) {
-		if (isset($item['id'])) {
+		if (!isset($item['name'])) {
 			$item['name'] = getItemNameById($item['id']);
-		}
-		else {
-			$item['id'] = 0;
 		}
 
 		$item['rarity_chance'] = round($item['chance'] / 1000, 2);
 		$item['rarity'] = getItemRarity($item['chance']);
-		$item['tooltip'] = ucfirst($item['name']) . '<br/>Chance: ' . $item['rarity'] . (setting('core.monsters_loot_percentage') ? ' ('. $item['rarity_chance'] .'%)' : '') . '<br/>Max count: ' . ($item['maxCount'] ?? 1);
+		$item['tooltip'] = ucfirst($item['name']) . '<br/>Chance: ' . $item['rarity'] . (setting('monsters.monsters_loot_percentage') ? ' ('. $item['rarity_chance'] .'%)' : '') . '<br/>Max count: ' . $item['count'];
+	}
+
+	foreach ($summons as &$summon) {
+		$summon['link'] = getMonsterLink($summon['name'], true);
 	}
 
 	$monster['loot'] = $loot ?? null;
@@ -111,3 +112,23 @@ if ($monsterModel && isset($monsterModel->name)) {
 
 // back button
 $twig->display('monsters/views/monsters.back_button.html.twig');
+
+function _getMonsterImage(array $monster): string
+{
+	$outfit = json_decode($monster['outfit'] ?? '', true);
+
+	if (!empty($outfit['typeex'])) {
+		return setting('core.item_images_url') . $outfit['typeex'] . setting('core.item_images_extension');
+	}
+
+	if (isset($outfit['type'])) {
+		$getValue = function ($val) use ($outfit) {
+			return (!empty($outfit[$val])
+				? '&' . $val . '=' . $outfit[$val] : '');
+		};
+
+		return setting('core.outfit_images_url') . '?id=' . $outfit['type'] . $getValue('addons') . $getValue('head') . $getValue('body') . $getValue('legs') . $getValue('feet');
+	}
+
+	return 'plugins/monsters/assets/images/nophoto.png';
+}

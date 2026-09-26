@@ -1,6 +1,15 @@
 <br/><br/>
-<div style="text-align:center">
+<div class="monsters-center">
 	<form action="{{ getLink('monsters') }}" method="post">
 		{{ include('buttons.back.html.twig') }}
 	</form>
 </div>
+
+<style>
+	.monsters-center {
+		text-align: center; /* Standard */
+		text-align: -webkit-center; /* For Safari and Chrome */
+		text-align: -moz-center; /* For Firefox */
+		text-align: -ms-center; /* For Internet Explorer */
+	}
+</style>

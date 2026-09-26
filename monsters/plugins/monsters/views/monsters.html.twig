@@ -32,7 +32,7 @@
 				{% for monster in monsters %}
 					{% set i = i + 1 %}
 					<div class="monsterImages">
-						<a href="{{ getMonsterLink(monster.name, false)|raw }}">
+						<a href="{{ monster.link }}">
 							<div class="monster_img " style="background-image: url({{ monster.img_link }}"></div>
 							<img class=" {{ (monster.rewardboss ? 'monsterBoss' : '') }}" src="{{ monster.img_link }}" border="0"/>
 						</a>
@@ -70,7 +70,7 @@
 			{% for monster in monsters %}
 				{% set i = i + 1 %}
 				<tr>
-					<td>{{ getMonsterLink(monster.name, true)|raw }}</td>
+					<td>{{ monster.link_full|raw }}</td>
 					<td>{{ (monster.rewardboss) ? 'Yes' : '---' }}</td>
 					<td>{{ monster.health|number_format(0, '.', ',') }}</td>
 					<td>{{ monster.exp|number_format(0, '.', ',') }}</td>

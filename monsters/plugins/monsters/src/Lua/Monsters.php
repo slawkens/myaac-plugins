@@ -1,49 +1,30 @@
 <?php
 
-namespace MyAAC\Plugins\LuaMonsters;
+namespace MyAAC\Plugins\Monsters\Lua;
 
 use MyAAC\Items;
 use MyAAC\Plugins\Monsters\Models\Monster as MonsterModel;
+use MyAAC\Plugins\Monsters\Base;
 
-class Monsters
+class Monsters extends Base
 {
+	const FOLDER = 'monster';
+
 	public static function reload($show = false): bool
 	{
 		self::clearDatabase($show);
 
-		$dataPackDirectory = configLua('dataPackDirectory');
-		$dataPathFull = config('server_path') . $dataPackDirectory;
-		if (empty($dataPackDirectory) || !is_dir($dataPathFull)) {
-			error("config.lua: the dataPackDirectory folder doesn't exist! Using data/");
-			$dataPathFull = config('server_path') . 'data';
-		}
+		$canaryDataPack = config('dataPackDirectory');
+		$canaryDataPack = $canaryDataPack ?? 'data-otservbr-global';
 
-		$monstersPath = $dataPathFull . '/monster';
+		$monstersFolder = self::getMonstersFolder($canaryDataPack);
 
-		success('Loading from: ' . $monstersPath);
-		self::loadFromLua($monstersPath, $show);
-
-		success('Loaded ' . MonsterModel::count() . ' monsters.');
-
+		self::load($monstersFolder, $show);
 		return true;
 	}
 
-	public static function clearDatabase($show = false)
+	public static function load(string $folder, $show = false): bool
 	{
-		try {
-			MonsterModel::query()->delete();
-		} catch(\Exception $error) {}
-
-		if($show) {
-			echo '<h2>Reload monsters.</h2>';
-			echo '<h2>All records deleted from table <b>' . TABLE_PREFIX . 'monsters</b> in database.</h2>';
-		}
-	}
-
-	public static function loadFromLua($folder, $show = false): void
-	{
-		set_time_limit(60);
-
 		$rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($folder));
 		$files = [];
 
@@ -55,10 +36,10 @@ class Monsters
 			$files[] = $file->getPathname();
 		}
 
-		$itemsReversed = [];
-		Items::load();
+		$itemsByName = [];
+		Items::init();
 		foreach((array)Items::$items as $id => $item) {
-			$itemsReversed[$item['name']] = $id;
+			$itemsByName[$item['name']] = $id;
 		}
 
 		$luaMonstersLoader = file_get_contents(__DIR__ . '/MonsterLoader.lua');
@@ -134,45 +115,85 @@ class Monsters
 				}
 
 				$loot = $monster['loot'] ?? [];
-				foreach($loot as &$item) {
-					if(isset($item['name']) && isset($itemsReversed[$item['name']])) {
-						$item['id'] = $itemsReversed[$item['name']];
+
+				foreach($loot as $_id => &$item) {
+					if (isset($item['maxCount'])) {
+						$item['count'] = $item['maxCount'];
+						unset($item['maxCount']);
+					}
+					elseif (!isset($item['count'])) {
+						$item['count'] = 1;
+					}
+
+					if (isset($item['name'])) {
+						if(isset($itemsByName[$item['name']])) {
+							$item['id'] = $itemsByName[$item['name']];
+						}
+					}
+
+					if(isset($item['id']) && !\Validator::number($item['id'])) {
+						if(isset($itemsByName[$item['id']])) {
+							$item['id'] = $itemsByName[$item['id']];
+						}
 					}
 				}
 
-				LuaMonsterModel::create([
-					'name' => $name,
-					'mana' => $monster['manaCost'] ?? 0,
-					'outfit' => json_encode($monster['outfit'] ?? []),
-					'exp' => $monster['experience'],
-					'health' => $monster['health'],
-					'speed_lvl' => $speed_lvl,
-					'use_haste' => $use_haste,
-					'summonable' => ($monster['flags']['summonable'] ?? false) ? 1 : 0,
-					'convinceable' => ($monster['flags']['convinceable'] ?? false) ? 1 : 0,
-					'rewardboss' => ($monster['flags']['rewardBoss'] ?? false) ? 1 : 0,
-					'voices' => json_encode($voices),
-					'immunities' => json_encode($immunities),
-					'elements' => json_encode($elements),
-					'flags' => json_encode($monster['flags'] ?? []),
-					'defense' => $monster['defenses']['defense'],
-					'armor' => $monster['defenses']['armor'],
-					'race' => $monster['race'] ?? '',
-					'summons' => json_encode($monster['summons'] ?? []),
-					'loot' => json_encode($loot),
-				]);
+				$outfitToSave = [];
+				$outfit = $monster['outfit'] ?? [];
+				foreach ($outfit as $key => $value) {
+					$newKey = str_replace('look', '', strtolower($key));
+					$outfitToSave[$newKey] = $value;
+				}
+
+				try {
+					MonsterModel::create([
+						'name' => $name,
+						'mana' => $monster['manaCost'] ?? 0,
+						'outfit' => json_encode($outfitToSave),
+						'exp' => $monster['experience'],
+						'health' => $monster['health'],
+						'speed_lvl' => $speed_lvl,
+						'use_haste' => $use_haste,
+						'summonable' => ($monster['flags']['summonable'] ?? false) ? 1 : 0,
+						'convinceable' => ($monster['flags']['convinceable'] ?? false) ? 1 : 0,
+						'rewardboss' => ($monster['flags']['rewardBoss'] ?? false) ? 1 : 0,
+						'voices' => json_encode($voices),
+						'immunities' => json_encode($immunities),
+						'elements' => json_encode($elements),
+						'flags' => json_encode($monster['flags'] ?? []),
+						'defense' => $monster['defenses']['defense'],
+						'armor' => $monster['defenses']['armor'],
+						'race' => $monster['race'] ?? '',
+						'summons' => json_encode($monster['summon']['summons'] ?? []),
+						'loot' => json_encode($loot),
+					]);
+
+					self::$totalsAdded++;
+
+					if ($show) {
+						success('Added: ' . ($name ?? 'Unknown'));
+					}
+
+				} catch (\PDOException $error) {
+					if ($show) {
+						warning('Error while adding monster - ' . $name . ' - ' . $error->getMessage());
+					}
+				}
 			}
 			catch (\Exception $exception) {
-				error('Error in ' . $file . ' :: ' . $exception->getMessage());
+				throw $exception;
 				//echo '<pre>';
 				//error($luaCode);
 				//echo '</pre>';
 			}
 		}
+
+		return true;
 	}
 
 	private static function getElementType($type)
 	{
+		$type = (int) $type;
 		return match ($type) {
 			0 => 'physical',
 			1 => 'energy',
@@ -190,5 +211,16 @@ class Monsters
 			13 => 'neutral',
 			default => 'unknown',
 		};
+	}
+
+	public static function getMonstersFolder(string $canaryDataPack): string
+	{
+		$monstersFolder = config('server_path') . $canaryDataPack . '/' . self::FOLDER;
+		if (!is_dir($monstersFolder)) {
+
+			$monstersFolder = config('server_path') . 'data/' . self::FOLDER;
+		}
+
+		return $monstersFolder;
 	}
 }

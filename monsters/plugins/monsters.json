@@ -10,6 +10,20 @@
 		"myaac": "1.0",
 		"php": "8.1"
 	},
+	"hooks": [
+		{
+			"type": "HOOK_FILTER_VALIDATE_CHARACTER_NEW_NAME",
+			"file": "plugins/monsters/hooks/validate-character-name.php"
+		},
+		{
+			"type": "HOOK_FILTER_ADMIN_DASHBOARD_STATISTICS",
+			"file": "plugins/monsters/hooks/admin-dashboard-statistics.php"
+		},
+		{
+			"type": "HOOK_ADMIN_SERVER_DATA_RELOAD",
+			"file": "plugins/monsters/hooks/admin-server-data-reload.php"
+		}
+	],
 	"install": "plugins/monsters/install.php",
 	"uninstall": [
 		"plugins/monsters.json",
