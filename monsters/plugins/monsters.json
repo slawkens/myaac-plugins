@@ -1,13 +1,13 @@
 {
 	"name": "Monsters",
-	"description": "Monsters Lua and XML loader.",
+	"description": "Support for Monsters (XML & Lua).",
 	"version": "1.0",
 	"type": "page",
 	"license": "GPLv3",
 	"author": "slawkens",
 	"contact": "slawkens@gmail.com",
 	"require": {
-		"myaac": "1.0",
+		"myaac": "3.0-dev",
 		"php": "8.1"
 	},
 	"hooks": [
