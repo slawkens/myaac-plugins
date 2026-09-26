@@ -1,0 +1,32 @@
+{
+	"name": "Spells",
+	"description": "Support for Spells (XML & Lua).",
+	"version": "1.0",
+	"type": "page",
+	"license": "GPLv3",
+	"author": "slawkens",
+	"contact": "slawkens@gmail.com",
+	"require": {
+		"myaac": "3.0-dev",
+		"php": "8.1"
+	},
+	"hooks": [
+		{
+			"type": "HOOK_FILTER_VALIDATE_CHARACTER_NEW_NAME",
+			"file": "plugins/spells/hooks/validate-character-name.php"
+		},
+		{
+			"type": "HOOK_FILTER_ADMIN_DASHBOARD_STATISTICS",
+			"file": "plugins/spells/hooks/admin-dashboard-statistics.php"
+		},
+		{
+			"type": "HOOK_ADMIN_SERVER_DATA_RELOAD",
+			"file": "plugins/spells/hooks/admin-server-data-reload.php"
+		}
+	],
+	"install": "plugins/spells/install.php",
+	"uninstall": [
+		"plugins/spells.json",
+		"plugins/spells"
+	]
+}

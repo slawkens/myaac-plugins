@@ -1,0 +1,8 @@
+{
+    "name": "myaac/spells",
+    "autoload": {
+        "psr-4": {
+            "MyAAC\\Plugins\\Spells\\": "src"
+        }
+    }
+}
