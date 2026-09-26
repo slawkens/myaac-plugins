@@ -47,7 +47,7 @@ class Base
 
 			if (is_dir($spellsFolder)) {
 				if (!SpellsLua::reload($show)) {
-					error(SpellsLua::getError());
+					$success = false;
 				}
 				$totals = SpellsLua::$totalsAdded;
 			}
@@ -57,11 +57,11 @@ class Base
 		}
 
 		if ($success) {
-			$endTime = round(microtime(true) - $startTime, 3);
+			$endTime = round(microtime(true) - $startTime, 4);
 			success("Spells have been loaded. (Total instant: {$totals[SpellsLua::TYPE_INSTANT]}, conjure: {$totals[SpellsLua::TYPE_CONJURE]}, runes: {$totals[SpellsLua::TYPE_RUNE]}) (In {$endTime} seconds)");
 		}
 		else {
-			error('Any spells folder (both XML and Lua) could not be found.');
+			error('Any spells folder (both XML and Lua) cannot be loaded.');
 		}
 	}
 

@@ -24,11 +24,6 @@ class Monsters extends Base
 
 	public static function load(string $folder, $show = false): bool
 	{
-		if (!extension_loaded('lua')) {
-			self::$error = 'Monsters cannot be loaded: PHP Lua extension is not loaded.';
-			return false;
-		}
-
 		$rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($folder));
 		$files = [];
 
@@ -184,15 +179,19 @@ class Monsters extends Base
 					}
 				}
 			}
-			catch (\Exception $exception) {
-				throw $exception;
+			catch (\Exception $e) {
+				if ($show) {
+					warning('Error while processing monster - ' . $file . ': ' . $e->getMessage());
+				}
+
+				//throw $exception;
 				//echo '<pre>';
 				//error($luaCode);
 				//echo '</pre>';
 			}
 		}
 
-		return true;
+		return (self::$totalsAdded > 0);
 	}
 
 	private static function getElementType($type)

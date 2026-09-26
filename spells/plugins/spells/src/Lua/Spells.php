@@ -38,12 +38,12 @@ class Spells extends Base
 			return false;
 		}
 
-		self::load('spells', $spellsFolder, $show);
-		self::load('runes', $runesFolder, $show);
-		return true;
+		return
+			self::load('spells', $spellsFolder, $show) &&
+			self::load('runes', $runesFolder, $show);
 	}
 
-	public static function load(string $type, string $folder, bool $show = false): void
+	public static function load(string $type, string $folder, bool $show = false): bool
 	{
 		$files = glob($folder . '/*/*.lua') + glob($folder . '/*.lua');
 
@@ -248,6 +248,8 @@ class Spells extends Base
 			$conjureId = null;
 			$conjureCount = null;
 		}
+
+		return (self::$totalsAdded[self::TYPE_INSTANT] > 0 || self::$totalsAdded[self::TYPE_CONJURE] > 0 || self::$totalsAdded[self::TYPE_RUNE] > 0);
 	}
 
 	public static function getSpellsFolder(string $canaryDataPack): string

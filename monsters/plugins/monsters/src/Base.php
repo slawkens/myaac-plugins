@@ -25,31 +25,39 @@ class Base
 				error(MonstersXML::getError());
 				$success = false;
 			}
+
 			$totals = MonstersXML::$totalsAdded;
 		}
 		else {
-			$canaryDataPack = config('dataPackDirectory');
-			$canaryDataPack = $canaryDataPack ?? 'data-otservbr-global';
-
-			$monstersFolder = MonstersLua::getMonstersFolder($canaryDataPack);
-
-			if (is_dir($monstersFolder)) {
-				if (!MonstersLua::reload($show)) {
-					error(MonstersLua::getError());
-				}
-				$totals = MonstersLua::$totalsAdded;
+			if (!extension_loaded('lua')) {
+				error('Monsters cannot be loaded: PHP Lua extension is not loaded.');
+				$success = false;
 			}
 			else {
-				$success = false;
+				$canaryDataPack = config('dataPackDirectory');
+				$canaryDataPack = $canaryDataPack ?? 'data-otservbr-global';
+
+				$monstersFolder = MonstersLua::getMonstersFolder($canaryDataPack);
+
+				if (is_dir($monstersFolder)) {
+					if (!MonstersLua::reload($show)) {
+						$success = false;
+					}
+
+					$totals = MonstersLua::$totalsAdded;
+				}
+				else {
+					$success = false;
+				}
 			}
 		}
 
 		if ($success) {
-			$endTime = round(microtime(true) - $startTime, 3);
-			success("Monsters have been loaded. (Total added: {$totals}) (In {$endTime} seconds)");
+			$endTime = round(microtime(true) - $startTime, 4);
+			success("Monsters have been loaded. (Total: {$totals}) (In {$endTime} seconds)");
 		}
 		else {
-			error('Any monsters folder (both XML and Lua) could not be found.');
+			error('Any monsters folder (both XML and Lua) cannot be loaded.');
 		}
 	}
 
