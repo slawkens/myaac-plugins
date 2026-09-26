@@ -17,7 +17,7 @@ NPCs::load();
 $npcs = NPCs::getNpcs();
 if(count($npcs) > 0) {
 	foreach ($npcs as $npc) {
-		if(str_contains(strtolower($args['name']), strtolower($npc))) {
+		if(str_contains(strtolower($npc), strtolower($args['name']))) {
 			$args['error'] = 'Your name cannot contains NPC name.';
 			return;
 		}
