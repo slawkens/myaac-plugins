@@ -6,6 +6,9 @@ use MyAAC\Plugins\Monsters\Lua\Monsters as MonstersLua;
 use MyAAC\Plugins\Monsters\Models\Monster as MonsterModel;
 use MyAAC\Plugins\Monsters\XML\Monsters as MonstersXML;
 
+// 5 minutes should be enough
+set_time_limit(5 * 60);
+
 class Base
 {
 	protected static string $error = '';
