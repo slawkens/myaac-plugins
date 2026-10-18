@@ -13,7 +13,7 @@ if (!$npcCheck) {
 /**
  * @var array $args
  */
-NPCs::load();
+NPCs::init();
 $npcs = NPCs::getNpcs();
 if(count($npcs) > 0) {
 	foreach ($npcs as $npc) {

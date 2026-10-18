@@ -1,7 +1,7 @@
 {
 	"name": "NPCs",
 	"description": "Loads NPCs (XML & Lua), to block creating characters with NPC names.",
-	"version": "1.0",
+	"version": "1.0.1",
 	"type": "page",
 	"license": "GPLv3",
 	"author": "slawkens",

@@ -1,0 +1,6 @@
+[1.0.1 - 18.10.2026]
+	* Added this changelog
+	* Fixed performance issue, the npcs have been loaded every time, instead of being loaded from cache
+	
+[1.0 - 29.09.2026]
+	* First release

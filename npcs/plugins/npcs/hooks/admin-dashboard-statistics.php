@@ -5,7 +5,7 @@ require_once PLUGINS . 'npcs/vendor/autoload.php';
 
 use MyAAC\Plugins\NPCs\Npcs;
 
-NPCs::load();
+NPCs::init();
 $npcs = NPCs::getNpcs();
 
 $args['elements']['npcs'] = [
