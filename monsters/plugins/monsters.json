@@ -1,7 +1,7 @@
 {
 	"name": "Monsters",
 	"description": "Support for Monsters (XML & Lua).",
-	"version": "1.0",
+	"version": "1.0.1",
 	"type": "page",
 	"license": "GPLv3",
 	"author": "slawkens",
