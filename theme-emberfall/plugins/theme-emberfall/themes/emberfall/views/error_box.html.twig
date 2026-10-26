@@ -1,0 +1,38 @@
+<div class="ef-error-box" role="alert">
+	<strong class="ef-error-title">The following errors occurred:</strong>
+	<ul>
+		{% for error in errors %}
+		<li>{{ error|striptags('<b><strong><a><em><i><br><code>')|raw }}</li>
+		{% endfor %}
+	</ul>
+</div>
+
+<style>
+	.ef-error-box {
+		margin: 0 0 16px;
+		padding: 12px 16px;
+		color: #641b12;
+		background: #f4d8c7;
+		border: 2px solid #9b3826;
+		border-left: 6px solid #8a1c10;
+		border-radius: 4px;
+		box-shadow: 0 3px 8px rgba(42, 26, 14, .25);
+	}
+
+	.ef-error-title {
+		display: block;
+		margin-bottom: 6px;
+		color: #721c12;
+		font-family: 'Cinzel', Georgia, serif;
+		font-size: 16px;
+	}
+
+	.ef-error-box ul {
+		margin: 0;
+		padding-left: 22px;
+	}
+
+	.ef-error-box li + li {
+		margin-top: 4px;
+	}
+</style>

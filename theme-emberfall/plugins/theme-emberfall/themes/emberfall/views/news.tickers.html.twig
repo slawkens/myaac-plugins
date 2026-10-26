@@ -1,0 +1,27 @@
+<table id="NewsTicker" style="width: 100%">
+	<tr class="white" bgcolor="{{ config.vdarkborder }}">
+		<td colspan="5">Tickers</td>
+	</tr>
+	{% set i = 0 %}
+	{% for ticker in tickers %}
+	<tr id="TickerEntry-{{ i }}" onclick='TickerAction("TickerEntry-{{ i }}")'>
+		<td style="width: 16px;"><img src="{{ constant('BASE_URL') }}images/news/icon_{{ ticker.icon }}_small.gif" alt="News icon"/></td>
+		<td style="width: 80px;">{{ ticker.date|date("j M Y") }}</td>
+
+		<td id="TickerEntry-{{ i }}-ShortText" class="NewsTickerShortText">{{ ticker.body_short|raw }}</td>
+		<td id="TickerEntry-{{ i }}-FullText" class="NewsTickerFullText">{{ ticker.body|raw }}
+			{% if canEdit %}
+				{{ include('admin.links.html.twig', {page: 'news', id: ticker.id, hide: ticker.hide }) }}
+			{% endif %}
+		</td>
+
+		<td style="padding: 0; width: 14px; vertical-align: top;">
+			<img src="{{ template_path }}/images/general/plus.gif" id="TickerEntry-{{ i }}-Button" style="cursor: pointer;"></td>
+		</td>
+	</tr>
+	{% set i = i + 1 %}
+	{% endfor %}
+</table>
+<br/>
+
+<script type="text/javascript" src="{{ template_path }}/js/ticker.js"></script>

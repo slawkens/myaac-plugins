@@ -1,0 +1,15 @@
+<article class="ef-news">
+	<header class="ef-news-head">
+		<span class="ef-news-date">{{ date|date(setting('core.news_date_format')) }}</span>
+		<h3 class="ef-news-title">{{ title }}</h3>
+		{% if author is not empty %}
+		<span class="ef-news-author">by <i>{{ author }}</i></span>
+		{% endif %}
+	</header>
+	<div class="ef-news-body">{{ content|raw }}</div>
+	{% if comments is not null %}
+	<footer class="ef-news-foot">
+		<a href="{{ comments }}">» Comment on this news</a>
+	</footer>
+	{% endif %}
+</article>
