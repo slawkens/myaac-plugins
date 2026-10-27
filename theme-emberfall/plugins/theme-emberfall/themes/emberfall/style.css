@@ -305,19 +305,6 @@ input[type=submit]:hover, input[type=button]:hover, button:hover, .btn:hover {
 	color: red;
 }
 
-.NewsTickerExtend {
-    position: relative;
-    right: 0px;
-    top: 1px;
-    right: 1px;
-    height: 12px;
-    width: 12px;
-    background-repeat: no-repeat;
-    float: right;
-    cursor: pointer;
-    z-index: 10;
-}
-
 #NewsTicker .NewsTickerFullText {
     display: none;
 }
